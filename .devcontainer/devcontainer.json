@@ -1,0 +1,5 @@
+{
+  "name": "Playwright Dev Container",
+  "image": "mcr.microsoft.com/playwright/dotnet:v1.57.0-noble",
+  "postCreateCommand": "dotnet build"
+}

@@ -1,0 +1,29 @@
+services:
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    container_name: juice-shop
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "/nodejs/bin/node",
+          "-e",
+          "require('node:http').get('http://localhost:3000', (res) => { if (res.statusCode >= 200 && res.statusCode < 400) process.exit(0); else process.exit(1); }).on('error', (err) => process.exit(1));",
+        ]
+      interval: 1s
+      timeout: 1s
+      retries: 15
+
+  playwright:
+    build: .
+    container_name: playwright-tests
+    ports:
+      - "8080:8080"
+    depends_on:
+      juice-shop:
+        condition: service_healthy
+    environment:
+      - CI=true
+    command: dotnet test
