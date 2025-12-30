@@ -1,7 +1,7 @@
 services:
   juice-shop:
     image: bkimminich/juice-shop:latest
-    container_name: juice-shop
+    container_name: juice-shop-csharp
     ports:
       - "3000:3000"
     healthcheck:
@@ -18,7 +18,7 @@ services:
 
   playwright:
     build: .
-    container_name: playwright-tests
+    container_name: playwright-tests-csharp
     ports:
       - "8080:8080"
     depends_on:
@@ -26,4 +26,4 @@ services:
         condition: service_healthy
     environment:
       - CI=true
-    command: dotnet test
+    command: ["dotnet", "test", "OwaspPlaywrightTests/OwaspPlaywrightTests.csproj"]
