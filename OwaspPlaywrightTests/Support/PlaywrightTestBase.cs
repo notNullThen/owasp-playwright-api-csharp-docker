@@ -11,12 +11,6 @@ namespace OwaspPlaywrightTests.Support
     {
         private IBrowser? _browser;
         public IPage Page { get; private set; } = null!;
-        public ITestOutputHelper? Output { get; private set; }
-
-        public PlaywrightTestBase(ITestOutputHelper output)
-        {
-            Output = output;
-        }
 
         public override async Task InitializeAsync()
         {
@@ -60,7 +54,7 @@ namespace OwaspPlaywrightTests.Support
         {
             if (Page != null)
             {
-                var testName = GetTestName();
+                var testName = TestContext.GetTestName();
 
                 Directory.CreateDirectory(PlaywrightConfig.TracesDir);
                 await Page.Context.Tracing.StopAsync(
@@ -72,29 +66,6 @@ namespace OwaspPlaywrightTests.Support
             {
                 await _browser.CloseAsync();
             }
-        }
-
-        private string GetTestName()
-        {
-            if (Output != null)
-            {
-                var type = Output.GetType();
-                var testMember = type.GetField(
-                    "test",
-                    BindingFlags.Instance | BindingFlags.NonPublic
-                );
-
-                if (testMember != null)
-                {
-                    var test = (ITest?)testMember.GetValue(Output);
-                    if (test != null)
-                    {
-                        return string.Join(" - ", test.DisplayName.Split('.').Skip(1));
-                    }
-                }
-            }
-
-            return $"UnknownTest_{Guid.NewGuid()}";
         }
     }
 }

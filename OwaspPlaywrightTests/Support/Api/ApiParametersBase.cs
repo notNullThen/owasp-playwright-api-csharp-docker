@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 using OwaspPlaywrightTests.Support;
+using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Support.Api;
 
@@ -33,7 +34,7 @@ public class RequestParameters
     public object? Body { get; set; }
 }
 
-public abstract class ApiParametersBase(string baseApiUrl)
+public abstract class ApiParametersBase(string baseApiUrl) : PlaywrightTestBase
 {
     protected int ApiWaitTimeout = PlaywrightConfig.ApiWaitTimeout;
     protected string? FullUrl;
