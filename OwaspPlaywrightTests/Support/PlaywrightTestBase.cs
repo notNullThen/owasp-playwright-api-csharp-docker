@@ -7,13 +7,13 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Support
 {
-    public abstract class PlaywrightDriver : PlaywrightTest
+    public abstract class PlaywrightTestBase : PlaywrightTest
     {
         private IBrowser? _browser;
         public IPage Page { get; private set; } = null!;
         public ITestOutputHelper? Output { get; private set; }
 
-        public PlaywrightDriver(ITestOutputHelper output)
+        public PlaywrightTestBase(ITestOutputHelper output)
         {
             Output = output;
         }
