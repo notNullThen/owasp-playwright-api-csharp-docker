@@ -12,10 +12,7 @@ public static class Utils
     public static async Task WaitForElementToBeStable(ILocator element)
     {
         var handle = await element.ElementHandleAsync();
-        if (handle != null)
-        {
-            await handle.WaitForElementStateAsync(ElementState.Stable);
-        }
+        await handle.WaitForElementStateAsync(ElementState.Stable);
     }
 
     public static string FormatPrice(decimal price)
@@ -36,7 +33,7 @@ public static class Utils
             {
                 Name = "cookieconsent_status",
                 Value = "dismiss",
-                Url = GetBaseUrl(),
+                Url = PlaywrightConfig.BaseURL,
             },
         ]);
     }
@@ -48,16 +45,9 @@ public static class Utils
             {
                 Name = "welcomebanner_status",
                 Value = "dismiss",
-                Url = GetBaseUrl(),
+                Url = PlaywrightConfig.BaseURL,
             },
         ]);
-    }
-
-    public static string GetBaseUrl()
-    {
-        return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("CI"))
-            ? "http://juice-shop:3000"
-            : "http://localhost:3000";
     }
 
     public static string ConnectUrlParts(params string[] parts)
