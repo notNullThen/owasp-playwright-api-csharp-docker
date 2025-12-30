@@ -5,7 +5,13 @@ namespace OwaspPlaywrightTests.Support;
 
 public class TestContext : PlaywrightTestBase
 {
-    public static ITestOutputHelper? Output;
+    private static readonly AsyncLocal<ITestOutputHelper> _output = new();
+
+    public static ITestOutputHelper Output
+    {
+        get => _output.Value!;
+        set => _output.Value = value;
+    }
 
     public TestContext(ITestOutputHelper output)
     {
