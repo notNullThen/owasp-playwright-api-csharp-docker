@@ -6,6 +6,10 @@
 # dotenv files
 .env
 
+# Playwright
+/playwright
+/playwright-traces
+
 # User-specific files
 *.rsuser
 *.suo

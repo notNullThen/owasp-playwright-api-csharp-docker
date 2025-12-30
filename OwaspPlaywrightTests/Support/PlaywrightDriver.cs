@@ -1,5 +1,9 @@
+using System;
+using System.IO;
+using System.Reflection;
 using Microsoft.Playwright;
 using Microsoft.Playwright.Xunit;
+using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Support
 {
@@ -7,6 +11,12 @@ namespace OwaspPlaywrightTests.Support
     {
         private IBrowser? _browser;
         public IPage Page { get; private set; } = null!;
+        public ITestOutputHelper? Output { get; private set; }
+
+        public PlaywrightDriver(ITestOutputHelper output)
+        {
+            Output = output;
+        }
 
         public override async Task InitializeAsync()
         {
@@ -26,7 +36,20 @@ namespace OwaspPlaywrightTests.Support
                 new()
                 {
                     BaseURL = PlaywrightConfig.BaseURL,
-                    ViewportSize = new() { Width = 1280, Height = 720 },
+                    ViewportSize = new()
+                    {
+                        Width = PlaywrightConfig.ViewportWidth,
+                        Height = PlaywrightConfig.ViewportHeight,
+                    },
+                }
+            );
+
+            await context.Tracing.StartAsync(
+                new()
+                {
+                    Screenshots = true,
+                    Snapshots = true,
+                    Sources = true,
                 }
             );
 
@@ -35,10 +58,43 @@ namespace OwaspPlaywrightTests.Support
 
         public override async Task DisposeAsync()
         {
+            if (Page != null)
+            {
+                var testName = GetTestName();
+
+                Directory.CreateDirectory(PlaywrightConfig.TracesDir);
+                await Page.Context.Tracing.StopAsync(
+                    new() { Path = Path.Combine(PlaywrightConfig.TracesDir, $"{testName}.zip") }
+                );
+            }
+
             if (_browser != null)
             {
                 await _browser.CloseAsync();
             }
+        }
+
+        private string GetTestName()
+        {
+            if (Output != null)
+            {
+                var type = Output.GetType();
+                var testMember = type.GetField(
+                    "test",
+                    BindingFlags.Instance | BindingFlags.NonPublic
+                );
+
+                if (testMember != null)
+                {
+                    var test = (ITest?)testMember.GetValue(Output);
+                    if (test != null)
+                    {
+                        return string.Join(" - ", test.DisplayName.Split('.').Skip(1));
+                    }
+                }
+            }
+
+            return $"UnknownTest_{Guid.NewGuid()}";
         }
     }
 }
