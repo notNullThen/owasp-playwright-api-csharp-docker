@@ -1,3 +1,8 @@
 {
-  "dotnet.defaultSolution": "OwaspPlaywrightDotNetTests.slnx"
+  "dotnet.defaultSolution": "OwaspPlaywrightDotNetTests.slnx",
+  "editor.defaultFormatter": "csharpier.csharpier-vscode",
+  "editor.formatOnSave": true,
+  "[csharp]": {
+    "editor.defaultFormatter": "csharpier.csharpier-vscode"
+  }
 }
