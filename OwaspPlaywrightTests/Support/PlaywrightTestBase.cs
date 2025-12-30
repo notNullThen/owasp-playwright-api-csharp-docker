@@ -1,9 +1,5 @@
-using System;
-using System.IO;
-using System.Reflection;
 using Microsoft.Playwright;
 using Microsoft.Playwright.Xunit;
-using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Support
 {
