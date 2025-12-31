@@ -1,7 +1,4 @@
-using System;
 using System.Runtime.Serialization;
-using OwaspPlaywrightTests.Support;
-using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Support.Api;
 
@@ -37,11 +34,11 @@ public class RequestParameters
 public abstract class ApiParametersBase(string baseApiUrl) : PlaywrightTestBase
 {
     protected int ApiWaitTimeout = PlaywrightConfig.ApiWaitTimeout;
-    protected string? FullUrl;
+    protected string FullUrl = string.Empty;
     protected string? Route;
     protected HttpMethod Method;
-    protected int[]? ExpectedStatusCodes;
-    protected RequestParameters? Params;
+    protected int[] ExpectedStatusCodes = [];
+    protected RequestParameters Params = new();
     private readonly string _baseApiUrl = Utils.ConnectUrlParts(
         PlaywrightConfig.BaseURL,
         baseApiUrl
@@ -50,7 +47,7 @@ public abstract class ApiParametersBase(string baseApiUrl) : PlaywrightTestBase
     protected ApiParametersBase AquireParameters(RequestParameters parameters)
     {
         // Cloning the current instance to avoid racing conditions when calling API endpoints in parallel
-        var clone = (ApiParametersBase)this.MemberwiseClone();
+        var clone = (ApiParametersBase)MemberwiseClone();
 
         clone.FullUrl = Utils.ConnectUrlParts(_baseApiUrl, parameters.Url ?? string.Empty);
         clone.Route = clone.FullUrl.Replace(Utils.ConnectUrlParts(PlaywrightConfig.BaseURL), "");

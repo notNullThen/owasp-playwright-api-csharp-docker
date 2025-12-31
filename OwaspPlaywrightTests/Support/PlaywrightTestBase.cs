@@ -7,6 +7,7 @@ namespace OwaspPlaywrightTests.Support
     {
         private IBrowser? _browser;
         public IPage Page { get; private set; } = null!;
+        public IAPIRequestContext Request => Page.APIRequest;
 
         public override async Task InitializeAsync()
         {
