@@ -1,21 +1,21 @@
 using Microsoft.Playwright;
 using OwaspPlaywrightTests.Support.Api.Types;
 
-namespace OwaspPlaywrightTests.Support.Api;
+namespace OwaspPlaywrightTests.Support.Api.Base;
 
 public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
 {
     protected int ActualStatusCode;
 
+    private string? ErrorMessage;
+
     public async Task<ApiResponse<T>> RequestAsync<T>(IAPIRequestContext context)
     {
-        await ApiTestContext.Context.Tracing.GroupAsync(
+        await TestContext.StartTracingGroupAsync(
             $"Request {Method} \"{Route}\", expect {string.Join(", ", ExpectedStatusCodes)}"
         );
 
-        var targetContext = context ?? ApiTestContext.Context.APIRequest;
-
-        var response = await targetContext.FetchAsync(
+        var response = await context.FetchAsync(
             FullUrl,
             new()
             {
@@ -30,14 +30,14 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
 
         var result = await GetResponseAsync<T>(response);
 
-        await ApiTestContext.Context.Tracing.GroupEndAsync();
+        await TestContext.EndTracingGroupAsync();
 
         return result;
     }
 
     public async Task<BrowserApiResponse<T>> WaitAsync<T>(IPage page)
     {
-        await ApiTestContext.Context.Tracing.GroupAsync(
+        await TestContext.StartTracingGroupAsync(
             $"Wait for {Method} \"{Route}\" {string.Join(", ", ExpectedStatusCodes)}"
         );
 
@@ -68,12 +68,14 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
             new() { Timeout = ApiWaitTimeout }
         );
 
+        ErrorMessage = response.StatusText;
+
         ActualStatusCode = response.Status;
         ValidateStatusCode();
 
         var result = await GetResponseAsync<T>(response);
 
-        await ApiTestContext.Context.Tracing.GroupEndAsync();
+        await TestContext.EndTracingGroupAsync();
 
         return result;
     }
@@ -109,7 +111,7 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
         if (!ExpectedStatusCodes.Contains(ActualStatusCode))
         {
             throw new Exception(
-                $"Expected to return {string.Join(", ", ExpectedStatusCodes)}, but got {ActualStatusCode}.\nEndpoint: {Method} {Route} "
+                $"Expected to return {string.Join(", ", ExpectedStatusCodes)}, but got {ActualStatusCode}.\nEndpoint: {Method} {Route}\nError Message: {ErrorMessage}"
             );
         }
     }

@@ -1,6 +1,6 @@
 using OwaspPlaywrightTests.Support.Api.Types;
 
-namespace OwaspPlaywrightTests.Support.Api;
+namespace OwaspPlaywrightTests.Support.Api.Base;
 
 public abstract class ApiParametersBase(string baseApiUrl)
 {
@@ -15,7 +15,7 @@ public abstract class ApiParametersBase(string baseApiUrl)
         baseApiUrl
     );
 
-    protected void AquireParameters(RequestParameters parameters)
+    protected ApiParametersBase AquireParameters(RequestParameters parameters)
     {
         FullUrl = Utils.ConnectUrlParts(_baseApiUrl, parameters.Url ?? string.Empty);
         Route = FullUrl.Replace(Utils.ConnectUrlParts(PlaywrightConfig.BaseURL), "");
@@ -23,5 +23,7 @@ public abstract class ApiParametersBase(string baseApiUrl)
         ExpectedStatusCodes =
             parameters.ExpectedStatusCodes ?? PlaywrightConfig.ExpectedAPIResponseCodes;
         Params = parameters;
+
+        return this;
     }
 }
