@@ -4,17 +4,24 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Support;
 
-public class TestContext : PlaywrightTestBase
+public class ApiTestContext
 {
-    private static readonly AsyncLocal<ITestOutputHelper> _output = new();
+    private static readonly AsyncLocal<ITestOutputHelper> _xunitOutput = new();
+    private static readonly AsyncLocal<IBrowserContext> _playwrightContext = new();
 
     public static ITestOutputHelper Output
     {
-        get => _output.Value!;
-        set => _output.Value = value;
+        get => _xunitOutput.Value!;
+        set => _xunitOutput.Value = value;
     }
 
-    public TestContext(ITestOutputHelper output)
+    public static IBrowserContext Context
+    {
+        get => _playwrightContext.Value!;
+        set => _playwrightContext.Value = value;
+    }
+
+    public ApiTestContext(ITestOutputHelper output)
     {
         Output = output;
     }

@@ -1,0 +1,9 @@
+namespace OwaspPlaywrightTests.Support.Api.Types;
+
+public class RequestParameters
+{
+    public string? Url { get; set; }
+    public ApiHttpMethod Method;
+    public int[]? ExpectedStatusCodes { get; set; }
+    public object? Body { get; set; }
+}
