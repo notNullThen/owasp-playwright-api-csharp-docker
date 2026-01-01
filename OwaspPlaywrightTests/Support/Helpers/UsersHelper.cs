@@ -18,7 +18,7 @@ public class UsersHelper
             .PostSecurityAnswers(
                 new()
                 {
-                    UserId = userResponse.ResponseBody.Data.Id,
+                    UserId = userResponse.ResponseBody!.Data.Id,
                     SecurityQuestionId = payload.SecurityQuestion.Id,
                     Answer = payload.SecurityAnswer,
                 }

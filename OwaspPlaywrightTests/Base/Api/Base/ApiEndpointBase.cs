@@ -92,7 +92,7 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
             // For better debugging convenience created JSON string with TextAsync()
             // and then used JsonSerializer.Deserialize<T>() instead of Playwright's JsonAsync<T>()
             var responseString = await response.TextAsync();
-            var responseBody = JsonSerializer.Deserialize<T>(responseString);
+            var responseBody = JsonSerializer.Deserialize<T>(responseString)!;
             return new() { Response = response, ResponseBody = responseBody };
         }
         catch
