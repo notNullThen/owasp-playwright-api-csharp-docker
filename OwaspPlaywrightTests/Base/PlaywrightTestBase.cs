@@ -15,12 +15,7 @@ public abstract class PlaywrightTestBase : PlaywrightTest
 
         Playwright.Selectors.SetTestIdAttribute(PlaywrightConfig.TestIdAttribute);
         _browser = await Playwright.Chromium.LaunchAsync(
-            new()
-            {
-                Headless = PlaywrightConfig.Headless,
-                Timeout = PlaywrightConfig.Timeout,
-                TracesDir = PlaywrightConfig.TracesDir,
-            }
+            new() { Headless = PlaywrightConfig.Headless, Timeout = PlaywrightConfig.Timeout }
         );
 
         var context = await _browser.NewContextAsync(

@@ -1,3 +1,4 @@
+using OwaspPlaywrightTests.Base;
 using OwaspPlaywrightTests.Base.Api;
 using OwaspPlaywrightTests.Base.Api.Base.Types.User;
 using OwaspPlaywrightTests.Base.Data;
@@ -30,6 +31,11 @@ public class UsersHelper
     public async Task<User> CreateRandomUserAsync()
     {
         var userPayload = UsersData.GenerateRandomUser();
-        return await CreateUserAsync(userPayload);
+
+        await TestContext.StartTracingGroupAsync($"Creating \"{userPayload.Email}\" user");
+        var user = await CreateUserAsync(userPayload);
+        await TestContext.EndTracingGroupAsync();
+
+        return user;
     }
 }
