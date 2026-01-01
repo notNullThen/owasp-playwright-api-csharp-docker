@@ -1,7 +1,7 @@
 using Microsoft.Playwright;
 using Microsoft.Playwright.Xunit;
 
-namespace OwaspPlaywrightTests.Support;
+namespace OwaspPlaywrightTests.Base;
 
 public abstract class PlaywrightTestBase : PlaywrightTest
 {

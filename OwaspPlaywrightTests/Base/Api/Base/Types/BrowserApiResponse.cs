@@ -1,6 +1,6 @@
 using Microsoft.Playwright;
 
-namespace OwaspPlaywrightTests.Support.Api.Types;
+namespace OwaspPlaywrightTests.Base.Api.Types;
 
 public class BrowserApiResponse<T>
 {

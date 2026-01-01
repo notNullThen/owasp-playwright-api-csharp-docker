@@ -2,7 +2,7 @@ using System.Reflection;
 using Microsoft.Playwright;
 using Xunit.Abstractions;
 
-namespace OwaspPlaywrightTests.Support;
+namespace OwaspPlaywrightTests.Base;
 
 public class TestContext : PlaywrightTestBase
 {

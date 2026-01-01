@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
-using OwaspPlaywrightTests.Support.Api.Base;
+using OwaspPlaywrightTests.Base.Api.Base;
 
-namespace OwaspPlaywrightTests.Support.Api;
+namespace OwaspPlaywrightTests.Base.Api;
 
 public class RestUserApi() : ApiBase("rest/user")
 {

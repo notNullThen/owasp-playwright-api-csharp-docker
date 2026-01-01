@@ -1,7 +1,7 @@
 using Microsoft.Playwright;
-using OwaspPlaywrightTests.Support.Api.Types;
+using OwaspPlaywrightTests.Base.Api.Types;
 
-namespace OwaspPlaywrightTests.Support.Api.Base;
+namespace OwaspPlaywrightTests.Base.Api.Base;
 
 public class ApiBase : ApiEndpointBase
 {

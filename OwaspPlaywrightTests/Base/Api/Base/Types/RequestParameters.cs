@@ -1,4 +1,4 @@
-namespace OwaspPlaywrightTests.Support.Api.Types;
+namespace OwaspPlaywrightTests.Base.Api.Types;
 
 public class RequestParameters
 {
