@@ -3,7 +3,7 @@ using OwaspPlaywrightTests.Support.Api.Base;
 
 namespace OwaspPlaywrightTests.Support.Api;
 
-public class SecurityAnswersApi() : ApiBase("api/security-answers")
+public class SecurityAnswersApi() : ApiBase("api/SecurityAnswers")
 {
     public class Data
     {

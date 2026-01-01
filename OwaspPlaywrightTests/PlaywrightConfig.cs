@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using OwaspPlaywrightTests.Support;
+using OwaspPlaywrightTests.Base;
 
 namespace OwaspPlaywrightTests;
 

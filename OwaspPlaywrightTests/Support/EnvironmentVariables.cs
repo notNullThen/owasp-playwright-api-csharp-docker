@@ -1,6 +1,6 @@
 #pragma warning disable CS8603 // Possible null reference return.
 
-namespace OwaspPlaywrightTests.Support;
+namespace OwaspPlaywrightTests.Base;
 
 public static class EnvironmentVariables
 {

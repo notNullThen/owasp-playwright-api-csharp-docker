@@ -13,6 +13,7 @@ public class UnitTest1(ITestOutputHelper output) : TestContext(output)
         var usersApi = new UsersApi();
         var securityAnswersApi = new SecurityAnswersApi();
 
+        var now = DateTime.UtcNow.ToString("O");
         var response = await usersApi
             .PostUser(
                 new()
@@ -24,8 +25,8 @@ public class UnitTest1(ITestOutputHelper output) : TestContext(output)
                     {
                         Id = 1,
                         Question = "Your eldest siblings middle name?",
-                        CreatedAt = "2025-12-31T15:03:02.655Z",
-                        UpdatedAt = "2025-12-31T15:03:02.655Z",
+                        CreatedAt = now,
+                        UpdatedAt = now,
                     },
                     SecurityAnswer = "asdasd",
                 }
@@ -34,7 +35,7 @@ public class UnitTest1(ITestOutputHelper output) : TestContext(output)
 
         var userId = response.ResponseBody!.Data.Id;
 
-        await securityAnswersApi
+        var answerResponse = await securityAnswersApi
             .PostSecurityAnswers(
                 new()
                 {

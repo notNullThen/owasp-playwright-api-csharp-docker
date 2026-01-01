@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.Playwright;
 using OwaspPlaywrightTests.Support.Api.Types;
 
@@ -15,12 +16,15 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
             $"Request {Method} \"{Route}\", expect {string.Join(", ", ExpectedStatusCodes)}"
         );
 
+        // Separate bodyJson variable for better debug
+        var bodyJson = JsonSerializer.Serialize(Body);
         var response = await context.FetchAsync(
             FullUrl,
             new()
             {
                 Method = Method.ToString(),
-                Data = Params.Body?.ToString() ?? string.Empty,
+                Data = bodyJson,
+                Headers = [new("Content-Type", "application/json")],
                 Timeout = PlaywrightConfig.ApiWaitTimeout,
             }
         );
@@ -84,7 +88,10 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
     {
         try
         {
-            var responseBody = await response.JsonAsync<T>();
+            // For better debugging convenience created JSON string with TextAsync()
+            // and then used JsonSerializer.Deserialize<T>() instead of Playwright's JsonAsync<T>()
+            var responseString = await response.TextAsync();
+            var responseBody = JsonSerializer.Deserialize<T>(responseString);
             return new() { Response = response, ResponseBody = responseBody };
         }
         catch

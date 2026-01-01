@@ -9,7 +9,7 @@ public abstract class ApiParametersBase(string baseApiUrl)
     protected string? Route;
     protected ApiHttpMethod Method;
     protected int[] ExpectedStatusCodes = [];
-    protected RequestParameters Params = new();
+    protected object? Body;
     private readonly string _baseApiUrl = Utils.ConnectUrlParts(
         PlaywrightConfig.BaseURL,
         baseApiUrl
@@ -22,7 +22,7 @@ public abstract class ApiParametersBase(string baseApiUrl)
         Method = parameters.Method;
         ExpectedStatusCodes =
             parameters.ExpectedStatusCodes ?? PlaywrightConfig.ExpectedAPIResponseCodes;
-        Params = parameters;
+        Body = parameters.Body;
 
         return this;
     }
