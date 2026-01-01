@@ -5,4 +5,4 @@ RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 1
 
 WORKDIR /e2e
 COPY . .
-RUN dotnet build
+# RUN dotnet build

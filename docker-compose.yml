@@ -26,4 +26,4 @@ services:
         condition: service_healthy
     environment:
       - CI=true
-    command: ["dotnet", "test", "OwaspPlaywrightTests/OwaspPlaywrightTests.csproj"]
+    command: ["dotnet", "test", "OwaspPlaywrightTests/OwaspPlaywrightTests.csproj", "--logger", "console;verbosity=detailed"]
