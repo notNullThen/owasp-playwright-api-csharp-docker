@@ -6,24 +6,7 @@ namespace OwaspPlaywrightTests.Base;
 
 public class TestContext : PlaywrightTestBase
 {
-    private static readonly AsyncLocal<ITestOutputHelper> _xunitOutput = new();
-
-    public static ITestOutputHelper Output
-    {
-        get => _xunitOutput.Value!;
-        set => _xunitOutput.Value = value;
-    }
-
-    // public static new IPage? Page
-    // {
-    //     get => _playwrightPage.Value;
-    //     set
-    //     {
-    //         _playwrightPage.Value = value!;
-    //         Context = value!.Context!;
-    //         Request = value.APIRequest;
-    //     }
-    // }
+    public static ITestOutputHelper? Output;
 
     public static new IPage? Page { get; private set; }
 
@@ -34,7 +17,7 @@ public class TestContext : PlaywrightTestBase
         Request = page.APIRequest;
     }
 
-    public static new IAPIRequestContext? Request { get; private set; }
+    public static new IAPIRequestContext? Request;
 
     private static IBrowserContext? Context;
 
