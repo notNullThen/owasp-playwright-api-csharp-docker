@@ -1,4 +1,4 @@
-using OwaspPlaywrightTests.Base.Api.Types;
+using OwaspPlaywrightTests.Base.Api.Base.Types;
 using OwaspPlaywrightTests.Support;
 
 namespace OwaspPlaywrightTests.Base.Api.Base;

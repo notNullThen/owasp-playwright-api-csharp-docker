@@ -1,5 +1,5 @@
 using Microsoft.Playwright;
-using OwaspPlaywrightTests.Base.Api.Types;
+using OwaspPlaywrightTests.Base.Api.Base.Types;
 
 namespace OwaspPlaywrightTests.Base.Api.Base;
 
