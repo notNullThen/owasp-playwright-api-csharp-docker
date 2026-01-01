@@ -1,6 +1,6 @@
 using Microsoft.Playwright;
 
-namespace OwaspPlaywrightTests.Base;
+namespace OwaspPlaywrightTests.Support;
 
 public static class Utils
 {

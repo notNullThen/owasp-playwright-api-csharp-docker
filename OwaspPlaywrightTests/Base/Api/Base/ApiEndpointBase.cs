@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Microsoft.Playwright;
 using OwaspPlaywrightTests.Base.Api.Types;
+using OwaspPlaywrightTests.Support;
 
 namespace OwaspPlaywrightTests.Base.Api.Base;
 
