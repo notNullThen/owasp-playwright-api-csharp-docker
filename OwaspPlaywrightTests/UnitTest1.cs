@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using OwaspPlaywrightTests.Base;
-using OwaspPlaywrightTests.Base.Api;
+﻿using OwaspPlaywrightTests.Base;
 using OwaspPlaywrightTests.Support.Helpers;
 using Xunit.Abstractions;
 
