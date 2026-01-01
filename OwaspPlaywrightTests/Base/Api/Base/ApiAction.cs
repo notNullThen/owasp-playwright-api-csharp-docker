@@ -8,13 +8,13 @@ public class ApiAction<T>(RequestParameters parameters, ApiBase apiBase)
     public readonly IAPIRequestContext Context = apiBase.Context;
     public readonly IPage? Page = apiBase.Page;
 
-    public async Task<ApiResponse<T>> Request()
+    public async Task<ApiResponse<T>> RequestAsync()
     {
         apiBase.SetParameters(parameters);
         return await apiBase.RequestAsync<T>(Context);
     }
 
-    public async Task<BrowserApiResponse<T>> Wait()
+    public async Task<BrowserApiResponse<T>> WaitAsync()
     {
         if (Page == null)
         {

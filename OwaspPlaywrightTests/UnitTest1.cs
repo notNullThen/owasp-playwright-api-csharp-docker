@@ -31,7 +31,7 @@ public class UnitTest1(ITestOutputHelper output) : TestContext(output)
                     SecurityAnswer = "asdasd",
                 }
             )
-            .Request();
+            .RequestAsync();
 
         var userId = response.ResponseBody!.Data.Id;
 
@@ -44,6 +44,6 @@ public class UnitTest1(ITestOutputHelper output) : TestContext(output)
                     UserId = userId,
                 }
             )
-            .Request();
+            .RequestAsync();
     }
 }
