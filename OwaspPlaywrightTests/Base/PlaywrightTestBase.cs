@@ -1,5 +1,6 @@
 using Microsoft.Playwright;
 using Microsoft.Playwright.Xunit;
+using OwaspPlaywrightTests.Fixtures;
 
 namespace OwaspPlaywrightTests.Base;
 
@@ -15,7 +16,7 @@ public abstract class PlaywrightTestBase : PlaywrightTest
 
         Playwright.Selectors.SetTestIdAttribute(PlaywrightConfig.TestIdAttribute);
         _browser = await Playwright.Chromium.LaunchAsync(
-            new() { Headless = PlaywrightConfig.Headless, Timeout = PlaywrightConfig.Timeout }
+            new() { Headless = PlaywrightConfig.Headless }
         );
 
         var context = await _browser.NewContextAsync(
@@ -40,8 +41,12 @@ public abstract class PlaywrightTestBase : PlaywrightTest
         );
 
         Page = await context.NewPageAsync();
+        Page.SetDefaultTimeout(PlaywrightConfig.Timeout);
+        Page.SetDefaultNavigationTimeout(PlaywrightConfig.Timeout);
 
         Test.Page = Page;
+
+        await GlobalSetup.GlobalSetupAsync();
     }
 
     public override async Task DisposeAsync()

@@ -1,11 +1,14 @@
 using Microsoft.Playwright;
 using OwaspPlaywrightTests.Base;
+using OwaspPlaywrightTests.Components;
 
 namespace OwaspPlaywrightTests.Pages;
 
 public abstract class PageBase(string url)
 {
     public IPage Page => Test.Page;
+
+    public HeaderComponent Header => new();
 
     public async Task GoToAsync()
     {

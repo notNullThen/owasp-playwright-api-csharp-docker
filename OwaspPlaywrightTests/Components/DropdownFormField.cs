@@ -14,10 +14,7 @@ public class DropdownFormField : FormFieldBase
             parent: parent
         )
     {
-        Body =
-            parent == null
-                ? Test.Page.GetByRole(AriaRole.Combobox)
-                : parent.GetByRole(AriaRole.Combobox);
+        Body = Body.Filter(new() { Has = Page.GetByRole(AriaRole.Combobox) });
     }
 
     public ILocator Input => Body.GetByRole(AriaRole.Combobox);

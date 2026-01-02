@@ -52,14 +52,27 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
                         var expectedUrl = Utils.NormalizeUrl(FullUrl);
                         var requestMethod = response.Request.Method;
 
-                        return actualUrl.Contains(
+                        if (
+                            !actualUrl.Contains(
                                 expectedUrl,
                                 StringComparison.InvariantCultureIgnoreCase
                             )
-                            && requestMethod.Equals(
+                        )
+                        {
+                            return false;
+                        }
+
+                        if (
+                            !requestMethod.Equals(
                                 Method.ToString(),
                                 StringComparison.InvariantCultureIgnoreCase
-                            );
+                            )
+                        )
+                        {
+                            return false;
+                        }
+
+                        return true;
                     },
                     new() { Timeout = ApiWaitTimeout }
                 );
@@ -94,7 +107,8 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
     {
         try
         {
-            var responseBody = await response.JsonAsync<T>();
+            var responseString = await response.TextAsync();
+            var responseBody = JsonSerializer.Deserialize<T>(responseString)!;
             return new() { Response = response, ResponseBody = responseBody };
         }
         catch

@@ -20,7 +20,7 @@ public class PrepareRandomUserFixture
         PreparedUser[Environment.CurrentManagedThreadId] = user;
     }
 
-    public static User GetUser()
+    public static User GetPreparedUser()
     {
         return PreparedUser[Environment.CurrentManagedThreadId];
     }

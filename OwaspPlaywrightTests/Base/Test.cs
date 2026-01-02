@@ -27,7 +27,6 @@ public class Test : PlaywrightTestBase
                 throw new PlaywrightException("The Playwright Page cannot be null.");
 
             _state.Value!.Page = value;
-            _context = value.Context;
             Request = value.APIRequest;
         }
     }
@@ -40,27 +39,27 @@ public class Test : PlaywrightTestBase
 
     public static async Task StepAsync(string name, Func<Task> action)
     {
-        await _context!.Tracing.GroupAsync(name);
+        await Page.Context!.Tracing.GroupAsync(name);
         try
         {
             await action();
         }
         finally
         {
-            await _context!.Tracing.GroupEndAsync();
+            await Page.Context!.Tracing.GroupEndAsync();
         }
     }
 
     public static async Task<T> StepAsync<T>(string name, Func<Task<T>> action)
     {
-        await _context!.Tracing.GroupAsync(name);
+        await Page.Context!.Tracing.GroupAsync(name);
         try
         {
             return await action();
         }
         finally
         {
-            await _context!.Tracing.GroupEndAsync();
+            await Page.Context!.Tracing.GroupEndAsync();
         }
     }
 
@@ -85,12 +84,6 @@ public class Test : PlaywrightTestBase
     }
 
     private static readonly AsyncLocal<TestContext> _state = new();
-
-    private static IBrowserContext? _context
-    {
-        get => _state.Value?.Context;
-        set { _state.Value?.Context = value; }
-    }
 
     private class TestContext
     {

@@ -1,4 +1,5 @@
 using Microsoft.Playwright;
+using OwaspPlaywrightTests.Base;
 
 namespace OwaspPlaywrightTests.Support;
 
@@ -23,9 +24,9 @@ public static class Utils
         return decimal.Parse(priceText.Replace(PRICE_SYMBOL, ""));
     }
 
-    public static async Task DismissCookies(IBrowserContext context)
+    public static async Task DismissCookiesAsync()
     {
-        await context.AddCookiesAsync([
+        await Test.Page.Context.AddCookiesAsync([
             new Cookie
             {
                 Name = "cookieconsent_status",
@@ -35,9 +36,9 @@ public static class Utils
         ]);
     }
 
-    public static async Task DismissWelcomeBanner(IBrowserContext context)
+    public static async Task DismissWelcomeBannerAsync()
     {
-        await context.AddCookiesAsync([
+        await Test.Page.Context.AddCookiesAsync([
             new Cookie
             {
                 Name = "welcomebanner_status",

@@ -27,11 +27,11 @@ public class InputFormField(string componentName, ILocator? parent = null)
         return inputFormField;
     }
 
-    public InputFormField GetByAreaLabel(string areaLabel)
+    public InputFormField GetByAriaLabel(string ariaLabel)
     {
         var inputFormField = new InputFormField(componentName: _componentName, parent: _parent);
         inputFormField.Body = inputFormField.Body.Filter(
-            new() { Has = Page.GetByRole(AriaRole.Textbox, new() { Name = areaLabel }) }
+            new() { Has = Page.GetByRole(AriaRole.Textbox, new() { Name = ariaLabel }) }
         );
         return inputFormField;
     }

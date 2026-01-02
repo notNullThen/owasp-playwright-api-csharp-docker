@@ -6,6 +6,6 @@ namespace OwaspPlaywrightTests.Base.Api;
 
 public class RestUserApi() : ApiBase("rest/user")
 {
-    public ApiAction<LoginResponse> Login() =>
+    public ApiAction<LoginResponse> PostLogin() =>
         Action<LoginResponse>(new() { Method = ApiHttpMethod.POST });
 }
