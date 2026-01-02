@@ -7,37 +7,36 @@ namespace OwaspPlaywrightTests.Support.Helpers;
 
 public class UsersHelper
 {
-    private readonly UsersApi _usersApi = new();
-    private readonly SecurityAnswersApi _securityAnswersApi = new();
-
     public async Task<User> CreateUserAsync(UserPayload payload)
     {
-        var userResponse = await _usersApi.PostUser(payload).RequestAsync();
-        ;
-        await _securityAnswersApi
-            .PostSecurityAnswers(
-                new()
-                {
-                    UserId = userResponse.ResponseBody!.Data.Id,
-                    SecurityQuestionId = payload.SecurityQuestion.Id,
-                    Answer = payload.SecurityAnswer,
-                }
-            )
-            .RequestAsync();
+        return await Test.StepAsync(
+            $"Creating \"{payload.Email}\" user",
+            async () =>
+            {
+                var userResponse = await Api.Users.PostUser(payload).RequestAsync();
 
-        var user = new User { Payload = payload, Response = userResponse.ResponseBody };
-        CreatedData.CreatedUsers.Add(user);
+                await Api
+                    .SecurityAnswers.PostSecurityAnswers(
+                        new()
+                        {
+                            UserId = userResponse.ResponseBody!.Data.Id,
+                            SecurityQuestionId = payload.SecurityQuestion.Id,
+                            Answer = payload.SecurityAnswer,
+                        }
+                    )
+                    .RequestAsync();
 
-        return user;
+                var user = new User { Payload = payload, Response = userResponse.ResponseBody };
+                CreatedData.CreatedUsers.Add(user);
+
+                return user;
+            }
+        );
     }
 
     public async Task<User> CreateRandomUserAsync()
     {
         var userPayload = UsersData.GenerateRandomUser();
-
-        return await Test.StepAsync(
-            $"Creating \"{userPayload.Email}\" user",
-            async () => await CreateUserAsync(userPayload)
-        );
+        return await CreateUserAsync(userPayload);
     }
 }
