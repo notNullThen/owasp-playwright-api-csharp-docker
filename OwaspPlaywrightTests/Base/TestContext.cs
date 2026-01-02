@@ -39,13 +39,6 @@ public class TestContext : PlaywrightTestBase
         set { _state.Value?.Request = value; }
     }
 
-    // public static void SetContext(IPage page)
-    // {
-    //     Page = page;
-    //     _context = page.Context;
-    //     Request = page.APIRequest;
-    // }
-
     public static async Task StartTracingGroupAsync(string name) =>
         await _context!.Tracing.GroupAsync(name);
 
