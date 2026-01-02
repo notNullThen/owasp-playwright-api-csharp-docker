@@ -2,7 +2,7 @@
 using OwaspPlaywrightTests.Support.Helpers;
 using Xunit.Abstractions;
 
-namespace OwaspPlaywrightTests;
+namespace OwaspPlaywrightTests.Tests;
 
 public class UnitTest1()
 {

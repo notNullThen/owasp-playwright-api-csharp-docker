@@ -25,7 +25,10 @@ public class UsersHelper
             )
             .RequestAsync();
 
-        return new() { Payload = payload, Response = userResponse.ResponseBody };
+        var user = new User { Payload = payload, Response = userResponse.ResponseBody };
+        CreatedData.CreatedUsers.Add(user);
+
+        return user;
     }
 
     public async Task<User> CreateRandomUserAsync()
