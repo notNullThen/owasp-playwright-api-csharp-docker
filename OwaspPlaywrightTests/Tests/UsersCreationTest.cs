@@ -6,7 +6,7 @@ namespace OwaspPlaywrightTests.Tests;
 
 public class UnitTest1()
 {
-    public class TestClass1(ITestOutputHelper output) : TestContext(output)
+    public class TestClass1(ITestOutputHelper output) : Test(output)
     {
         private readonly ITestOutputHelper _output = output;
 
@@ -22,7 +22,7 @@ public class UnitTest1()
         }
     }
 
-    public class TestClass2(ITestOutputHelper output) : TestContext(output)
+    public class TestClass2(ITestOutputHelper output) : Test(output)
     {
         private readonly ITestOutputHelper _output = output;
 
@@ -38,7 +38,7 @@ public class UnitTest1()
         }
     }
 
-    public class TestClass3(ITestOutputHelper output) : TestContext(output)
+    public class TestClass3(ITestOutputHelper output) : Test(output)
     {
         private readonly ITestOutputHelper _output = output;
 
@@ -54,7 +54,7 @@ public class UnitTest1()
         }
     }
 
-    public class TestClass4(ITestOutputHelper output) : TestContext(output)
+    public class TestClass4(ITestOutputHelper output) : Test(output)
     {
         private readonly ITestOutputHelper _output = output;
 
@@ -70,7 +70,7 @@ public class UnitTest1()
         }
     }
 
-    public class TestClass5(ITestOutputHelper output) : TestContext(output)
+    public class TestClass5(ITestOutputHelper output) : Test(output)
     {
         private readonly ITestOutputHelper _output = output;
 
@@ -86,7 +86,7 @@ public class UnitTest1()
         }
     }
 
-    public class TestClass6(ITestOutputHelper output) : TestContext(output)
+    public class TestClass6(ITestOutputHelper output) : Test(output)
     {
         private readonly ITestOutputHelper _output = output;
 

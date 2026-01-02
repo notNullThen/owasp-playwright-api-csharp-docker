@@ -9,7 +9,7 @@ public class MenuBase(string componentName, ILocator body) : ComponentBase(compo
 
     public async Task CloseAsync()
     {
-        await TestContext.StepAsync(
+        await Test.StepAsync(
             $"Close \"{ComponentName}\" menu",
             async () =>
             {

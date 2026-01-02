@@ -5,7 +5,7 @@ namespace OwaspPlaywrightTests.Pages;
 
 public abstract class PageBase(string url)
 {
-    public IPage Page => TestContext.Page;
+    public IPage Page => Test.Page;
 
     public async Task GoToAsync()
     {

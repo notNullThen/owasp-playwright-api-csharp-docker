@@ -4,11 +4,11 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Base;
 
-public class TestContext : PlaywrightTestBase
+public class Test : PlaywrightTestBase
 {
-    public TestContext(ITestOutputHelper output)
+    public Test(ITestOutputHelper output)
     {
-        _state.Value = new TestContextState();
+        _state.Value = new TestContext();
         Output = output;
     }
 
@@ -84,7 +84,7 @@ public class TestContext : PlaywrightTestBase
         return $"UnknownTest_{Guid.NewGuid()}";
     }
 
-    private static readonly AsyncLocal<TestContextState> _state = new();
+    private static readonly AsyncLocal<TestContext> _state = new();
 
     private static IBrowserContext? _context
     {
@@ -92,7 +92,7 @@ public class TestContext : PlaywrightTestBase
         set { _state.Value?.Context = value; }
     }
 
-    private class TestContextState
+    private class TestContext
     {
         public ITestOutputHelper? Output;
         public IPage? Page;

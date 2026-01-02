@@ -13,7 +13,7 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
 
     public async Task<ApiResponse<T>> RequestAsync<T>(IAPIRequestContext context)
     {
-        return await TestContext.StepAsync(
+        return await Test.StepAsync(
             $"Request {Method} \"{Route}\", expect {string.Join(", ", ExpectedStatusCodes)}",
             async () =>
             {
@@ -40,7 +40,7 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
 
     public async Task<BrowserApiResponse<T>> WaitAsync<T>(IPage page)
     {
-        return await TestContext.StepAsync(
+        return await Test.StepAsync(
             $"Wait for {Method} \"{Route}\" {string.Join(", ", ExpectedStatusCodes)}",
             async () =>
             {

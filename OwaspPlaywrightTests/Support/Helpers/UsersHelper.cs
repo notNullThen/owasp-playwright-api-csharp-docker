@@ -35,7 +35,7 @@ public class UsersHelper
     {
         var userPayload = UsersData.GenerateRandomUser();
 
-        return await TestContext.StepAsync(
+        return await Test.StepAsync(
             $"Creating \"{userPayload.Email}\" user",
             async () => await CreateUserAsync(userPayload)
         );

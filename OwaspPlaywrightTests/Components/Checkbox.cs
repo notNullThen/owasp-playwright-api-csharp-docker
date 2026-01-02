@@ -15,9 +15,7 @@ public class Checkbox : ComponentBase
     public Checkbox(string componentName, ILocator? parent)
         : base(
             componentName.EndsWith(" Checkbox") ? componentName : componentName + " Checkbox",
-            parent == null
-                ? TestContext.Page.Locator("mat-checkbox")
-                : parent.Locator("mat-checkbox")
+            parent == null ? Test.Page.Locator("mat-checkbox") : parent.Locator("mat-checkbox")
         )
     {
         _componentName = componentName;
@@ -28,7 +26,7 @@ public class Checkbox : ComponentBase
 
     public async Task CheckAsync()
     {
-        await TestContext.StepAsync(
+        await Test.StepAsync(
             $"Check \"{this.ComponentName}\" checkbox",
             async () =>
             {
@@ -45,7 +43,7 @@ public class Checkbox : ComponentBase
 
     public async Task UncheckAsync()
     {
-        await TestContext.StepAsync(
+        await Test.StepAsync(
             $"Uncheck \"{this.ComponentName}\" checkbox",
             async () =>
             {
@@ -71,7 +69,7 @@ public class Checkbox : ComponentBase
 
     public async Task ShouldBeCheckedAsync()
     {
-        await TestContext.StepAsync(
+        await Test.StepAsync(
             $"Verify \"{_componentName}\" checkbox is checked",
             async () =>
             {
@@ -83,7 +81,7 @@ public class Checkbox : ComponentBase
 
     public async Task ShouldBeUncheckedAsync()
     {
-        await TestContext.StepAsync(
+        await Test.StepAsync(
             $"Verify \"{_componentName}\" checkbox is not checked",
             async () =>
             {

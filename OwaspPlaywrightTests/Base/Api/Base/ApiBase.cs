@@ -11,15 +11,15 @@ public class ApiBase : ApiEndpointBase
     public ApiBase(string baseApiUrl)
         : base(baseApiUrl)
     {
-        if (TestContext.Request == null && TestContext.Page == null)
+        if (Test.Request == null && Test.Page == null)
         {
             throw new PlaywrightException(
                 $"You need to provide at least '{nameof(Context)}' or '{nameof(Page)}' parameters to create an instance of '{nameof(ApiBase)}'."
             );
         }
 
-        Context = TestContext.Request!;
-        Page = TestContext.Page;
+        Context = Test.Request!;
+        Page = Test.Page;
 
         Context = (Page?.APIRequest ?? Context)!;
     }

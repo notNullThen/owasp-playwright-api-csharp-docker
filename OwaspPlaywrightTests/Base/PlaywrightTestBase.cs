@@ -41,14 +41,14 @@ public abstract class PlaywrightTestBase : PlaywrightTest
 
         Page = await context.NewPageAsync();
 
-        TestContext.Page = Page;
+        Test.Page = Page;
     }
 
     public override async Task DisposeAsync()
     {
         if (Page != null)
         {
-            var testName = TestContext.GetTestName();
+            var testName = Test.GetTestName();
 
             Directory.CreateDirectory(PlaywrightConfig.TracesDir);
             await Page.Context.Tracing.StopAsync(

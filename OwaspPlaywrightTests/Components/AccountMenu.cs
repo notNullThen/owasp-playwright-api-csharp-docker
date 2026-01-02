@@ -4,13 +4,13 @@ using OwaspPlaywrightTests.Support;
 
 namespace OwaspPlaywrightTests.Components;
 
-public class AccountMenu() : MenuBase("Account Menu", TestContext.Page.Locator("#navbarAccount"))
+public class AccountMenu() : MenuBase("Account Menu", Test.Page.Locator("#navbarAccount"))
 {
     public ILocator UserProfileItem => Menu.GetByRole(AriaRole.Menu).First;
 
     public async Task OpenAsync()
     {
-        await TestContext.StepAsync(
+        await Test.StepAsync(
             $"Open \"{ComponentName}\" menu",
             async () =>
             {

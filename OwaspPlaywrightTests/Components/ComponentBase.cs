@@ -5,7 +5,7 @@ namespace OwaspPlaywrightTests.Components;
 
 public abstract class ComponentBase(string componentName, ILocator body)
 {
-    public IPage Page => TestContext.Page;
+    public IPage Page => Test.Page;
     public ILocator Body = body;
     protected string ComponentName => componentName;
 
