@@ -4,7 +4,8 @@ using OwaspPlaywrightTests.Support;
 
 namespace OwaspPlaywrightTests.Components;
 
-public class AccountMenu() : MenuBase("Account Menu", Test.Page.Locator("#navbarAccount"))
+public class AccountMenu()
+    : MenuBase(componentName: "Account Menu", body: Test.Page.Locator("#navbarAccount"))
 {
     public ILocator UserProfileItem => Menu.GetByRole(AriaRole.Menu).First;
 
@@ -18,7 +19,7 @@ public class AccountMenu() : MenuBase("Account Menu", Test.Page.Locator("#navbar
                 if (!isVisible)
                 {
                     await Body.ClickAsync();
-                    await Utils.WaitForElementToBeStable(Menu);
+                    await Utils.WaitForElementToBeStableAsync(Menu);
                 }
 
                 // Here we use Playwright's Expect().ToBeVisibleAsync() instead of IsOpenAsync() for waiting until the menu is visible

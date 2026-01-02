@@ -6,7 +6,7 @@ public static class Utils
 {
     public const string PRICE_SYMBOL = "¤";
 
-    public static async Task WaitForElementToBeStable(ILocator element)
+    public static async Task WaitForElementToBeStableAsync(ILocator element)
     {
         var handle = await element.ElementHandleAsync();
         await handle.WaitForElementStateAsync(ElementState.Stable);

@@ -3,7 +3,8 @@ using OwaspPlaywrightTests.Base;
 
 namespace OwaspPlaywrightTests.Components;
 
-public class MenuBase(string componentName, ILocator body) : ComponentBase(componentName, body)
+public class MenuBase(string componentName, ILocator body)
+    : ComponentBase(componentName: componentName, body: body)
 {
     public ILocator Menu => Page.GetByRole(AriaRole.Menu);
 

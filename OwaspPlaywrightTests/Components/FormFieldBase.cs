@@ -3,8 +3,13 @@ using OwaspPlaywrightTests.Base;
 
 namespace OwaspPlaywrightTests.Components;
 
-public class FormFieldBase(string componentName, ILocator? parent)
+public class FormFieldBase(string componentName, ILocator? parent = null)
     : ComponentBase(
-        componentName,
-        parent == null ? Test.Page.Locator("mat-form-field") : parent.Locator("mat-form-field")
-    ) { }
+        componentName: componentName,
+        body: parent == null
+            ? Test.Page.Locator("mat-form-field")
+            : parent.Locator("mat-form-field")
+    )
+{
+    protected ILocator? _parent = parent;
+}

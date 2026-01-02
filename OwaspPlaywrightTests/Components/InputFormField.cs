@@ -3,30 +3,33 @@ using OwaspPlaywrightTests.Base;
 
 namespace OwaspPlaywrightTests.Components;
 
-public class InputFormField(string componentName, ILocator? parent)
+public class InputFormField(string componentName, ILocator? parent = null)
     : FormFieldBase(
-        componentName.EndsWith(" Input Field", StringComparison.InvariantCultureIgnoreCase)
+        componentName: componentName.EndsWith(
+            " Input Field",
+            StringComparison.InvariantCultureIgnoreCase
+        )
             ? componentName
             : componentName + " Input Field",
-        parent
+        parent: parent
     )
 {
     private const string ErrorClass = "mat-form-field-invalid";
 
-    private readonly ILocator? _parent = parent;
+    private new readonly ILocator? _parent = parent;
 
     public ILocator Input => Body.GetByRole(AriaRole.Textbox);
 
     public InputFormField GetByLocator(string locator)
     {
-        var inputFormField = new InputFormField(_componentName, _parent);
+        var inputFormField = new InputFormField(componentName: _componentName, parent: _parent);
         inputFormField.Body = inputFormField.Body.Filter(new() { Has = Page.Locator(locator) });
         return inputFormField;
     }
 
     public InputFormField GetByAreaLabel(string areaLabel)
     {
-        var inputFormField = new InputFormField(_componentName, _parent);
+        var inputFormField = new InputFormField(componentName: _componentName, parent: _parent);
         inputFormField.Body = inputFormField.Body.Filter(
             new() { Has = Page.GetByRole(AriaRole.Textbox, new() { Name = areaLabel }) }
         );
