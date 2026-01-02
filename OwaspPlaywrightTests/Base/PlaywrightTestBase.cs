@@ -41,7 +41,7 @@ public abstract class PlaywrightTestBase : PlaywrightTest
 
         Page = await context.NewPageAsync();
 
-        TestContext.SetContext(Page);
+        TestContext.Page = Page;
     }
 
     public override async Task DisposeAsync()
