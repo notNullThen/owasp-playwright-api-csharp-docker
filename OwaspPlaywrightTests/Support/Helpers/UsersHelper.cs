@@ -35,10 +35,9 @@ public class UsersHelper
     {
         var userPayload = UsersData.GenerateRandomUser();
 
-        await TestContext.StartTracingGroupAsync($"Creating \"{userPayload.Email}\" user");
-        var user = await CreateUserAsync(userPayload);
-        await TestContext.EndTracingGroupAsync();
-
-        return user;
+        return await TestContext.StepAsync(
+            $"Creating \"{userPayload.Email}\" user",
+            async () => await CreateUserAsync(userPayload)
+        );
     }
 }

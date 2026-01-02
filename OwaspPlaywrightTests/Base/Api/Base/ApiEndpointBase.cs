@@ -13,76 +13,65 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
 
     public async Task<ApiResponse<T>> RequestAsync<T>(IAPIRequestContext context)
     {
-        await TestContext.StartTracingGroupAsync(
-            $"Request {Method} \"{Route}\", expect {string.Join(", ", ExpectedStatusCodes)}"
-        );
-
-        // Separate bodyJson variable for better debug
-        var bodyJson = JsonSerializer.Serialize(Body);
-        var response = await context.FetchAsync(
-            FullUrl,
-            new()
+        return await TestContext.StepAsync(
+            $"Request {Method} \"{Route}\", expect {string.Join(", ", ExpectedStatusCodes)}",
+            async () =>
             {
-                Method = Method.ToString(),
-                Data = bodyJson,
-                Headers = [new("Content-Type", "application/json")],
-                Timeout = PlaywrightConfig.ApiWaitTimeout,
+                // Separate bodyJson variable for better debug
+                var bodyJson = JsonSerializer.Serialize(Body);
+                var response = await context.FetchAsync(
+                    FullUrl,
+                    new()
+                    {
+                        Method = Method.ToString(),
+                        Data = bodyJson,
+                        Headers = [new("Content-Type", "application/json")],
+                        Timeout = PlaywrightConfig.ApiWaitTimeout,
+                    }
+                );
+
+                ActualStatusCode = response.Status;
+                ValidateStatusCode();
+
+                return await GetResponseAsync<T>(response);
             }
         );
-
-        ActualStatusCode = response.Status;
-        ValidateStatusCode();
-
-        var result = await GetResponseAsync<T>(response);
-
-        await TestContext.EndTracingGroupAsync();
-
-        return result;
     }
 
     public async Task<BrowserApiResponse<T>> WaitAsync<T>(IPage page)
     {
-        await TestContext.StartTracingGroupAsync(
-            $"Wait for {Method} \"{Route}\" {string.Join(", ", ExpectedStatusCodes)}"
-        );
-
-        var response = await page.WaitForResponseAsync(
-            (response) =>
+        return await TestContext.StepAsync(
+            $"Wait for {Method} \"{Route}\" {string.Join(", ", ExpectedStatusCodes)}",
+            async () =>
             {
-                // Ignore trailing slash and casing differences
-                var actualUrl = Utils.NormalizeUrl(response.Url);
-                var expectedUrl = Utils.NormalizeUrl(FullUrl);
-                var requestMethod = response.Request.Method;
+                var response = await page.WaitForResponseAsync(
+                    (response) =>
+                    {
+                        // Ignore trailing slash and casing differences
+                        var actualUrl = Utils.NormalizeUrl(response.Url);
+                        var expectedUrl = Utils.NormalizeUrl(FullUrl);
+                        var requestMethod = response.Request.Method;
 
-                if (!actualUrl.Contains(expectedUrl, StringComparison.InvariantCultureIgnoreCase))
-                {
-                    return false;
-                }
+                        return actualUrl.Contains(
+                                expectedUrl,
+                                StringComparison.InvariantCultureIgnoreCase
+                            )
+                            && requestMethod.Equals(
+                                Method.ToString(),
+                                StringComparison.InvariantCultureIgnoreCase
+                            );
+                    },
+                    new() { Timeout = ApiWaitTimeout }
+                );
 
-                if (
-                    !requestMethod.Equals(
-                        Method.ToString(),
-                        StringComparison.InvariantCultureIgnoreCase
-                    )
-                )
-                {
-                    return false;
-                }
-                return true;
-            },
-            new() { Timeout = ApiWaitTimeout }
+                ErrorMessage = response.StatusText;
+
+                ActualStatusCode = response.Status;
+                ValidateStatusCode();
+
+                return await GetResponseAsync<T>(response);
+            }
         );
-
-        ErrorMessage = response.StatusText;
-
-        ActualStatusCode = response.Status;
-        ValidateStatusCode();
-
-        var result = await GetResponseAsync<T>(response);
-
-        await TestContext.EndTracingGroupAsync();
-
-        return result;
     }
 
     private static async Task<ApiResponse<T>> GetResponseAsync<T>(IAPIResponse response)
