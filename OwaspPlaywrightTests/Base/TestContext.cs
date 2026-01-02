@@ -18,15 +18,15 @@ public class TestContext : PlaywrightTestBase
         set { _state.Value?.Output = value; }
     }
 
-    public static new IPage? Page
+    public static new IPage Page
     {
-        get => _state.Value?.Page;
+        get => _state.Value!.Page!;
         set
         {
             if (value == null)
                 throw new PlaywrightException("The Playwright Page cannot be null.");
 
-            _state.Value?.Page = value;
+            _state.Value!.Page = value;
             _context = value.Context;
             Request = value.APIRequest;
         }
@@ -38,10 +38,31 @@ public class TestContext : PlaywrightTestBase
         set { _state.Value?.Request = value; }
     }
 
-    public static async Task StartTracingGroupAsync(string name) =>
+    public static async Task StepAsync(string name, Func<Task> action)
+    {
         await _context!.Tracing.GroupAsync(name);
+        try
+        {
+            await action();
+        }
+        finally
+        {
+            await _context!.Tracing.GroupEndAsync();
+        }
+    }
 
-    public static async Task EndTracingGroupAsync() => await _context!.Tracing.GroupEndAsync();
+    public static async Task<T> StepAsync<T>(string name, Func<Task<T>> action)
+    {
+        await _context!.Tracing.GroupAsync(name);
+        try
+        {
+            return await action();
+        }
+        finally
+        {
+            await _context!.Tracing.GroupEndAsync();
+        }
+    }
 
     public static string GetTestName()
     {
