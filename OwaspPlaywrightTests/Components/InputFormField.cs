@@ -13,18 +13,20 @@ public class InputFormField(string componentName, ILocator? parent)
 {
     private const string ErrorClass = "mat-form-field-invalid";
 
+    private readonly ILocator? _parent = parent;
+
     public ILocator Input => Body.GetByRole(AriaRole.Textbox);
 
     public InputFormField GetByLocator(string locator)
     {
-        var inputFormField = new InputFormField(_componentName, parent);
+        var inputFormField = new InputFormField(_componentName, _parent);
         inputFormField.Body = inputFormField.Body.Filter(new() { Has = Page.Locator(locator) });
         return inputFormField;
     }
 
     public InputFormField GetByAreaLabel(string areaLabel)
     {
-        var inputFormField = new InputFormField(_componentName, parent);
+        var inputFormField = new InputFormField(_componentName, _parent);
         inputFormField.Body = inputFormField.Body.Filter(
             new() { Has = Page.GetByRole(AriaRole.Textbox, new() { Name = areaLabel }) }
         );

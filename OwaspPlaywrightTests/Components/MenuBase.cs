@@ -10,7 +10,7 @@ public class MenuBase(string componentName, ILocator body) : ComponentBase(compo
     public async Task CloseAsync()
     {
         await Test.StepAsync(
-            $"Close \"{ComponentName}\" menu",
+            $"Close \"{_componentName}\" menu",
             async () =>
             {
                 var oldMenuCount = await Menu.CountAsync();

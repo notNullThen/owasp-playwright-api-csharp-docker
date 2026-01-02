@@ -11,7 +11,7 @@ public class AccountMenu() : MenuBase("Account Menu", Test.Page.Locator("#navbar
     public async Task OpenAsync()
     {
         await Test.StepAsync(
-            $"Open \"{ComponentName}\" menu",
+            $"Open \"{_componentName}\" menu",
             async () =>
             {
                 var isVisible = await IsOpenAsync();

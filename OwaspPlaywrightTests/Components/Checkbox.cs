@@ -13,7 +13,7 @@ public class Checkbox(string componentName, ILocator? parent)
     )
 {
     private const string CheckedClass = "mdc-checkbox--selected";
-    private readonly ILocator? _parent;
+    private readonly ILocator? _parent = parent;
 
     public ILocator CheckboxInput => Body.GetByRole(AriaRole.Checkbox);
 
