@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Threading;
 using Microsoft.Playwright;
 using Xunit.Abstractions;
 
@@ -25,7 +24,7 @@ public class TestContext : PlaywrightTestBase
         set
         {
             if (value == null)
-                throw new PlaywrightException("The Page passed from Playwright cannot be null.");
+                throw new PlaywrightException("The Playwright Page cannot be null.");
 
             _state.Value?.Page = value;
             _context = value.Context;
@@ -47,7 +46,7 @@ public class TestContext : PlaywrightTestBase
     public static string GetTestName()
     {
         if (Output == null)
-            throw new PlaywrightException("Output passed from XUnit cannot be null.");
+            throw new PlaywrightException("The XUnit Output cannot be null.");
 
         var type = Output!.GetType();
         var testMember = type.GetField("test", BindingFlags.Instance | BindingFlags.NonPublic);
