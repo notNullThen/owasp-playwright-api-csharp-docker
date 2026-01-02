@@ -4,9 +4,9 @@ using OwaspPlaywrightTests.Support;
 
 namespace OwaspPlaywrightTests.Components;
 
-public class Dropdown : FormFieldBase
+public class DropdownFormField : FormFieldBase
 {
-    public Dropdown(string componentName, ILocator? parent = null)
+    public DropdownFormField(string componentName, ILocator? parent = null)
         : base(
             componentName: componentName.EndsWith(" Dropdown")
                 ? componentName
@@ -24,9 +24,9 @@ public class Dropdown : FormFieldBase
 
     public ILocator Options => Page.GetByRole(AriaRole.Listbox);
 
-    public Dropdown GetByName(string name)
+    public DropdownFormField GetByName(string name)
     {
-        var dropdown = new Dropdown(componentName: _componentName, parent: _parent);
+        var dropdown = new DropdownFormField(componentName: _componentName, parent: _parent);
         dropdown.Body = dropdown.Body.Filter(
             new() { Has = Page.GetByRole(AriaRole.Combobox, new() { Name = name }) }
         );
