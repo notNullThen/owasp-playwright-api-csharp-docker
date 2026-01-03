@@ -1,5 +1,5 @@
 using OwaspPlaywrightTests.Base;
-using OwaspPlaywrightTests.Base.Data;
+using OwaspPlaywrightTests.Data;
 using OwaspPlaywrightTests.Pages;
 using OwaspPlaywrightTests.Support.Helpers;
 using Xunit.Abstractions;
