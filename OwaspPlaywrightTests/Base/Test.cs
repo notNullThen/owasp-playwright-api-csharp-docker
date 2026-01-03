@@ -40,6 +40,11 @@ public class Test : PlaywrightTestBase
         set { _state.Value?.Request = value; }
     }
 
+    /**
+     * TODO: StepAsync() functions are VIBE-CODED AREA - Investigate and understand if we can simplify this further.
+     * Topics resolved with vibe-coding:
+     * Handling parallel execution of ApiEndpointBase.WaitAsync() which has logic inside StepAsync().
+     */
     public static async Task StepAsync(string name, Func<Task> action)
     {
         EnsureContext();
