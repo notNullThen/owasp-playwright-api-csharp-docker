@@ -6,9 +6,6 @@ namespace OwaspPlaywrightTests.Base;
 
 public class Test : PlaywrightTestBase
 {
-    private static readonly AsyncLocal<TestContext> _state = new();
-    private static readonly AsyncLocal<int> _logicalDepth = new();
-
     public Test(ITestOutputHelper output)
     {
         _state.Value = new TestContext();
@@ -42,68 +39,63 @@ public class Test : PlaywrightTestBase
 
     /**
      * TODO: StepAsync() functions are VIBE-CODED AREA.
-     * Task: Investigate and understand if it is possible to simplify this further.
+     * Task: Investigate and understand why do we need this handling of tracing groups.
      * Topics resolved with vibe-coding:
      * Handling parallel execution of ApiEndpointBase.WaitAsync() which has logic inside StepAsync().
      */
     public static async Task StepAsync(string name, Func<Task> action)
     {
-        EnsureContext();
-
-        _logicalDepth.Value++;
-        Interlocked.Increment(ref _state.Value!.RunningSteps);
-
-        // Only create a tracing group if we are running sequentially.
-        // If RunningSteps > _logicalDepth.Value, it implies parallel execution (Task.WhenAll),
-        // where Playwright's stack-based tracing groups would conflict.
-        bool isSequential = _state.Value.RunningSteps == _logicalDepth.Value;
-
-        if (isSequential)
-        {
-            await Page.Context.Tracing.GroupAsync(name);
-        }
+        // Start the trace group without blocking the action.
+        // This avoids races when multiple steps are started in parallel (Task.WhenAll)
+        // and the action needs to register Playwright waiters immediately.
+        var groupTask = Page.Context.Tracing.GroupAsync(name);
+        Exception? actionException = null;
 
         try
         {
             await action();
         }
+        catch (Exception ex)
+        {
+            actionException = ex;
+            throw;
+        }
         finally
         {
-            if (isSequential)
+            try
             {
+                await groupTask;
                 await Page.Context.Tracing.GroupEndAsync();
             }
-            Interlocked.Decrement(ref _state.Value!.RunningSteps);
-            _logicalDepth.Value--;
+            catch when (actionException != null)
+            {
+                // Don't mask the original failure with tracing failures.
+            }
         }
     }
 
     public static async Task<T> StepAsync<T>(string name, Func<Task<T>> action)
     {
-        EnsureContext();
-
-        _logicalDepth.Value++;
-        Interlocked.Increment(ref _state.Value!.RunningSteps);
-
-        bool isSequential = _state.Value.RunningSteps == _logicalDepth.Value;
-
-        if (isSequential)
-        {
-            await Page.Context.Tracing.GroupAsync(name);
-        }
+        var groupTask = Page.Context.Tracing.GroupAsync(name);
+        Exception? actionException = null;
 
         try
         {
             return await action();
         }
+        catch (Exception ex)
+        {
+            actionException = ex;
+            throw;
+        }
         finally
         {
-            if (isSequential)
+            try
             {
+                await groupTask;
                 await Page.Context.Tracing.GroupEndAsync();
             }
-            Interlocked.Decrement(ref _state.Value!.RunningSteps);
-            _logicalDepth.Value--;
+            catch when (actionException != null) { }
         }
     }
 
@@ -127,16 +119,12 @@ public class Test : PlaywrightTestBase
         return $"UnknownTest_{Guid.NewGuid()}";
     }
 
-    private static void EnsureContext()
-    {
-        _state.Value ??= new TestContext();
-    }
+    private static readonly AsyncLocal<TestContext> _state = new();
 
     private class TestContext
     {
         public ITestOutputHelper? Output;
         public IPage? Page;
         public IAPIRequestContext? Request;
-        public int RunningSteps;
     }
 }
