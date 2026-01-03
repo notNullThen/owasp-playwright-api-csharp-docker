@@ -39,7 +39,7 @@ public class InputFormField(string componentName, ILocator? parent = null)
     public async Task FillAsync(string value)
     {
         await Test.StepAsync(
-            $"Fill \"{_componentName}\" input field with value: \"{value}\"",
+            $"Fill \"{_componentName}\" with value: \"{value}\"",
             async () => await Input.FillAsync(value)
         );
     }
@@ -47,7 +47,7 @@ public class InputFormField(string componentName, ILocator? parent = null)
     public async Task ShouldHaveErrorAsync()
     {
         await Test.StepAsync(
-            $"Verify \"{_componentName}\" input field has an error",
+            $"Verify \"{_componentName}\" has an error",
             async () =>
                 Assert.True(
                     await HasErrorAsync(),
@@ -59,7 +59,7 @@ public class InputFormField(string componentName, ILocator? parent = null)
     public async Task ShouldNotHaveErrorAsync()
     {
         await Test.StepAsync(
-            $"Verify \"{_componentName}\" input field has no error",
+            $"Verify \"{_componentName}\" has no error",
             async () =>
                 Assert.False(
                     await HasErrorAsync(),
@@ -77,7 +77,7 @@ public class InputFormField(string componentName, ILocator? parent = null)
     public async Task PressEnterAsync()
     {
         await Test.StepAsync(
-            $"Press Enter key on \"{_componentName}\" input field",
+            $"Press Enter key on \"{_componentName}\"",
             async () => await Input.PressAsync("Enter")
         );
     }

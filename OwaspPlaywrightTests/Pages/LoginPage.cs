@@ -24,20 +24,28 @@ public class LoginPage() : PageBase("/#/login")
         bool rememberMe = true
     )
     {
-        await EmailInput.FillAsync(email);
-        await PasswordInput.FillAsync(password);
-        if (rememberMe)
-        {
-            await RememberMeCheckbox.CheckAsync();
-        }
+        return await Test.StepAsync(
+            $"Login with {email} user",
+            async () =>
+            {
+                await EmailInput.FillAsync(email);
+                await PasswordInput.FillAsync(password);
+                if (rememberMe)
+                {
+                    await RememberMeCheckbox.CheckAsync();
+                }
 
-        var loginResponseTask = Api.RestUser.PostLogin().WaitAsync();
-        await Task.WhenAll(LoginButton.ClickAsync(), loginResponseTask);
+                var loginResponseTask = Api.RestUser.PostLogin().WaitAsync();
+                await Task.WhenAll(LoginButton.ClickAsync(), loginResponseTask);
 
-        await Header.AccountMenu.OpenAsync();
-        await Assertions.Expect(Header.AccountMenu.UserProfileItem).ToContainTextAsync(email);
-        await Header.AccountMenu.CloseAsync();
+                await Header.AccountMenu.OpenAsync();
+                await Assertions
+                    .Expect(Header.AccountMenu.UserProfileItem)
+                    .ToContainTextAsync(email);
+                await Header.AccountMenu.CloseAsync();
 
-        return await loginResponseTask;
+                return await loginResponseTask;
+            }
+        );
     }
 }
