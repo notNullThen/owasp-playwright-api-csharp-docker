@@ -1,7 +1,7 @@
 using Bogus;
 using OwaspPlaywrightTests.Base.Api.Base.Types.User;
 
-namespace OwaspPlaywrightTests.Base.Data;
+namespace OwaspPlaywrightTests.Data;
 
 public static class UsersData
 {
