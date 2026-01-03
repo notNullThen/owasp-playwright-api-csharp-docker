@@ -39,10 +39,13 @@ public class Test : PlaywrightTestBase
 
     public static async Task StepAsync(string name, Func<Task> action)
     {
-        await Page.Context.Tracing.GroupAsync(name);
+        var groupTask = Page.Context.Tracing.GroupAsync(name);
+        var actionTask = action();
+
         try
         {
-            await action();
+            await groupTask;
+            await actionTask;
         }
         finally
         {
@@ -52,10 +55,13 @@ public class Test : PlaywrightTestBase
 
     public static async Task<T> StepAsync<T>(string name, Func<Task<T>> action)
     {
-        await Page.Context.Tracing.GroupAsync(name);
+        var groupTask = Page.Context.Tracing.GroupAsync(name);
+        var actionTask = action();
+
         try
         {
-            return await action();
+            await groupTask;
+            return await actionTask;
         }
         finally
         {
