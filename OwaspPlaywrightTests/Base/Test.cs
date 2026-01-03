@@ -39,27 +39,27 @@ public class Test : PlaywrightTestBase
 
     public static async Task StepAsync(string name, Func<Task> action)
     {
-        await Page.Context!.Tracing.GroupAsync(name);
+        await Page.Context.Tracing.GroupAsync(name);
         try
         {
             await action();
         }
         finally
         {
-            await Page.Context!.Tracing.GroupEndAsync();
+            await Page.Context.Tracing.GroupEndAsync();
         }
     }
 
     public static async Task<T> StepAsync<T>(string name, Func<Task<T>> action)
     {
-        await Page.Context!.Tracing.GroupAsync(name);
+        await Page.Context.Tracing.GroupAsync(name);
         try
         {
             return await action();
         }
         finally
         {
-            await Page.Context!.Tracing.GroupEndAsync();
+            await Page.Context.Tracing.GroupEndAsync();
         }
     }
 
@@ -68,7 +68,7 @@ public class Test : PlaywrightTestBase
         if (Output == null)
             throw new PlaywrightException("The XUnit Output cannot be null.");
 
-        var type = Output!.GetType();
+        var type = Output.GetType();
         var testMember = type.GetField("test", BindingFlags.Instance | BindingFlags.NonPublic);
 
         if (testMember != null)
