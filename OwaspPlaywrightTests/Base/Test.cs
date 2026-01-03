@@ -41,7 +41,8 @@ public class Test : PlaywrightTestBase
     }
 
     /**
-     * TODO: StepAsync() functions are VIBE-CODED AREA - Investigate and understand if we can simplify this further.
+     * TODO: StepAsync() functions are VIBE-CODED AREA.
+     * Task: Investigate and understand if it is possible to simplify this further.
      * Topics resolved with vibe-coding:
      * Handling parallel execution of ApiEndpointBase.WaitAsync() which has logic inside StepAsync().
      */
