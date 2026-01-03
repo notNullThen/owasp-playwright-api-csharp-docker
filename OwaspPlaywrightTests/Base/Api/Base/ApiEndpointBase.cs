@@ -40,42 +40,39 @@ public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(bas
 
     public async Task<BrowserApiResponse<T>> WaitAsync<T>(IPage page)
     {
+        var waitTask = page.WaitForResponseAsync(
+            (response) =>
+            {
+                // Ignore trailing slash and casing differences
+                var actualUrl = Utils.NormalizeUrl(response.Url);
+                var expectedUrl = Utils.NormalizeUrl(FullUrl);
+                var requestMethod = response.Request.Method;
+
+                if (!actualUrl.Contains(expectedUrl, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return false;
+                }
+
+                if (
+                    !requestMethod.Equals(
+                        Method.ToString(),
+                        StringComparison.InvariantCultureIgnoreCase
+                    )
+                )
+                {
+                    return false;
+                }
+
+                return true;
+            },
+            new() { Timeout = ApiWaitTimeout }
+        );
+
         return await Test.StepAsync(
             $"Wait for {Method} \"{Route}\" {string.Join(", ", ExpectedStatusCodes)}",
             async () =>
             {
-                var response = await page.WaitForResponseAsync(
-                    (response) =>
-                    {
-                        // Ignore trailing slash and casing differences
-                        var actualUrl = Utils.NormalizeUrl(response.Url);
-                        var expectedUrl = Utils.NormalizeUrl(FullUrl);
-                        var requestMethod = response.Request.Method;
-
-                        if (
-                            !actualUrl.Contains(
-                                expectedUrl,
-                                StringComparison.InvariantCultureIgnoreCase
-                            )
-                        )
-                        {
-                            return false;
-                        }
-
-                        if (
-                            !requestMethod.Equals(
-                                Method.ToString(),
-                                StringComparison.InvariantCultureIgnoreCase
-                            )
-                        )
-                        {
-                            return false;
-                        }
-
-                        return true;
-                    },
-                    new() { Timeout = ApiWaitTimeout }
-                );
+                var response = await waitTask;
 
                 ErrorMessage = response.StatusText;
 

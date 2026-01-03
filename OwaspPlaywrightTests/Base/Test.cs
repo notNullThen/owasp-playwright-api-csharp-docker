@@ -6,6 +6,9 @@ namespace OwaspPlaywrightTests.Base;
 
 public class Test : PlaywrightTestBase
 {
+    private static readonly AsyncLocal<TestContext> _state = new();
+    private static readonly AsyncLocal<int> _logicalDepth = new();
+
     public Test(ITestOutputHelper output)
     {
         _state.Value = new TestContext();
@@ -39,7 +42,20 @@ public class Test : PlaywrightTestBase
 
     public static async Task StepAsync(string name, Func<Task> action)
     {
-        await Page.Context.Tracing.GroupAsync(name);
+        EnsureContext();
+
+        _logicalDepth.Value++;
+        Interlocked.Increment(ref _state.Value!.RunningSteps);
+
+        // Only create a tracing group if we are running sequentially.
+        // If RunningSteps > _logicalDepth.Value, it implies parallel execution (Task.WhenAll),
+        // where Playwright's stack-based tracing groups would conflict.
+        bool isSequential = _state.Value.RunningSteps == _logicalDepth.Value;
+
+        if (isSequential)
+        {
+            await Page.Context.Tracing.GroupAsync(name);
+        }
 
         try
         {
@@ -47,13 +63,28 @@ public class Test : PlaywrightTestBase
         }
         finally
         {
-            await Page.Context.Tracing.GroupEndAsync();
+            if (isSequential)
+            {
+                await Page.Context.Tracing.GroupEndAsync();
+            }
+            Interlocked.Decrement(ref _state.Value!.RunningSteps);
+            _logicalDepth.Value--;
         }
     }
 
     public static async Task<T> StepAsync<T>(string name, Func<Task<T>> action)
     {
-        await Page.Context.Tracing.GroupAsync(name);
+        EnsureContext();
+
+        _logicalDepth.Value++;
+        Interlocked.Increment(ref _state.Value!.RunningSteps);
+
+        bool isSequential = _state.Value.RunningSteps == _logicalDepth.Value;
+
+        if (isSequential)
+        {
+            await Page.Context.Tracing.GroupAsync(name);
+        }
 
         try
         {
@@ -61,7 +92,12 @@ public class Test : PlaywrightTestBase
         }
         finally
         {
-            await Page.Context.Tracing.GroupEndAsync();
+            if (isSequential)
+            {
+                await Page.Context.Tracing.GroupEndAsync();
+            }
+            Interlocked.Decrement(ref _state.Value!.RunningSteps);
+            _logicalDepth.Value--;
         }
     }
 
@@ -85,12 +121,16 @@ public class Test : PlaywrightTestBase
         return $"UnknownTest_{Guid.NewGuid()}";
     }
 
-    private static readonly AsyncLocal<TestContext> _state = new();
+    private static void EnsureContext()
+    {
+        _state.Value ??= new TestContext();
+    }
 
     private class TestContext
     {
         public ITestOutputHelper? Output;
         public IPage? Page;
         public IAPIRequestContext? Request;
+        public int RunningSteps;
     }
 }
