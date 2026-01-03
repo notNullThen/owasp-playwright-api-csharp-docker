@@ -7,7 +7,7 @@ namespace OwaspPlaywrightTests.Components;
 public class AccountMenu()
     : MenuBase(componentName: "Account Menu", body: Test.Page.Locator("#navbarAccount"))
 {
-    public ILocator UserProfileItem => Menu.GetByRole(AriaRole.Menu).First;
+    public ILocator UserProfileItem => Menu.GetByRole(AriaRole.Menuitem).First;
 
     public async Task OpenAsync()
     {
