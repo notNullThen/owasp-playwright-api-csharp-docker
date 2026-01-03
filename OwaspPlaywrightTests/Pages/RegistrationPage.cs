@@ -44,10 +44,9 @@ public class RegistrationPage() : PageBase("/#/register")
 
                 await AnswerInput.FillAsync(securityAnswer);
                 await AnswerInput.ShouldNotHaveErrorAsync();
-
-                await SubmitAsync();
             }
         );
+        await SubmitAsync();
     }
 
     public async Task<BrowserApiResponse<UserResponse>> SubmitAsync()
