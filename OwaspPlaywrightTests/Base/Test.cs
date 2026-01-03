@@ -90,6 +90,5 @@ public class Test : PlaywrightTestBase
         public ITestOutputHelper? Output;
         public IPage? Page;
         public IAPIRequestContext? Request;
-        public IBrowserContext? Context;
     }
 }
