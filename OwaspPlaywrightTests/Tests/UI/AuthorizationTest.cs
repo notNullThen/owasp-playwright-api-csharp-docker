@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.UI;
 
-public class UserRegistrationTest(ITestOutputHelper output) : Test(output)
+public class AuthorizationTest(ITestOutputHelper output) : Test(output)
 {
     [Fact]
     public async Task UserCanRegisterSuccessfully()
