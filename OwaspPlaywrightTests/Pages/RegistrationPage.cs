@@ -28,25 +28,31 @@ public class RegistrationPage() : PageBase("/#/register")
     )
     {
         await Test.StepAsync(
-            $"Fill {email} user registration form",
+            $"Register user with email: {email}",
             async () =>
             {
-                await EmailInput.FillAsync(email);
-                await EmailInput.ShouldNotHaveErrorAsync();
+                await Test.StepAsync(
+                    $"Fill {email} user registration form",
+                    async () =>
+                    {
+                        await EmailInput.FillAsync(email);
+                        await EmailInput.ShouldNotHaveErrorAsync();
 
-                await PasswordInput.FillAsync(password);
-                await PasswordInput.ShouldNotHaveErrorAsync();
+                        await PasswordInput.FillAsync(password);
+                        await PasswordInput.ShouldNotHaveErrorAsync();
 
-                await RepeatPasswordInput.FillAsync(password);
-                await RepeatPasswordInput.ShouldNotHaveErrorAsync();
+                        await RepeatPasswordInput.FillAsync(password);
+                        await RepeatPasswordInput.ShouldNotHaveErrorAsync();
 
-                await SecurityQuestionDropdown.SelectAsync(securityQuestion);
+                        await SecurityQuestionDropdown.SelectAsync(securityQuestion);
 
-                await AnswerInput.FillAsync(securityAnswer);
-                await AnswerInput.ShouldNotHaveErrorAsync();
+                        await AnswerInput.FillAsync(securityAnswer);
+                        await AnswerInput.ShouldNotHaveErrorAsync();
+                    }
+                );
+                await SubmitAsync();
             }
         );
-        await SubmitAsync();
     }
 
     public async Task<BrowserApiResponse<UserResponse>> SubmitAsync()
