@@ -6,10 +6,10 @@ namespace OwaspPlaywrightTests.Base;
 
 public class Test : PlaywrightTestBase
 {
-    public Test(ITestOutputHelper output)
+    public Test(ITestOutputHelper outputHelper)
     {
         _state.Value = new TestContext();
-        Output = output;
+        Output = outputHelper;
     }
 
     public static ITestOutputHelper? Output

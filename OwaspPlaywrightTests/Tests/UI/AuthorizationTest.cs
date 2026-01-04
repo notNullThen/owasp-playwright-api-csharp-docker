@@ -1,43 +1,48 @@
 using OwaspPlaywrightTests.Base;
 using OwaspPlaywrightTests.Data;
+using OwaspPlaywrightTests.Hooks;
 using OwaspPlaywrightTests.Pages;
 using OwaspPlaywrightTests.Support.Helpers;
 using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.UI;
 
-public class AuthorizationTest(ITestOutputHelper output) : Test(output)
+public class AuthorizationTest
 {
-    [Fact]
-    public async Task UserCanRegisterSuccessfully()
+    public class RegistrationTests(ITestOutputHelper outputHelper) : Test(outputHelper)
     {
-        var registrationPage = new RegistrationPage();
+        [Fact]
+        public async Task UserCanRegisterSuccessfully()
+        {
+            var registrationPage = new RegistrationPage();
 
-        var generatedUser = UsersData.GenerateRandomUser();
+            var generatedUser = UsersData.GenerateRandomUser();
 
-        await registrationPage.GoToAsync();
+            await registrationPage.GoToAsync();
 
-        await Expect(registrationPage.RegisterButton).ToBeDisabledAsync();
+            await Expect(registrationPage.RegisterButton).ToBeDisabledAsync();
 
-        await registrationPage.RegisterUserAsync(
-            email: generatedUser.Email,
-            password: generatedUser.Password,
-            securityQuestion: generatedUser.SecurityQuestion.Question,
-            securityAnswer: generatedUser.SecurityAnswer
-        );
+            await registrationPage.RegisterUserAsync(
+                email: generatedUser.Email,
+                password: generatedUser.Password,
+                securityQuestion: generatedUser.SecurityQuestion.Question,
+                securityAnswer: generatedUser.SecurityAnswer
+            );
+        }
     }
 
-    [Fact]
-    public async Task UserCanLogInSuccessfully()
+    public class LogIntests(ITestOutputHelper outputHelper) : CreatedUserHook(outputHelper)
     {
-        var loginPage = new LoginPage();
+        [Fact]
+        public async Task UserCanLogInSuccessfully()
+        {
+            var loginPage = new LoginPage();
 
-        var preparedUser = await new UsersHelper().CreateRandomUserAsync();
-        await loginPage.GoToAsync();
-
-        await loginPage.LoginAsync(
-            email: preparedUser.Payload.Email,
-            password: preparedUser.Payload.Password
-        );
+            await loginPage.GoToAsync();
+            await loginPage.LoginAsync(
+                email: CreatedUser.Payload.Email,
+                password: CreatedUser.Payload.Password
+            );
+        }
     }
 }
