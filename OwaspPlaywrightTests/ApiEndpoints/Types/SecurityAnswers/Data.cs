@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace OwaspPlaywrightTests.Base.ApiEndpoints.Types.SecurityAnswers;
+namespace OwaspPlaywrightTests.ApiEndpoints.Types.SecurityAnswers;
 
 public class Data
 {

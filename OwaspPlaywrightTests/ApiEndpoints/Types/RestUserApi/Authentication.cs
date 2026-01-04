@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace OwaspPlaywrightTests.Base.ApiEndpoints.Types.RestUserApi;
+namespace OwaspPlaywrightTests.ApiEndpoints.Types.RestUserApi;
 
 public class Authentication
 {

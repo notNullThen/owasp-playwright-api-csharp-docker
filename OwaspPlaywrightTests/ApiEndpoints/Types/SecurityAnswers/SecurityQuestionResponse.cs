@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace OwaspPlaywrightTests.Base.ApiEndpoints.Types.User;
+namespace OwaspPlaywrightTests.ApiEndpoints.Types.SecurityAnswers;
 
-public class UserResponse
+public class SecurityQuestionResponse
 {
     [JsonPropertyName("status")]
     public required string Status { get; set; }

@@ -1,8 +1,8 @@
-using OwaspPlaywrightTests.Base.ApiEndpoints.Types.RestUserApi;
+using OwaspPlaywrightTests.ApiEndpoints.Types.RestUserApi;
 using OwaspPlaywrightTests.Base.ApiHandler;
 using OwaspPlaywrightTests.Base.ApiHandler.Types;
 
-namespace OwaspPlaywrightTests.Base.ApiEndpoints;
+namespace OwaspPlaywrightTests.ApiEndpoints;
 
 public class RestUserApi() : ApiEndpointBase("rest/user")
 {

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace OwaspPlaywrightTests.Base.ApiEndpoints.Types.User;
+namespace OwaspPlaywrightTests.ApiEndpoints.Types.User;
 
 public class SecurityQuestion
 {

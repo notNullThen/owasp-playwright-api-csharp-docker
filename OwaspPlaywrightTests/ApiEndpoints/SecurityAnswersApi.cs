@@ -1,8 +1,8 @@
-using OwaspPlaywrightTests.Base.ApiEndpoints.Types.SecurityAnswers;
+using OwaspPlaywrightTests.ApiEndpoints.Types.SecurityAnswers;
 using OwaspPlaywrightTests.Base.ApiHandler;
 using OwaspPlaywrightTests.Base.ApiHandler.Types;
 
-namespace OwaspPlaywrightTests.Base.ApiEndpoints;
+namespace OwaspPlaywrightTests.ApiEndpoints;
 
 public class SecurityAnswersApi() : ApiEndpointBase("api/SecurityAnswers")
 {
