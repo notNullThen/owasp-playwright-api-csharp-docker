@@ -13,6 +13,12 @@ public abstract class PageBase(string url)
 
     public async Task GoToAsync()
     {
-        await Page.GotoAsync(url);
+        await Test.StepAsync(
+            $"Go to '{url}' page",
+            async () =>
+            {
+                await Page.GotoAsync(url);
+            }
+        );
     }
 }

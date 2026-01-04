@@ -1,3 +1,4 @@
+using OwaspPlaywrightTests.ApiEndpoints.Types;
 using OwaspPlaywrightTests.ApiEndpoints.Types.Products;
 using OwaspPlaywrightTests.Base.ApiHandler;
 using OwaspPlaywrightTests.Base.ApiHandler.Types;

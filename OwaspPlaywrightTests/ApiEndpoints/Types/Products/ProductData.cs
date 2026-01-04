@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using OwaspPlaywrightTests.ApiEndpoints.Types.BasketItems;
 
 namespace OwaspPlaywrightTests.ApiEndpoints.Types.Products;
 
@@ -30,4 +31,7 @@ public class ProductData
 
     [JsonPropertyName("deletedAt")]
     public string? DeletedAt { get; set; }
+
+    [JsonPropertyName("BasketItem")]
+    public BasketItemData? BasketItem { get; set; }
 }

@@ -1,5 +1,6 @@
 using Microsoft.Playwright;
 using OwaspPlaywrightTests.ApiEndpoints;
+using OwaspPlaywrightTests.ApiEndpoints.Types;
 using OwaspPlaywrightTests.ApiEndpoints.Types.User;
 using OwaspPlaywrightTests.Base;
 using OwaspPlaywrightTests.Base.ApiHandler.Types;
