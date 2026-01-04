@@ -1,37 +1,129 @@
+using System.Text.Json;
 using Microsoft.Playwright;
 using OwaspPlaywrightTests.Base.ApiHandler.Types;
+using OwaspPlaywrightTests.Support;
 
 namespace OwaspPlaywrightTests.Base.ApiHandler;
 
-public class ApiBase : ApiEndpointBase
+public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
 {
-    public readonly IAPIRequestContext Context;
-    public readonly IPage? Page;
+    protected int _actualStatusCode;
 
-    public ApiBase(string baseApiUrl)
-        : base(baseApiUrl)
+    private string? _errorMessage;
+
+    public async Task<ApiResponse<T>> RequestAsync<T>(IAPIRequestContext context)
     {
-        if (Test.Request == null && Test.Page == null)
-        {
-            throw new PlaywrightException(
-                $"You need to provide at least '{nameof(Context)}' or '{nameof(Page)}' parameters to create an instance of '{nameof(ApiBase)}'."
-            );
-        }
+        return await Test.StepAsync(
+            $"Request {Method} \"{Route}\", expect {string.Join(", ", ExpectedStatusCodes)}",
+            async () =>
+            {
+                // Separate bodyJson variable for better debug
+                var bodyJson = JsonSerializer.Serialize(Body);
+                var response = await context.FetchAsync(
+                    FullUrl,
+                    new()
+                    {
+                        Method = Method.ToString(),
+                        Data = bodyJson,
+                        Headers = [new("Content-Type", "application/json")],
+                        Timeout = PlaywrightConfig.ApiWaitTimeout,
+                    }
+                );
 
-        Context = Test.Request!;
-        Page = Test.Page;
+                _actualStatusCode = response.Status;
+                ValidateStatusCode();
 
-        Context = (Page?.APIRequest ?? Context)!;
+                return await GetResponseAsync<T>(response);
+            }
+        );
     }
 
-    public ApiAction<T> Action<T>(RequestParameters parameters) =>
-        new(apiBase: this, parameters: parameters);
-
-    public ApiAction<dynamic> Action(RequestParameters parameters) =>
-        new(apiBase: this, parameters: parameters);
-
-    public void SetParameters(RequestParameters parameters)
+    public async Task<BrowserApiResponse<T>> WaitAsync<T>(IPage page)
     {
-        AquireParameters(parameters);
+        return await Test.StepAsync(
+            $"Wait for {Method} \"{Route}\" {string.Join(", ", ExpectedStatusCodes)}",
+            async () =>
+            {
+                var response = await page.WaitForResponseAsync(
+                    (response) =>
+                    {
+                        // Ignore trailing slash and casing differences
+                        var actualUrl = Utils.NormalizeUrl(response.Url);
+                        var expectedUrl = Utils.NormalizeUrl(FullUrl);
+                        var requestMethod = response.Request.Method;
+
+                        if (
+                            !actualUrl.Contains(
+                                expectedUrl,
+                                StringComparison.InvariantCultureIgnoreCase
+                            )
+                        )
+                        {
+                            return false;
+                        }
+
+                        if (
+                            !requestMethod.Equals(
+                                Method.ToString(),
+                                StringComparison.InvariantCultureIgnoreCase
+                            )
+                        )
+                        {
+                            return false;
+                        }
+
+                        return true;
+                    },
+                    new() { Timeout = ApiWaitTimeout }
+                );
+
+                _errorMessage = response.StatusText;
+
+                _actualStatusCode = response.Status;
+                ValidateStatusCode();
+
+                return await GetResponseAsync<T>(response);
+            }
+        );
+    }
+
+    private static async Task<ApiResponse<T>> GetResponseAsync<T>(IAPIResponse response)
+    {
+        try
+        {
+            // For better debugging convenience created JSON string with TextAsync()
+            // and then used JsonSerializer.Deserialize<T>() instead of Playwright's JsonAsync<T>()
+            var responseString = await response.TextAsync();
+            var responseBody = JsonSerializer.Deserialize<T>(responseString)!;
+            return new() { Response = response, ResponseBody = responseBody };
+        }
+        catch
+        {
+            return new() { Response = response, ResponseBody = default };
+        }
+    }
+
+    private static async Task<BrowserApiResponse<T>> GetResponseAsync<T>(IResponse response)
+    {
+        try
+        {
+            var responseString = await response.TextAsync();
+            var responseBody = JsonSerializer.Deserialize<T>(responseString)!;
+            return new() { Response = response, ResponseBody = responseBody };
+        }
+        catch
+        {
+            return new() { Response = response, ResponseBody = default };
+        }
+    }
+
+    private void ValidateStatusCode()
+    {
+        if (!ExpectedStatusCodes.Contains(_actualStatusCode))
+        {
+            throw new Exception(
+                $"Expected to return {string.Join(", ", ExpectedStatusCodes)}, but got {_actualStatusCode}.\nEndpoint: {Method} {Route}\nError Message: {_errorMessage}"
+            );
+        }
     }
 }

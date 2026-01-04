@@ -4,7 +4,7 @@ using OwaspPlaywrightTests.Base.ApiHandler.Types;
 
 namespace OwaspPlaywrightTests.Base.ApiEndpoints;
 
-public class SecurityAnswersApi() : ApiBase("api/SecurityAnswers")
+public class SecurityAnswersApi() : ApiEndpointBase("api/SecurityAnswers")
 {
     public ApiAction<SecurityQuestionResponse> PostSecurityAnswers(
         SecurityAnswersPayload? payload = null

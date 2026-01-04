@@ -5,9 +5,9 @@ namespace OwaspPlaywrightTests.Base.ApiHandler;
 
 public class ApiAction<T>
 {
-    private readonly ApiBase _apiBase;
+    private readonly ApiEndpointBase _apiBase;
 
-    public ApiAction(ApiBase apiBase, RequestParameters? parameters = null)
+    public ApiAction(ApiEndpointBase apiBase, RequestParameters? parameters = null)
     {
         _apiBase = apiBase;
         if (parameters != null)
