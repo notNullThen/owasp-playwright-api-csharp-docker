@@ -13,7 +13,7 @@ public class ProductTile()
     public ILocator Price => Body.Locator(".item-price");
     public ILocator AddToBasketButton => Body.Locator(".btn-basket");
 
-    public async Task<decimal> GetPriceValueAsync()
+    public async Task<float> GetPriceValueAsync()
     {
         var priceText = await Price.InnerTextAsync();
         return Utils.GetPriceFromText(priceText);

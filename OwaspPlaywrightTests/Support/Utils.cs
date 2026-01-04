@@ -19,9 +19,9 @@ public static class Utils
         return $"{priceString}{PRICE_SYMBOL}";
     }
 
-    public static decimal GetPriceFromText(string priceText)
+    public static float GetPriceFromText(string priceText)
     {
-        return decimal.Parse(priceText.Replace(PRICE_SYMBOL, ""));
+        return float.Parse(priceText.Replace(PRICE_SYMBOL, ""));
     }
 
     public static async Task DismissCookiesAsync()
