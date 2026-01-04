@@ -48,8 +48,8 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
                     (response) =>
                     {
                         // Ignore trailing slash and casing differences
-                        var actualUrl = Utils.NormalizeUrl(response.Url);
-                        var expectedUrl = Utils.NormalizeUrl(FullUrl);
+                        var actualUrl = TestUtils.NormalizeUrl(response.Url);
+                        var expectedUrl = TestUtils.NormalizeUrl(FullUrl);
                         var requestMethod = response.Request.Method;
 
                         if (

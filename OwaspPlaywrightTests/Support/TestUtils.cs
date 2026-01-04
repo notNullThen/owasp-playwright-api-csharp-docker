@@ -3,7 +3,7 @@ using OwaspPlaywrightTests.Base;
 
 namespace OwaspPlaywrightTests.Support;
 
-public static class Utils
+public static class TestUtils
 {
     public const string PRICE_SYMBOL = "¤";
 

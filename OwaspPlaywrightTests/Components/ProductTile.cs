@@ -19,7 +19,7 @@ public class ProductTile()
     public async Task<float> GetPriceValueAsync()
     {
         var priceText = await Price.InnerTextAsync();
-        return Utils.GetPriceFromText(priceText);
+        return TestUtils.GetPriceFromText(priceText);
     }
 
     public ProductTile GetByName(string name)

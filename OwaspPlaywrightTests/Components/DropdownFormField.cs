@@ -42,7 +42,7 @@ public class DropdownFormField : FormFieldBase
             async () =>
             {
                 await Input.ClickAsync();
-                await Utils.WaitForElementToBeStableAsync(Options);
+                await TestUtils.WaitForElementToBeStableAsync(Options);
 
                 await GetOptionByName(name).ClickAsync();
                 await Assertions.Expect(Input).ToHaveTextAsync(name);

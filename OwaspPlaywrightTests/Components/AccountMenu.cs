@@ -19,7 +19,7 @@ public class AccountMenu()
                 if (!isVisible)
                 {
                     await Body.ClickAsync();
-                    await Utils.WaitForElementToBeStableAsync(Menu);
+                    await TestUtils.WaitForElementToBeStableAsync(Menu);
                 }
 
                 // Here we use Playwright's Expect().ToBeVisibleAsync() instead of IsOpenAsync() for waiting until the menu is visible
