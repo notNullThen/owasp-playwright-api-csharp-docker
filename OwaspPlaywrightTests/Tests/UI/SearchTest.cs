@@ -16,7 +16,7 @@ public class SearchTest(ITestOutputHelper output) : Test(output)
         await homePage.GoToAsync();
         await homePage.Header.SearchBar.SearchAsync(partialName);
 
-        var productTile = homePage.ProductTile.GetByName(ProductsData.RaspberryJuice.Name);
+        var productTile = homePage.ProductTiles.GetByName(ProductsData.RaspberryJuice.Name);
         await Expect(productTile.Body).ToBeVisibleAsync();
     }
 }
