@@ -3,15 +3,23 @@ using OwaspPlaywrightTests.Base.Api.Base.Types;
 
 namespace OwaspPlaywrightTests.Base.Api.Base;
 
-public class ApiAction<T>(RequestParameters parameters, ApiBase apiBase)
+public class ApiAction<T>
 {
-    public readonly IAPIRequestContext Context = apiBase.Context;
-    public readonly IPage? Page = apiBase.Page;
+    private readonly ApiBase _apiBase;
+
+    public ApiAction(ApiBase apiBase, RequestParameters? parameters = null)
+    {
+        _apiBase = apiBase;
+        if (parameters != null)
+            apiBase.SetParameters(parameters);
+    }
+
+    public IAPIRequestContext Context => _apiBase.Context;
+    public IPage? Page => _apiBase.Page;
 
     public async Task<ApiResponse<T>> RequestAsync()
     {
-        apiBase.SetParameters(parameters);
-        return await apiBase.RequestAsync<T>(Context);
+        return await _apiBase.RequestAsync<T>(Context);
     }
 
     public async Task<BrowserApiResponse<T>> WaitAsync()
@@ -19,11 +27,10 @@ public class ApiAction<T>(RequestParameters parameters, ApiBase apiBase)
         if (Page == null)
         {
             throw new PlaywrightException(
-                $"You can use {nameof(apiBase.WaitAsync)}() only in the context of UI Tests (The '{nameof(IPage)}' should be available)."
+                $"You can use {nameof(_apiBase.WaitAsync)}() only in the context of UI Tests (The '{nameof(IPage)}' should be available)."
             );
         }
 
-        apiBase.SetParameters(parameters);
-        return await apiBase.WaitAsync<T>(Page);
+        return await _apiBase.WaitAsync<T>(Page);
     }
 }

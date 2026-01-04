@@ -24,7 +24,11 @@ public class ApiBase : ApiEndpointBase
         Context = (Page?.APIRequest ?? Context)!;
     }
 
-    public ApiAction<T> Action<T>(RequestParameters parameters) => new(parameters, this);
+    public ApiAction<T> Action<T>(RequestParameters parameters) =>
+        new(apiBase: this, parameters: parameters);
+
+    public ApiAction<dynamic> Action(RequestParameters parameters) =>
+        new(apiBase: this, parameters: parameters);
 
     public void SetParameters(RequestParameters parameters)
     {

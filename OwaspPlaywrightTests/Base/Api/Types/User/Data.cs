@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace OwaspPlaywrightTests.Base.Api.Base.Types.User;
+namespace OwaspPlaywrightTests.Base.Api.Types.User;
 
 public class Data
 {

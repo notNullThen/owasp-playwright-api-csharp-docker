@@ -1,6 +1,6 @@
 using OwaspPlaywrightTests.Base.Api.Base;
 using OwaspPlaywrightTests.Base.Api.Base.Types;
-using OwaspPlaywrightTests.Base.Api.Base.Types.SecurityAnswers;
+using OwaspPlaywrightTests.Base.Api.Types.SecurityAnswers;
 
 namespace OwaspPlaywrightTests.Base.Api;
 
