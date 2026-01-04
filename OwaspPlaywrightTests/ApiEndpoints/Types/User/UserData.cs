@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace OwaspPlaywrightTests.ApiEndpoints.Types.User;
 
-public class Data
+public class UserData
 {
     [JsonPropertyName("username")]
     public required string Username { get; set; }

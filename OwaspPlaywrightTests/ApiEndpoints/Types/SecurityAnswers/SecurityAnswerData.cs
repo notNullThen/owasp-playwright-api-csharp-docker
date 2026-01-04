@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace OwaspPlaywrightTests.ApiEndpoints.Types.SecurityAnswers;
 
-public class Data
+public class SecurityAnswerData
 {
     [JsonPropertyName("id")]
     public required int Id { get; set; }

@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace OwaspPlaywrightTests.ApiEndpoints.Types.BasketItems;
 
-public class Data
+public class BasketItemData
 {
     [JsonPropertyName("id")]
     public required int Id { get; set; }

@@ -8,5 +8,5 @@ public class UserResponse
     public required string Status { get; set; }
 
     [JsonPropertyName("data")]
-    public required Data Data { get; set; }
+    public required UserData Data { get; set; }
 };

@@ -8,5 +8,5 @@ public class SecurityQuestionResponse
     public required string Status { get; set; }
 
     [JsonPropertyName("data")]
-    public required Data Data { get; set; }
+    public required SecurityAnswerData Data { get; set; }
 };
