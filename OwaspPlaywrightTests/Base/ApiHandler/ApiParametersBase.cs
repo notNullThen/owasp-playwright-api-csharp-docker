@@ -1,7 +1,7 @@
-using OwaspPlaywrightTests.Base.Api.Base.Types;
+using OwaspPlaywrightTests.Base.ApiHandler.Types;
 using OwaspPlaywrightTests.Support;
 
-namespace OwaspPlaywrightTests.Base.Api.Base;
+namespace OwaspPlaywrightTests.Base.ApiHandler;
 
 public abstract class ApiParametersBase(string baseApiUrl)
 {

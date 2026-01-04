@@ -1,4 +1,4 @@
-namespace OwaspPlaywrightTests.Base.Api;
+namespace OwaspPlaywrightTests.Base.ApiEndpoints;
 
 public static class Api
 {

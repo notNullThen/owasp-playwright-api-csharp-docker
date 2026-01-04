@@ -1,8 +1,8 @@
-using OwaspPlaywrightTests.Base.Api.Base;
-using OwaspPlaywrightTests.Base.Api.Base.Types;
-using OwaspPlaywrightTests.Base.Api.Types.User;
+using OwaspPlaywrightTests.Base.ApiEndpoints.Types.User;
+using OwaspPlaywrightTests.Base.ApiHandler;
+using OwaspPlaywrightTests.Base.ApiHandler.Types;
 
-namespace OwaspPlaywrightTests.Base.Api;
+namespace OwaspPlaywrightTests.Base.ApiEndpoints;
 
 public class UsersApi() : ApiBase("api/Users")
 {

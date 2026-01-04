@@ -1,9 +1,9 @@
 using System.Text.Json;
 using Microsoft.Playwright;
-using OwaspPlaywrightTests.Base.Api.Base.Types;
+using OwaspPlaywrightTests.Base.ApiHandler.Types;
 using OwaspPlaywrightTests.Support;
 
-namespace OwaspPlaywrightTests.Base.Api.Base;
+namespace OwaspPlaywrightTests.Base.ApiHandler;
 
 public abstract class ApiEndpointBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
 {

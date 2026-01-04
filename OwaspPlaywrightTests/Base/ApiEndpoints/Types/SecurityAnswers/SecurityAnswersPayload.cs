@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace OwaspPlaywrightTests.Base.Api.Types.SecurityAnswers;
+namespace OwaspPlaywrightTests.Base.ApiEndpoints.Types.SecurityAnswers;
 
 public class SecurityAnswersPayload
 {

@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace OwaspPlaywrightTests.Base.Api.Types.User;
+namespace OwaspPlaywrightTests.Base.ApiEndpoints.Types.User;
 
 public class UserPayload
 {

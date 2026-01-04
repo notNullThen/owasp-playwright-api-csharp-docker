@@ -1,7 +1,7 @@
 using Microsoft.Playwright;
-using OwaspPlaywrightTests.Base.Api.Base.Types;
+using OwaspPlaywrightTests.Base.ApiHandler.Types;
 
-namespace OwaspPlaywrightTests.Base.Api.Base;
+namespace OwaspPlaywrightTests.Base.ApiHandler;
 
 public class ApiAction<T>
 {
