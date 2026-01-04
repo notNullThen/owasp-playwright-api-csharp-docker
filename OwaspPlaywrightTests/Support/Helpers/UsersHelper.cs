@@ -5,9 +5,9 @@ using OwaspPlaywrightTests.Data;
 
 namespace OwaspPlaywrightTests.Support.Helpers;
 
-public class UsersHelper
+public static class UsersHelper
 {
-    public async Task<User> CreateUserAsync(UserPayload payload)
+    public static async Task<User> CreateUserAsync(UserPayload payload)
     {
         return await Test.StepAsync(
             $"Creating \"{payload.Email}\" user",
@@ -34,7 +34,7 @@ public class UsersHelper
         );
     }
 
-    public async Task<User> CreateRandomUserAsync()
+    public static async Task<User> CreateRandomUserAsync()
     {
         var userPayload = UsersData.GenerateRandomUser();
         return await CreateUserAsync(userPayload);

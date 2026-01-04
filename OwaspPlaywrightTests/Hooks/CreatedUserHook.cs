@@ -12,6 +12,6 @@ public class CreatedUserHook(ITestOutputHelper output) : Test(output)
     public override async Task InitializeAsync()
     {
         await base.InitializeAsync();
-        CreatedUser = await new UsersHelper().CreateRandomUserAsync();
+        CreatedUser = await UsersHelper.CreateRandomUserAsync();
     }
 }
