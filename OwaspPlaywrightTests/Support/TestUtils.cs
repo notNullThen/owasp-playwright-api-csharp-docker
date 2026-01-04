@@ -5,8 +5,6 @@ namespace OwaspPlaywrightTests.Support;
 
 public static class TestUtils
 {
-    public const string PRICE_SYMBOL = "¤";
-
     public static async Task WaitForElementToBeStableAsync(ILocator element)
     {
         var handle = await element.ElementHandleAsync();
@@ -16,12 +14,12 @@ public static class TestUtils
     public static string FormatPrice(decimal price)
     {
         string priceString = price <= 99.99m ? price.ToString("F2") : price.ToString("F0");
-        return $"{priceString}{PRICE_SYMBOL}";
+        return $"{priceString}{TestConfig.PriceSymbol}";
     }
 
     public static float GetPriceFromText(string priceText)
     {
-        return float.Parse(priceText.Replace(PRICE_SYMBOL, ""));
+        return float.Parse(priceText.Replace(TestConfig.PriceSymbol, ""));
     }
 
     public static async Task DismissCookiesAsync()
@@ -31,7 +29,7 @@ public static class TestUtils
             {
                 Name = "cookieconsent_status",
                 Value = "dismiss",
-                Url = TestConfig.BaseURL,
+                Url = TestConfig.BaseUrl,
             },
         ]);
     }
@@ -43,7 +41,7 @@ public static class TestUtils
             {
                 Name = "welcomebanner_status",
                 Value = "dismiss",
-                Url = TestConfig.BaseURL,
+                Url = TestConfig.BaseUrl,
             },
         ]);
     }

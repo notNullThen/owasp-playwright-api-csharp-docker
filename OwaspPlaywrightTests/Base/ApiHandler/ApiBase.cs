@@ -14,16 +14,16 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
     public async Task<ApiResponse<T>> RequestAsync<T>(IAPIRequestContext context)
     {
         return await Test.StepAsync(
-            $"Request {Method} \"{Route}\", expect {string.Join(", ", ExpectedStatusCodes)}",
+            $"Request {_method} \"{_route}\", expect {string.Join(", ", _expectedStatusCodes)}",
             async () =>
             {
                 // Separate bodyJson variable for better debug
-                var bodyJson = JsonSerializer.Serialize(Body);
+                var bodyJson = JsonSerializer.Serialize(_body);
                 var response = await context.FetchAsync(
-                    FullUrl,
+                    _fullUrl,
                     new()
                     {
-                        Method = Method.ToString(),
+                        Method = _method.ToString(),
                         Data = bodyJson,
                         Headers = [new("Content-Type", "application/json")],
                         Timeout = TestConfig.ApiWaitTimeout,
@@ -41,7 +41,7 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
     public async Task<BrowserApiResponse<T>> WaitAsync<T>(IPage page)
     {
         return await Test.StepAsync(
-            $"Wait for {Method} \"{Route}\" {string.Join(", ", ExpectedStatusCodes)}",
+            $"Wait for {_method} \"{_route}\" {string.Join(", ", _expectedStatusCodes)}",
             async () =>
             {
                 var response = await page.WaitForResponseAsync(
@@ -49,7 +49,7 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
                     {
                         // Ignore trailing slash and casing differences
                         var actualUrl = TestUtils.NormalizeUrl(response.Url);
-                        var expectedUrl = TestUtils.NormalizeUrl(FullUrl);
+                        var expectedUrl = TestUtils.NormalizeUrl(_fullUrl);
                         var requestMethod = response.Request.Method;
 
                         if (
@@ -64,7 +64,7 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
 
                         if (
                             !requestMethod.Equals(
-                                Method.ToString(),
+                                _method.ToString(),
                                 StringComparison.InvariantCultureIgnoreCase
                             )
                         )
@@ -74,7 +74,7 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
 
                         return true;
                     },
-                    new() { Timeout = ApiWaitTimeout }
+                    new() { Timeout = _apiWaitTimeout }
                 );
 
                 _errorMessage = response.StatusText;
@@ -119,10 +119,10 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
 
     private void ValidateStatusCode()
     {
-        if (!ExpectedStatusCodes.Contains(_actualStatusCode))
+        if (!_expectedStatusCodes.Contains(_actualStatusCode))
         {
             throw new Exception(
-                $"Expected to return {string.Join(", ", ExpectedStatusCodes)}, but got {_actualStatusCode}.\nEndpoint: {Method} {Route}\nError Message: {_errorMessage}"
+                $"Expected to return {string.Join(", ", _expectedStatusCodes)}, but got {_actualStatusCode}.\nEndpoint: {_method} {_route}\nError Message: {_errorMessage}"
             );
         }
     }

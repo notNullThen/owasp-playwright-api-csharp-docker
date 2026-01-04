@@ -20,7 +20,7 @@ public abstract class PlaywrightTestBase : PlaywrightTest
         var context = await _browser.NewContextAsync(
             new()
             {
-                BaseURL = TestConfig.BaseURL,
+                BaseURL = TestConfig.BaseUrl,
                 ViewportSize = new()
                 {
                     Width = TestConfig.ViewportWidth,
