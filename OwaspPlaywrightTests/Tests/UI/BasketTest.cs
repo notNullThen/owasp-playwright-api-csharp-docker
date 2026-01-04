@@ -16,11 +16,11 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedHook(output)
         var product = ProductsData.BananaJuice;
         var partialName = product.Name.Split(' ')[0];
 
-        await homePage.GoToAsync();
+        await homePage.GotoAsync();
         await homePage.Header.SearchBar.SearchAsync(partialName);
         await homePage.ProductTiles.GetByName(product.Name).AddToBasketAsync();
 
-        await basketPage.GoToAsync();
+        await basketPage.GotoAsync();
         var expectedProductRow = await basketPage.Products.GetByName(product.Name);
         await Expect(expectedProductRow.Body).ToBeVisibleAsync();
     }

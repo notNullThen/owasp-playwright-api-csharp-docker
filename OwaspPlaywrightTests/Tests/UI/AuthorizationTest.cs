@@ -18,7 +18,7 @@ public class AuthorizationTest
 
             var generatedUser = UsersData.GenerateRandomUser();
 
-            await registrationPage.GoToAsync();
+            await registrationPage.GotoAsync();
 
             await Expect(registrationPage.RegisterButton).ToBeDisabledAsync();
 
@@ -38,7 +38,7 @@ public class AuthorizationTest
         {
             var loginPage = new LoginPage();
 
-            await loginPage.GoToAsync();
+            await loginPage.GotoAsync();
             await loginPage.LoginAsync(
                 email: CreatedUser.Payload.Email,
                 password: CreatedUser.Payload.Password

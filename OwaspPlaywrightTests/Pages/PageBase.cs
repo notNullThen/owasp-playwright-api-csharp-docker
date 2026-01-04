@@ -11,7 +11,7 @@ public abstract class PageBase(string url)
 
     public ILocator HeaderText => Page.Locator(".heading");
 
-    public async Task GoToAsync()
+    public async Task GotoAsync()
     {
         await Test.StepAsync(
             $"Go to '{url}' page",

@@ -13,7 +13,7 @@ public class SearchTest(ITestOutputHelper output) : Test(output)
         var homePage = new HomePage();
         var partialName = ProductsData.RaspberryJuice.Name.Split(' ')[0];
 
-        await homePage.GoToAsync();
+        await homePage.GotoAsync();
         await homePage.Header.SearchBar.SearchAsync(partialName);
 
         var productTile = homePage.ProductTiles.GetByName(ProductsData.RaspberryJuice.Name);
