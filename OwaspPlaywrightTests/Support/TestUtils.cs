@@ -31,7 +31,7 @@ public static class TestUtils
             {
                 Name = "cookieconsent_status",
                 Value = "dismiss",
-                Url = PlaywrightConfig.BaseURL,
+                Url = TestConfig.BaseURL,
             },
         ]);
     }
@@ -43,7 +43,7 @@ public static class TestUtils
             {
                 Name = "welcomebanner_status",
                 Value = "dismiss",
-                Url = PlaywrightConfig.BaseURL,
+                Url = TestConfig.BaseURL,
             },
         ]);
     }

@@ -3,7 +3,7 @@ using OwaspPlaywrightTests.Base;
 
 namespace OwaspPlaywrightTests;
 
-public static class PlaywrightConfig
+public static class TestConfig
 {
     public const int Timeout = 5 * 1000;
     public const int ApiWaitTimeout = 5 * 1000;

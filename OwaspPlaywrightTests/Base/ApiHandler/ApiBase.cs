@@ -26,7 +26,7 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
                         Method = Method.ToString(),
                         Data = bodyJson,
                         Headers = [new("Content-Type", "application/json")],
-                        Timeout = PlaywrightConfig.ApiWaitTimeout,
+                        Timeout = TestConfig.ApiWaitTimeout,
                     }
                 );
 

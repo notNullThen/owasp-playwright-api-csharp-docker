@@ -14,19 +14,17 @@ public abstract class PlaywrightTestBase : PlaywrightTest
     {
         await base.InitializeAsync().ConfigureAwait(false);
 
-        Playwright.Selectors.SetTestIdAttribute(PlaywrightConfig.TestIdAttribute);
-        _browser = await Playwright.Chromium.LaunchAsync(
-            new() { Headless = PlaywrightConfig.Headless }
-        );
+        Playwright.Selectors.SetTestIdAttribute(TestConfig.TestIdAttribute);
+        _browser = await Playwright.Chromium.LaunchAsync(new() { Headless = TestConfig.Headless });
 
         var context = await _browser.NewContextAsync(
             new()
             {
-                BaseURL = PlaywrightConfig.BaseURL,
+                BaseURL = TestConfig.BaseURL,
                 ViewportSize = new()
                 {
-                    Width = PlaywrightConfig.ViewportWidth,
-                    Height = PlaywrightConfig.ViewportHeight,
+                    Width = TestConfig.ViewportWidth,
+                    Height = TestConfig.ViewportHeight,
                 },
             }
         );
@@ -41,8 +39,8 @@ public abstract class PlaywrightTestBase : PlaywrightTest
         );
 
         Page = await context.NewPageAsync();
-        Page.SetDefaultTimeout(PlaywrightConfig.Timeout);
-        Page.SetDefaultNavigationTimeout(PlaywrightConfig.Timeout);
+        Page.SetDefaultTimeout(TestConfig.Timeout);
+        Page.SetDefaultNavigationTimeout(TestConfig.Timeout);
 
         Test.Page = Page;
 
@@ -55,9 +53,9 @@ public abstract class PlaywrightTestBase : PlaywrightTest
         {
             var testName = Test.GetTestName();
 
-            Directory.CreateDirectory(PlaywrightConfig.TracesDir);
+            Directory.CreateDirectory(TestConfig.TracesDir);
             await Page.Context.Tracing.StopAsync(
-                new() { Path = Path.Combine(PlaywrightConfig.TracesDir, $"{testName}.zip") }
+                new() { Path = Path.Combine(TestConfig.TracesDir, $"{testName}.zip") }
             );
         }
 
