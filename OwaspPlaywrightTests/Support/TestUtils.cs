@@ -56,7 +56,7 @@ public static class TestUtils
                 .Where(part => part.Trim().Length > 0)
         );
 
-        return connectedParts + "/";
+        return connectedParts;
     }
 
     public static string NormalizeUrl(string url)
