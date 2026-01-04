@@ -13,7 +13,9 @@ public static class ProductsHelper
             async () =>
             {
                 var searchResults = await Api.Products.SearchProducts(name).RequestAsync();
-                return searchResults.ResponseBody!.Data.First(p => p.Name == name);
+                return searchResults.ResponseBody!.Data.First(p =>
+                    p.Name.Contains(name, StringComparison.InvariantCultureIgnoreCase)
+                );
             }
         );
     }
