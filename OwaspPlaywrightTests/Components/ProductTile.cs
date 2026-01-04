@@ -1,5 +1,8 @@
 using Microsoft.Playwright;
+using OwaspPlaywrightTests.ApiEndpoints;
+using OwaspPlaywrightTests.ApiEndpoints.Types.BasketItems;
 using OwaspPlaywrightTests.Base;
+using OwaspPlaywrightTests.Base.ApiHandler.Types;
 using OwaspPlaywrightTests.Support;
 
 namespace OwaspPlaywrightTests.Components;
@@ -24,5 +27,18 @@ public class ProductTile()
         var tile = new ProductTile();
         tile.Body = Body.Filter(new() { Has = Page.Locator(ItemNameSelector).GetByText(name) });
         return tile;
+    }
+
+    public async Task<BrowserApiResponse<BasketItemsResponse>> AddToBasketAsync()
+    {
+        return await Test.StepAsync(
+            $"Add product '{await ItemName.InnerTextAsync()}' to basket",
+            async () =>
+            {
+                var basketItemsWaitTask = Api.BasketItems.PostBasketItems().WaitAsync();
+                await Task.WhenAll(basketItemsWaitTask, AddToBasketButton.ClickAsync());
+                return await basketItemsWaitTask;
+            }
+        );
     }
 }

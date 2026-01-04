@@ -1,5 +1,5 @@
 using Bogus;
-using OwaspPlaywrightTests.Base.Api.Base.Types.User;
+using OwaspPlaywrightTests.ApiEndpoints.Types.User;
 
 namespace OwaspPlaywrightTests.Data;
 

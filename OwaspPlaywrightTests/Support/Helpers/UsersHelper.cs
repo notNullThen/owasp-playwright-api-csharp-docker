@@ -1,6 +1,6 @@
+using OwaspPlaywrightTests.ApiEndpoints;
+using OwaspPlaywrightTests.ApiEndpoints.Types.User;
 using OwaspPlaywrightTests.Base;
-using OwaspPlaywrightTests.Base.Api;
-using OwaspPlaywrightTests.Base.Api.Base.Types.User;
 using OwaspPlaywrightTests.Data;
 
 namespace OwaspPlaywrightTests.Support.Helpers;

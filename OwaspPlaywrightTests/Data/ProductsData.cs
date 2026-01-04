@@ -10,4 +10,11 @@ public static class ProductsData
         Price: 4.99f,
         SoldOut: false
     );
+
+    public static readonly Product BananaJuice = new(
+        Name: "Banana Juice (1000ml)",
+        Description: "Monkeys love it the most.",
+        Price: 1.99f,
+        SoldOut: true
+    );
 }
