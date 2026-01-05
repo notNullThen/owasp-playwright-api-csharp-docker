@@ -2,7 +2,6 @@ using OwaspPlaywrightTests.Base;
 using OwaspPlaywrightTests.Data;
 using OwaspPlaywrightTests.Hooks;
 using OwaspPlaywrightTests.Pages;
-using OwaspPlaywrightTests.Support.Helpers;
 using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.UI;

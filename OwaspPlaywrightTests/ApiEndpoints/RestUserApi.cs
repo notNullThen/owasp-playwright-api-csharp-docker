@@ -7,5 +7,5 @@ namespace OwaspPlaywrightTests.ApiEndpoints;
 public class RestUserApi() : ApiEndpointBase("rest/user")
 {
     public ApiAction<LoginResponse> PostLogin() =>
-        Action<LoginResponse>(new() { Method = ApiHttpMethod.POST });
+        Action<LoginResponse>(new() { Url = "login", Method = ApiHttpMethod.POST });
 }
