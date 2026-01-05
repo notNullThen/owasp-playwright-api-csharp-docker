@@ -45,32 +45,4 @@ public static class TestUtils
             },
         ]);
     }
-
-    public static string ConnectUrlParts(params string[] parts)
-    {
-        var connectedParts = string.Join(
-            "/",
-            parts
-                .Where(part => !string.IsNullOrEmpty(part))
-                .Select(NormalizeUrl)
-                .Where(part => part.Trim().Length > 0)
-        );
-
-        return connectedParts;
-    }
-
-    public static string NormalizeUrl(string url)
-    {
-        return RemoveLeadingSlash(RemoveTrailingSlash(url));
-    }
-
-    public static string RemoveTrailingSlash(string url)
-    {
-        return url.EndsWith('/') ? url.Substring(0, url.Length - 1) : url;
-    }
-
-    public static string RemoveLeadingSlash(string url)
-    {
-        return url.StartsWith('/') ? url.Substring(1) : url;
-    }
 }
