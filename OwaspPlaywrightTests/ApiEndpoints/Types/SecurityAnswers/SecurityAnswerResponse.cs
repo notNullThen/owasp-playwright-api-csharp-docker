@@ -1,3 +1,3 @@
 namespace OwaspPlaywrightTests.ApiEndpoints.Types.SecurityAnswers;
 
-public class SecurityAnswerResponse : Response<SecurityAnswerData> { }
+public class SecurityAnswerResponse : ResponseBase<SecurityAnswerData> { }

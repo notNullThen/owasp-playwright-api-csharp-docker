@@ -5,5 +5,5 @@ namespace OwaspPlaywrightTests.ApiEndpoints.Types.RestUserApi;
 public class LoginResponse
 {
     [JsonPropertyName("authentication")]
-    public required Authentication authentication;
+    public required Authentication Authentication { get; set; }
 }

@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
 
-namespace OwaspPlaywrightTests.ApiEndpoints.Types.BasketItems;
+namespace OwaspPlaywrightTests.ApiEndpoints.Types.RestBasket;
 
-public class BasketItemData
+public class RestBasketItemData
 {
     [JsonPropertyName("id")]
     public required int Id { get; set; }
@@ -11,7 +11,7 @@ public class BasketItemData
     public required int ProductId { get; set; }
 
     [JsonPropertyName("BasketId")]
-    public required string BasketId { get; set; }
+    public required int BasketId { get; set; }
 
     [JsonPropertyName("quantity")]
     public required int Quantity { get; set; }

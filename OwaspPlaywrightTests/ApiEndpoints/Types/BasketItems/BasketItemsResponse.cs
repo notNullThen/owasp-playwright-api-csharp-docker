@@ -1,3 +1,3 @@
 namespace OwaspPlaywrightTests.ApiEndpoints.Types.BasketItems;
 
-public class BasketItemsResponse : Response<List<BasketItemData>> { }
+public class BasketItemsResponse : ResponseBase<BasketItemData> { }

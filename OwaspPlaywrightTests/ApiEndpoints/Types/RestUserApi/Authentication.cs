@@ -5,11 +5,11 @@ namespace OwaspPlaywrightTests.ApiEndpoints.Types.RestUserApi;
 public class Authentication
 {
     [JsonPropertyName("token")]
-    public required string Token;
+    public required string Token { get; set; }
 
     [JsonPropertyName("bid")]
-    public required string Bid;
+    public required int Bid { get; set; }
 
-    [JsonPropertyName("email")]
-    public required string Email;
+    [JsonPropertyName("umail")]
+    public required string Umail { get; set; }
 }

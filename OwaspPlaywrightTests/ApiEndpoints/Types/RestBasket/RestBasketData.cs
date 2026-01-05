@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using OwaspPlaywrightTests.ApiEndpoints.Types.Products;
 
 namespace OwaspPlaywrightTests.ApiEndpoints.Types.RestBasket;
 
@@ -21,5 +20,5 @@ public class RestBasketData
     public required string UpdatedAt { get; set; }
 
     [JsonPropertyName("Products")]
-    public required List<ProductData> Products { get; set; }
+    public required List<RestBasketProductData> Products { get; set; }
 }

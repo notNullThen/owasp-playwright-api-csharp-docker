@@ -8,7 +8,7 @@ public class BasketItemsPayload
     public required int ProductId { get; set; }
 
     [JsonPropertyName("BasketId")]
-    public required int BasketId { get; set; }
+    public required string BasketId { get; set; }
 
     [JsonPropertyName("quantity")]
     public required int Quantity { get; set; }

@@ -1,12 +1,12 @@
 using OwaspPlaywrightTests.ApiEndpoints;
-using OwaspPlaywrightTests.ApiEndpoints.Types.Products;
+using OwaspPlaywrightTests.ApiEndpoints.Types.RestBasket;
 using OwaspPlaywrightTests.Base;
 
 namespace OwaspPlaywrightTests.Support.Helpers;
 
 public static class ProductsHelper
 {
-    public static async Task<ProductData> GetProductByNameAsync(string name)
+    public static async Task<RestBasketProductData> GetProductByNameAsync(string name)
     {
         return await Test.StepAsync(
             $"Get product with name \"{name}\"",
