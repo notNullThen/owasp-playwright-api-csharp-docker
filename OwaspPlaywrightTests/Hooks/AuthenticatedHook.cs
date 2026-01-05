@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Hooks;
 
-public class AuthenticatedHook(ITestOutputHelper output) : CreatedUserHook(output)
+public abstract class AuthenticatedHook(ITestOutputHelper output) : CreatedUserHook(output)
 {
     protected LoginResponse LoginResponseBody { get; private set; } = null!;
 

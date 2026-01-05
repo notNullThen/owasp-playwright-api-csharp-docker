@@ -5,7 +5,7 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Hooks;
 
-public class CreatedUserHook(ITestOutputHelper output) : Test(output)
+public abstract class CreatedUserHook(ITestOutputHelper output) : Test(output)
 {
     protected User CreatedUser { get; private set; } = null!;
 
