@@ -1,9 +1,11 @@
 using Microsoft.Playwright;
 using OwaspPlaywrightTests.Base;
+using OwaspPlaywrightTests.Support;
 
 namespace OwaspPlaywrightTests.Components;
 
-public class ProductRow() : ComponentBase("Row", Test.Page.Locator("app-purchase-basket mat-row"))
+public class ProductRow()
+    : ComponentBase("Product Row", Test.Page.Locator("app-purchase-basket mat-row"))
 {
     public ILocator Cells => Body.GetByRole(AriaRole.Cell);
     public ILocator ImageCell => Cells.Nth(0);
@@ -12,7 +14,30 @@ public class ProductRow() : ComponentBase("Row", Test.Page.Locator("app-purchase
     public ILocator PriceCell => Cells.Nth(3);
     public ILocator DeleteCell => Cells.Nth(4);
 
-    public async Task<ProductRow> GetByName(string productName)
+    public async Task<string> GetProductNameAsync()
+    {
+        return await NameCell.InnerTextAsync();
+    }
+
+    public async Task<int> GetQuantityValueAsync()
+    {
+        var quantityText = await QuantityCell.InnerTextAsync();
+        return int.Parse(quantityText);
+    }
+
+    public async Task<float> GetPriceValueAsync()
+    {
+        var priceText = await PriceCell.InnerTextAsync();
+        return TestUtils.GetPriceFromText(priceText);
+    }
+
+    public async Task<ProductRow> GetByNameAsync(string productName)
+    {
+        var index = await GetIndexByNameAsync(productName);
+        return GetByIndex(index);
+    }
+
+    public async Task<int> GetIndexByNameAsync(string productName)
     {
         var rowsCount = await CountAsync();
         for (int i = 0; i < rowsCount; i++)
@@ -22,7 +47,7 @@ public class ProductRow() : ComponentBase("Row", Test.Page.Locator("app-purchase
 
             if (productName.Equals(actualProductName, StringComparison.InvariantCultureIgnoreCase))
             {
-                return row;
+                return i;
             }
         }
 
