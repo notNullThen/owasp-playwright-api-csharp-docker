@@ -42,6 +42,12 @@ public class DropdownFormField : FormFieldBase
             async () =>
             {
                 await Input.ClickAsync();
+                if (!await Options.IsVisibleAsync())
+                {
+                    await Page.WaitForTimeoutAsync(1000);
+                    await Input.ClickAsync();
+                }
+
                 await TestUtils.WaitForElementToBeStableAsync(Options);
 
                 await GetOptionByName(name).ClickAsync();
