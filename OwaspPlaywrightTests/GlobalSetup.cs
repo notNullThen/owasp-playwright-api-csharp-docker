@@ -1,7 +1,7 @@
 using OwaspPlaywrightTests.Base.ApiHandler;
 using OwaspPlaywrightTests.Support;
 
-namespace OwaspPlaywrightTests.Fixtures;
+namespace OwaspPlaywrightTests;
 
 public static class GlobalSetup
 {
@@ -15,5 +15,7 @@ public static class GlobalSetup
 
         await TestUtils.DismissCookiesAsync();
         await TestUtils.DismissWelcomeBannerAsync();
+
+        await TestUtils.WaitForBaseUrlReadyAsync();
     }
 }
