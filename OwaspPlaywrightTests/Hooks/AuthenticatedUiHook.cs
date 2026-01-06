@@ -1,3 +1,4 @@
+using OwaspPlaywrightTests.ApiEndpoints.Helpers;
 using OwaspPlaywrightTests.ApiEndpoints.Types.RestUserApi;
 using OwaspPlaywrightTests.Base.ApiHandler;
 using OwaspPlaywrightTests.Pages;
@@ -21,6 +22,6 @@ public abstract class AuthenticatedUiHook(ITestOutputHelper output) : CreatedUse
         );
         LoggedInUserResponse = loginResponse.ResponseBody!;
 
-        ApiParametersBase.SetToken($"Bearer {LoggedInUserResponse.Authentication.Token}");
+        ApiParametersBase.SetToken(BearerToken.Format(LoggedInUserResponse.Authentication.Token));
     }
 }
