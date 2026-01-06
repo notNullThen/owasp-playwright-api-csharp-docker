@@ -4,7 +4,8 @@
 ## Get latest from `dotnet new gitignore`
 
 # dotenv files
-.env
+# Not ignored for demonstration purposes
+# .env
 
 # Playwright
 /playwright

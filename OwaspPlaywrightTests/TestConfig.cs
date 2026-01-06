@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using OwaspPlaywrightTests.Base;
 
 namespace OwaspPlaywrightTests;
@@ -23,4 +24,10 @@ public static class TestConfig
 
     public static string TracesDir =>
         Path.Combine("../", "../", "../", "../", "./playwright-traces");
+
+    [ModuleInitializer]
+    public static void Initialize()
+    {
+        DotNetEnv.Env.Load(File.OpenRead("../../../../.env"));
+    }
 }
