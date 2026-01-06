@@ -14,7 +14,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
         var homePage = new HomePage();
         var basketPage = new BasketPage();
 
-        var product = ProductsData.BananaJuice;
+        var product = ProductsTestData.BananaJuice;
         var partialName = product.Name.Split(' ')[0];
 
         await homePage.GotoAsync();
@@ -31,7 +31,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
     {
         var basketPage = new BasketPage();
 
-        var product = ProductsData.BananaJuice;
+        var product = ProductsTestData.BananaJuice;
         var searchQuery = product.Name.Split(' ')[0].ToLower();
         var productResponse = await ProductsHelper.GetProductByNameAsync(searchQuery);
         var basketId = LoggedInUserResponse.Authentication.Bid;

@@ -2,7 +2,7 @@ namespace OwaspPlaywrightTests.Data;
 
 public sealed record Product(string Name, string Description, float Price, bool SoldOut);
 
-public static class ProductsData
+public static class ProductsTestData
 {
     public static readonly Product RaspberryJuice = new(
         Name: "Raspberry Juice (1000ml)",

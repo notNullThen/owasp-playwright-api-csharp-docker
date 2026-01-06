@@ -7,8 +7,8 @@ public class EnvVariablesTest
     [Fact]
     public void EnvVariablesAreLoadedSuccessfully()
     {
-        var adminUserEmail = EnvironmentVariables.ADMIN_USER_EMAIL();
-        var adminUserPassword = EnvironmentVariables.ADMIN_USER_PASSWORD();
+        var adminUserEmail = CIEnvironmentVariables.ADMIN_USER_EMAIL();
+        var adminUserPassword = CIEnvironmentVariables.ADMIN_USER_PASSWORD();
 
         Assert.False(string.IsNullOrWhiteSpace(adminUserEmail));
         Assert.False(string.IsNullOrWhiteSpace(adminUserPassword));

@@ -11,12 +11,12 @@ public class SearchTest(ITestOutputHelper output) : Test(output)
     public async Task UserCanSearchForItemName()
     {
         var homePage = new HomePage();
-        var partialName = ProductsData.RaspberryJuice.Name.Split(' ')[0];
+        var partialName = ProductsTestData.RaspberryJuice.Name.Split(' ')[0];
 
         await homePage.GotoAsync();
         await homePage.Header.SearchBar.SearchAsync(partialName);
 
-        var productTile = homePage.ProductTiles.GetByName(ProductsData.RaspberryJuice.Name);
+        var productTile = homePage.ProductTiles.GetByName(ProductsTestData.RaspberryJuice.Name);
         await Expect(productTile.Body).ToBeVisibleAsync();
     }
 }

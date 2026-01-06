@@ -2,7 +2,7 @@
 
 namespace OwaspPlaywrightTests.Base;
 
-public static class EnvironmentVariables
+public static class CIEnvironmentVariables
 {
     public static string CI() => Environment.GetEnvironmentVariable("CI");
 

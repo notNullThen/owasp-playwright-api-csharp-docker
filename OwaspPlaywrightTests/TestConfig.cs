@@ -15,7 +15,7 @@ public static class TestConfig
     public const int ViewportHeight = 720;
     public static bool Headless => !Debugger.IsAttached;
     public static string BaseUrl =>
-        string.IsNullOrWhiteSpace(EnvironmentVariables.CI())
+        string.IsNullOrWhiteSpace(CIEnvironmentVariables.CI())
             ? "http://localhost:3000"
             : "http://juice-shop:3000";
 
