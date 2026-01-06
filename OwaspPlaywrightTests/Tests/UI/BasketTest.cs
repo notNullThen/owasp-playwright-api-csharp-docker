@@ -6,7 +6,7 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.UI;
 
-public class BasketTest(ITestOutputHelper output) : AuthenticatedHook(output)
+public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
 {
     [Fact]
     public async Task UserCanSearchAndAddProductToBasket()
