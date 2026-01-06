@@ -6,7 +6,7 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.UI;
 
-public class AuthorizationTest
+public class UsersTest
 {
     public class RegistrationTests(ITestOutputHelper outputHelper) : Test(outputHelper)
     {
