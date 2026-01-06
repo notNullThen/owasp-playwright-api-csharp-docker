@@ -1,4 +1,3 @@
-using OwaspPlaywrightTests.ApiEndpoints.Types;
 using OwaspPlaywrightTests.ApiEndpoints.Types.RestBasket;
 using OwaspPlaywrightTests.Base.ApiHandler;
 using OwaspPlaywrightTests.Base.ApiHandler.Types;
@@ -11,7 +10,7 @@ public class RestBasketApi() : ApiEndpointBase("rest/basket")
         Action<RestBasketResponse>(
             new()
             {
-                Url = string.IsNullOrWhiteSpace(userId) ? null : $"{userId}",
+                Url = string.IsNullOrWhiteSpace(userId) ? null : userId,
                 Method = ApiHttpMethod.GET,
             }
         );

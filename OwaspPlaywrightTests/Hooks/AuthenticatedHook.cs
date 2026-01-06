@@ -7,7 +7,7 @@ namespace OwaspPlaywrightTests.Hooks;
 
 public abstract class AuthenticatedHook(ITestOutputHelper output) : CreatedUserHook(output)
 {
-    protected LoginResponse LoginResponseBody { get; private set; } = null!;
+    protected LoginResponse LoggedInUserResponse { get; private set; } = null!;
 
     public override async Task InitializeAsync()
     {
@@ -19,8 +19,8 @@ public abstract class AuthenticatedHook(ITestOutputHelper output) : CreatedUserH
             email: CreatedUser.Payload.Email,
             password: CreatedUser.Payload.Password
         );
-        LoginResponseBody = loginResponse.ResponseBody!;
+        LoggedInUserResponse = loginResponse.ResponseBody!;
 
-        ApiParametersBase.SetToken($"Bearer {LoginResponseBody.Authentication.Token}");
+        ApiParametersBase.SetToken($"Bearer {LoggedInUserResponse.Authentication.Token}");
     }
 }

@@ -7,7 +7,7 @@ namespace OwaspPlaywrightTests.ApiEndpoints;
 
 public class ProductsApi() : ApiEndpointBase("rest/products")
 {
-    public ApiAction<ProductsResponse> SearchProducts(string query)
+    public ApiAction<ProductsResponse> GetSearchProducts(string query)
     {
         var encodedQuery = Uri.EscapeDataString(query);
         return Action<ProductsResponse>(

@@ -1,6 +1,5 @@
 using Microsoft.Playwright;
 using Microsoft.Playwright.Xunit;
-using OwaspPlaywrightTests.Fixtures;
 
 namespace OwaspPlaywrightTests.Base;
 

@@ -12,9 +12,9 @@ public static class ProductsHelper
             $"Get product with name \"{name}\"",
             async () =>
             {
-                var searchResults = await Api.Products.SearchProducts(name).RequestAsync();
-                return searchResults.ResponseBody!.Data.First(p =>
-                    p.Name.Contains(name, StringComparison.InvariantCultureIgnoreCase)
+                var searchResults = await Api.Products.GetSearchProducts(name).RequestAsync();
+                return searchResults.ResponseBody!.Data.First(product =>
+                    product.Name.Contains(name, StringComparison.InvariantCultureIgnoreCase)
                 );
             }
         );

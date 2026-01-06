@@ -6,8 +6,8 @@ namespace OwaspPlaywrightTests;
 public static class TestConfig
 {
     public const string PriceSymbol = "¤";
-    public const int Timeout = 5 * 1000;
-    public const int ApiWaitTimeout = 5 * 1000;
+    public const int Timeout = 5_000;
+    public const int ApiWaitTimeout = 5_000;
     public static readonly IReadOnlyCollection<int> ExpectedApiStatusCodes = [200, 201];
     public const string TestIdAttribute = "data-testid";
     public const int ViewportWidth = 1280;
@@ -17,6 +17,9 @@ public static class TestConfig
         string.IsNullOrWhiteSpace(EnvironmentVariables.CI())
             ? "http://localhost:3000"
             : "http://juice-shop:3000";
+
+    public static int BaseUrlReadyRetries = 40;
+    public static int BaseUrlReadyDelayMs = 1_000;
 
     public static string TracesDir =>
         Path.Combine("../", "../", "../", "../", "./playwright-traces");
