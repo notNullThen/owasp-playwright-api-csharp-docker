@@ -18,7 +18,7 @@ public static class TestConfig
             ? "http://localhost:3000"
             : "http://juice-shop:3000";
 
-    public static int BaseUrlReadyRetries = 40;
+    public static int BaseUrlReadyRetries = 5;
     public static int BaseUrlReadyDelayMs = 1_000;
 
     public static string TracesDir =>
