@@ -1,7 +1,7 @@
 using OwaspPlaywrightTests.Base;
-using OwaspPlaywrightTests.Data;
 using OwaspPlaywrightTests.Hooks;
 using OwaspPlaywrightTests.Pages;
+using OwaspPlaywrightTests.Support.Helpers;
 using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.UI;
@@ -15,7 +15,7 @@ public class UsersTest
         {
             var registrationPage = new RegistrationPage();
 
-            var generatedUser = UsersData.GenerateRandomUser();
+            var generatedUser = UsersHelper.GenerateRandomUser();
 
             await registrationPage.GotoAsync();
 

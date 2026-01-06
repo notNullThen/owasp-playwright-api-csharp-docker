@@ -1,7 +1,7 @@
+using Bogus;
 using OwaspPlaywrightTests.ApiEndpoints;
 using OwaspPlaywrightTests.ApiEndpoints.Types.User;
 using OwaspPlaywrightTests.Base;
-using OwaspPlaywrightTests.Data;
 
 namespace OwaspPlaywrightTests.Support.Helpers;
 
@@ -36,7 +36,31 @@ public static class UsersHelper
 
     public static async Task<User> CreateRandomUserAsync()
     {
-        var userPayload = UsersData.GenerateRandomUser();
+        var userPayload = GenerateRandomUser();
         return await CreateUserAsync(userPayload);
+    }
+
+    public static UserPayload GenerateRandomUser()
+    {
+        var faker = new Faker();
+        var password = faker.Internet.Password();
+        var now = DateTime.UtcNow.ToString("o");
+
+        var user = new UserPayload
+        {
+            Email = faker.Internet.Email(),
+            Password = password,
+            PasswordRepeat = password,
+            SecurityAnswer = faker.Lorem.Word(),
+            SecurityQuestion = new()
+            {
+                Id = 1,
+                Question = "Your eldest siblings middle name?",
+                CreatedAt = now,
+                UpdatedAt = now,
+            },
+        };
+
+        return user;
     }
 }
