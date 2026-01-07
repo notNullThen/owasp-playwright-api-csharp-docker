@@ -1,3 +1,4 @@
+using OwaspPlaywrightTests.Base;
 using OwaspPlaywrightTests.Data;
 using OwaspPlaywrightTests.Hooks;
 using OwaspPlaywrightTests.Pages;
@@ -27,7 +28,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
     }
 
     [Fact]
-    public async Task UserCanPerformCheckout()
+    public async Task BasketShowsCorrectDetails()
     {
         var basketPage = new BasketPage();
 
@@ -46,16 +47,38 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
         await basketPage.GotoAsync();
         var row = await basketPage.Products.GetByNameAsync(product.Name);
 
-        var rowProductName = await row.GetProductNameAsync();
-        Assert.Equal(rowProductName, product.Name);
+        await Test.StepAsync(
+            $"Verify Product Name in basket to be '{product.Name}'",
+            async () =>
+            {
+                var rowProductName = await row.GetProductNameAsync();
+                Assert.Equal(rowProductName, product.Name);
+            }
+        );
 
-        var rowQuantity = await row.GetQuantityValueAsync();
-        Assert.Equal(rowQuantity, quantity);
+        await Test.StepAsync(
+            $"Verify Quantity in basket to be '{quantity}'",
+            async () =>
+            {
+                var rowQuantity = await row.GetQuantityValueAsync();
+                Assert.Equal(rowQuantity, quantity);
+            }
+        );
 
-        var rowPrice = await row.GetPriceValueAsync();
-        Assert.Equal(rowPrice, product.Price);
+        await Test.StepAsync(
+            $"Verify Price in basket to be '{product.Price}'",
+            async () =>
+            {
+                var rowPrice = await row.GetPriceValueAsync();
+                Assert.Equal(rowPrice, product.Price);
+            }
+        );
 
-        var totalPrice = await basketPage.GetTotalPriceValueAsync();
-        Assert.Equal(product.Price * quantity, totalPrice);
+        var actualTotalPrice = await basketPage.GetTotalPriceValueAsync();
+        var expectedTotalPrice = product.Price * quantity;
+        await Test.StepAsync(
+            $"Verify Total Price in basket to be '{expectedTotalPrice}'",
+            async () => Assert.Equal(expectedTotalPrice, actualTotalPrice)
+        );
     }
 }
