@@ -1,12 +1,12 @@
+using OwaspPlaywrightTests.ApiEndpoints;
 using OwaspPlaywrightTests.ApiEndpoints.Helpers;
 using OwaspPlaywrightTests.ApiEndpoints.Types.RestUserApi;
 using OwaspPlaywrightTests.Base.ApiHandler;
-using OwaspPlaywrightTests.Pages;
 using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Hooks;
 
-public abstract class AuthenticatedUiHook(ITestOutputHelper output) : CreatedUserHook(output)
+public abstract class AuthenticatedHook(ITestOutputHelper output) : CreatedUserHook(output)
 {
     protected LoginResponse LoggedInUserResponse { get; private set; } = null!;
 
@@ -14,12 +14,12 @@ public abstract class AuthenticatedUiHook(ITestOutputHelper output) : CreatedUse
     {
         await base.InitializeAsync();
 
-        var loginPage = new LoginPage();
-        await loginPage.GotoAsync();
-        var loginResponse = await loginPage.LoginAsync(
-            email: CreatedUser.Payload.Email,
-            password: CreatedUser.Payload.Password
-        );
+        var loginResponse = await Api
+            .RestUser.PostLogin(
+                new() { Email = CreatedUser.Payload.Email, Password = CreatedUser.Payload.Password }
+            )
+            .RequestAsync();
+
         LoggedInUserResponse = loginResponse.ResponseBody!;
 
         ApiParametersBase.SetToken(BearerToken.Format(LoggedInUserResponse.Authentication.Token));

@@ -30,7 +30,7 @@ public class UsersTest
         }
     }
 
-    public class LogIntests(ITestOutputHelper outputHelper) : CreatedUserApiHook(outputHelper)
+    public class LogIntests(ITestOutputHelper outputHelper) : CreatedUserHook(outputHelper)
     {
         [Fact]
         public async Task UserCanLogInSuccessfully()
