@@ -48,7 +48,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
         var row = await basketPage.Products.GetByNameAsync(product.Name);
 
         await Test.StepAsync(
-            $"Verify Product Name in basket to be '{product.Name}'",
+            $"Verify Product Name in basket to be \"{product.Name}\"",
             async () =>
             {
                 var rowProductName = await row.GetProductNameAsync();
@@ -57,7 +57,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
         );
 
         await Test.StepAsync(
-            $"Verify Quantity in basket to be '{quantity}'",
+            $"Verify Quantity in basket to be \"{quantity}\"",
             async () =>
             {
                 var rowQuantity = await row.GetQuantityValueAsync();
@@ -66,7 +66,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
         );
 
         await Test.StepAsync(
-            $"Verify Price in basket to be '{product.Price}'",
+            $"Verify Price in basket to be \"{product.Price}\"",
             async () =>
             {
                 var rowPrice = await row.GetPriceValueAsync();
@@ -77,7 +77,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
         var actualTotalPrice = await basketPage.GetTotalPriceValueAsync();
         var expectedTotalPrice = product.Price * quantity;
         await Test.StepAsync(
-            $"Verify Total Price in basket to be '{expectedTotalPrice}'",
+            $"Verify Total Price in basket to be \"{expectedTotalPrice}\"",
             async () => Assert.Equal(expectedTotalPrice, actualTotalPrice)
         );
     }
