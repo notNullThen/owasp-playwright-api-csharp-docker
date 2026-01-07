@@ -1,5 +1,12 @@
 FROM mcr.microsoft.com/playwright/dotnet:v1.57.0-noble
 
+# Install NodeJS
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs
+
+# Install Allure 3
+RUN npm install -g allure
+
 # Install .NET 10 SDK
 RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 10.0 --install-dir /usr/share/dotnet
 

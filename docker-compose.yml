@@ -3,15 +3,9 @@ services:
     image: bkimminich/juice-shop:latest
     container_name: juice-shop-csharp
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
     healthcheck:
-      test:
-        [
-          "CMD",
-          "/nodejs/bin/node",
-          "-e",
-          "require('node:http').get('http://localhost:3000', (res) => { if (res.statusCode >= 200 && res.statusCode < 400) process.exit(0); else process.exit(1); }).on('error', (err) => process.exit(1));",
-        ]
+      test: [ "CMD", "/nodejs/bin/node", "-e", "require('node:http').get('http://localhost:3000', (res) => { if (res.statusCode >= 200 && res.statusCode < 400) process.exit(0); else process.exit(1); }).on('error', (err) => process.exit(1));" ]
       interval: 1s
       timeout: 1s
       retries: 15
@@ -26,4 +20,4 @@ services:
         condition: service_healthy
     environment:
       - CI=true
-    command: ["dotnet", "test", "OwaspPlaywrightTests/OwaspPlaywrightTests.csproj"]
+    command: sh -c "dotnet test OwaspPlaywrightTests && allure serve OwaspPlaywrightTests/bin/Debug/net10.0/allure-results --port 8080"

@@ -11,6 +11,9 @@
 /playwright
 /playwright-traces
 
+# Allure
+/allure-results
+
 # User-specific files
 *.rsuser
 *.suo
