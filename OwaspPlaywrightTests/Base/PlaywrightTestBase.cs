@@ -1,3 +1,4 @@
+using Allure.Net.Commons;
 using Microsoft.Playwright;
 using Microsoft.Playwright.Xunit;
 
@@ -51,10 +52,15 @@ public abstract class PlaywrightTestBase : PlaywrightTest
         if (Page != null)
         {
             var testName = Test.GetTestName();
+            var tracePath = Path.Combine(TestConfig.TracesDir, $"{testName}.zip");
 
             Directory.CreateDirectory(TestConfig.TracesDir);
-            await Page.Context.Tracing.StopAsync(
-                new() { Path = Path.Combine(TestConfig.TracesDir, $"{testName}.zip") }
+            await Page.Context.Tracing.StopAsync(new() { Path = tracePath });
+
+            AllureApi.AddAttachment(
+                "Playwright Trace",
+                "application/vnd.allure.playwright-trace",
+                tracePath
             );
         }
 
