@@ -1,4 +1,3 @@
-using OwaspPlaywrightTests.Base;
 using OwaspPlaywrightTests.Data;
 using OwaspPlaywrightTests.Hooks;
 using OwaspPlaywrightTests.Pages;
@@ -9,7 +8,7 @@ namespace OwaspPlaywrightTests.Tests.UI;
 
 public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
 {
-    [Fact]
+    [Fact(DisplayName = "User can search and add Product to Basket")]
     public async Task UserCanSearchAndAddProductToBasket()
     {
         var homePage = new HomePage();
@@ -27,7 +26,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
         await Expect(expectedProduct.Body).ToBeVisibleAsync();
     }
 
-    [Fact]
+    [Fact(DisplayName = "Basket shows correct details for added Product")]
     public async Task BasketShowsCorrectDetails()
     {
         var basketPage = new BasketPage();
@@ -47,7 +46,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
         await basketPage.GotoAsync();
         var row = await basketPage.Products.GetByNameAsync(product.Name);
 
-        await Test.StepAsync(
+        await StepAsync(
             $"Verify Product Name in basket to be \"{product.Name}\"",
             async () =>
             {
@@ -56,7 +55,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
             }
         );
 
-        await Test.StepAsync(
+        await StepAsync(
             $"Verify Quantity in basket to be \"{quantity}\"",
             async () =>
             {
@@ -65,7 +64,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
             }
         );
 
-        await Test.StepAsync(
+        await StepAsync(
             $"Verify Price in basket to be \"{product.Price}\"",
             async () =>
             {
@@ -76,7 +75,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
 
         var actualTotalPrice = await basketPage.GetTotalPriceValueAsync();
         var expectedTotalPrice = product.Price * quantity;
-        await Test.StepAsync(
+        await StepAsync(
             $"Verify Total Price in basket to be \"{expectedTotalPrice}\"",
             async () => Assert.Equal(expectedTotalPrice, actualTotalPrice)
         );
