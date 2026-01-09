@@ -7,7 +7,7 @@ namespace OwaspPlaywrightTests.Tests.UI;
 
 public class SearchTest(ITestOutputHelper output) : Test(output)
 {
-    [Fact]
+    [Fact(DisplayName = "User can search for item by name")]
     public async Task UserCanSearchForItemName()
     {
         var homePage = new HomePage();

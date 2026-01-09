@@ -10,7 +10,7 @@ public class UsersTest
 {
     public class RegistrationTests(ITestOutputHelper outputHelper) : Test(outputHelper)
     {
-        [Fact]
+        [Fact(DisplayName = "User can register successfully")]
         public async Task UserCanRegisterSuccessfully()
         {
             var registrationPage = new RegistrationPage();
@@ -30,9 +30,9 @@ public class UsersTest
         }
     }
 
-    public class LogIntests(ITestOutputHelper outputHelper) : CreatedUserHook(outputHelper)
+    public class LogInTests(ITestOutputHelper outputHelper) : CreatedUserHook(outputHelper)
     {
-        [Fact]
+        [Fact(DisplayName = "User can log in successfully")]
         public async Task UserCanLogInSuccessfully()
         {
             var loginPage = new LoginPage();
