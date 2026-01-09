@@ -22,7 +22,7 @@ public static class TestConfig
     public static int BaseUrlReadyRetries = 5;
     public static int BaseUrlReadyDelayMs = 1_000;
 
-    public static string TracesDir => Path.Combine("..", "..", "..", "..", "playwright-traces");
+    public static string TracesDir => Path.Combine("..", "..", "..", "playwright-traces");
 
     public static string DotEnvFilePath => Path.Combine("..", "..", "..", "..", ".env");
 

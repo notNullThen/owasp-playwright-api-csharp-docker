@@ -8,11 +8,11 @@
 # .env
 
 # Playwright
-/playwright
-/playwright-traces
+playwright
+playwright-traces
 
 # Allure
-/allure-results
+allure-results
 
 # User-specific files
 *.rsuser
