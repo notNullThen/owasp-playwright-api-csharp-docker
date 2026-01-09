@@ -4,7 +4,7 @@ namespace OwaspPlaywrightTests.Tests.System;
 
 public class EnvVariablesTest
 {
-    [Fact]
+    [Fact(DisplayName = "Environment variables are loaded successfully")]
     public void EnvVariablesAreLoadedSuccessfully()
     {
         CIEnvironmentVariables.ADMIN_USER_EMAIL();
