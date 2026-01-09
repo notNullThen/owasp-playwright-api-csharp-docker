@@ -22,6 +22,9 @@
 LICENSE
 README.md
 
+# DotEnv
+**/*.env
+
 # Playwright
 **/playwright
 **/playwright-traces
