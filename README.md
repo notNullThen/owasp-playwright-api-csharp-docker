@@ -2,7 +2,7 @@
 
 Portfolio project showcasing an **SDET-friendly test framework on top of Playwright for .NET** for the OWASP Juice Shop web app.
 
-## Playwright TypeScript version
+## Playwright TypeScript NodeJS version
 
 Also available as a Playwright TypeScript NodeJS version: https://github.com/notNullThen/owasp-playwright-api-typescript-docker
 
