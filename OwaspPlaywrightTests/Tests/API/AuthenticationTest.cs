@@ -22,7 +22,7 @@ public class AuthenticationTest(ITestOutputHelper outputHelper) : CreatedUserHoo
 
         Assert.NotEmpty(loginResponse.Token);
 
-        Assert.NotEqual(CreatedUser.Payload.Email, loginResponse.Umail);
+        Assert.Equal(CreatedUser.Payload.Email, loginResponse.Umail);
 
         Assert.True(loginResponse.Bid > 0, "User ID (bid) should be a positive integer");
     }
