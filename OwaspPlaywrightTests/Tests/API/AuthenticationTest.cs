@@ -9,36 +9,20 @@ public class AuthenticationTest(ITestOutputHelper outputHelper) : CreatedUserHoo
     [Fact(DisplayName = "User can authenticate successfully")]
     public async Task UserCanAuthenticateSuccessfully()
     {
-        var response = await StepAsync(
-            "Authenticate with valid credentials",
-            async () =>
-                await Api
-                    .RestUser.PostLogin(
-                        new()
-                        {
-                            Email = CreatedUser.Payload.Email,
-                            Password = CreatedUser.Payload.Password,
-                        }
-                    )
-                    .RequestAsync()
-        );
+        var response = await Api
+            .RestUser.PostLogin(
+                new() { Email = CreatedUser.Payload.Email, Password = CreatedUser.Payload.Password }
+            )
+            .RequestAsync();
+
         var loginResponse = response.ResponseBody!.Authentication;
 
         Assert.NotNull(response.ResponseBody);
         Assert.NotNull(loginResponse.Umail);
 
-        Assert.False(
-            string.IsNullOrWhiteSpace(loginResponse.Token),
-            "Authentication token should not be null or empty"
-        );
+        Assert.NotEmpty(loginResponse.Token);
 
-        Assert.True(
-            CreatedUser.Payload.Email.Equals(
-                loginResponse.Umail,
-                StringComparison.InvariantCultureIgnoreCase
-            ),
-            "Authenticated email should match the Payload email"
-        );
+        Assert.NotEqual(CreatedUser.Payload.Email, loginResponse.Umail);
 
         Assert.True(loginResponse.Bid > 0, "User ID (bid) should be a positive integer");
     }
