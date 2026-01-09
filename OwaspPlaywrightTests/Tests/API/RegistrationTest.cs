@@ -1,7 +1,4 @@
-using OwaspPlaywrightTests.ApiEndpoints;
-using OwaspPlaywrightTests.Base;
 using OwaspPlaywrightTests.Hooks;
-using OwaspPlaywrightTests.Support.Helpers;
 using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.API;
