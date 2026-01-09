@@ -1,5 +1,8 @@
 {
   "name": "Playwright Dev Container",
   "image": "mcr.microsoft.com/playwright/dotnet:v1.57.0-noble",
-  "postCreateCommand": "dotnet build"
+  // Install NodeJS
+  // Install Allure 3
+  // Install .NET 10 SDK
+  "postCreateCommand": "curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -y nodejs && npm install -g allure && curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 10.0 --install-dir /usr/share/dotnet && dotnet build"
 }
