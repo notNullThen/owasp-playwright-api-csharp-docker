@@ -4,6 +4,7 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.API;
 
+[Trait("Suite", "API")]
 public class BasketItemsTest(ITestOutputHelper outputHelper) : AuthenticatedHook(outputHelper)
 {
     [Fact(DisplayName = "User can add item to basket")]

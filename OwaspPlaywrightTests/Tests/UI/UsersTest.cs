@@ -8,6 +8,7 @@ namespace OwaspPlaywrightTests.Tests.UI;
 
 public class UsersTest
 {
+    [Trait("Suite", "UI")]
     public class RegistrationTests(ITestOutputHelper outputHelper) : Test(outputHelper)
     {
         [Fact(DisplayName = "User can register successfully")]
@@ -30,6 +31,7 @@ public class UsersTest
         }
     }
 
+    [Trait("Suite", "UI")]
     public class LogInTests(ITestOutputHelper outputHelper) : CreatedUserHook(outputHelper)
     {
         [Fact(DisplayName = "User can log in successfully")]

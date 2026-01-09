@@ -4,6 +4,7 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.API;
 
+[Trait("Suite", "API")]
 public class ProductsTest(ITestOutputHelper outputHelper) : Test(outputHelper)
 {
     [Fact(DisplayName = "Can search for products")]

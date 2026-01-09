@@ -4,6 +4,7 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.API;
 
+[Trait("Suite", "API")]
 public class AuthenticationTest(ITestOutputHelper outputHelper) : CreatedUserHook(outputHelper)
 {
     [Fact(DisplayName = "User can authenticate successfully")]

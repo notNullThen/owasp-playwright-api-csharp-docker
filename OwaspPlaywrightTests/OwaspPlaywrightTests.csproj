@@ -32,4 +32,24 @@
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
+
+  <Target Name="RunAllTests" DependsOnTargets="RunAPITests;RunUITests">
+    <Message Importance="high" Text="Finished running all test suites." />
+  </Target>
+
+  <Target Name="RunAPITests" Outputs="_ForceRun">
+    <Message Importance="high" Text=" " />
+    <Message Importance="high" Text="------------------------------------------" />
+    <Message Importance="high" Text="🚀 STARTING API TESTS" />
+    <Message Importance="high" Text="------------------------------------------" />
+    <Exec Command="dotnet test --filter 'Suite=API'" />
+  </Target>
+
+  <Target Name="RunUITests" Outputs="_ForceRun">
+    <Message Importance="high" Text=" " />
+    <Message Importance="high" Text="------------------------------------------" />
+    <Message Importance="high" Text="🚀 STARTING UI TESTS" />
+    <Message Importance="high" Text="------------------------------------------" />
+    <Exec Command="dotnet test --filter 'Suite=UI'" />
+  </Target>
 </Project>

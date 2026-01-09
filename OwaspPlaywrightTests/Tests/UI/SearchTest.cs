@@ -5,6 +5,7 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.UI;
 
+[Trait("Suite", "UI")]
 public class SearchTest(ITestOutputHelper output) : Test(output)
 {
     [Fact(DisplayName = "User can search for item by name")]

@@ -6,6 +6,7 @@ using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Tests.UI;
 
+[Trait("Suite", "UI")]
 public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
 {
     [Fact(DisplayName = "User can search and add Product to Basket")]
