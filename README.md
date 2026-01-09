@@ -79,7 +79,7 @@ This will:
 1. Run all tests:
 
 ```bash
-dotnet test
+dotnet build -t:RunAllTests /tl:false
 ```
 
 3. Open Allure reports:
@@ -111,7 +111,7 @@ cp .env.example .env
 4. Run all tests:
 
 ```bash
-dotnet test OwaspPlaywrightTests
+dotnet build -t:RunAllTests /tl:false
 ```
 
 5. (Optional) Open Allure report locally (requires Allure CLI):
