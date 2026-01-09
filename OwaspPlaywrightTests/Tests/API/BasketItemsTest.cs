@@ -6,7 +6,7 @@ namespace OwaspPlaywrightTests.Tests.API;
 
 public class BasketItemsTest(ITestOutputHelper outputHelper) : AuthenticatedHook(outputHelper)
 {
-    [Fact(DisplayName = "Review: User can add item to basket")]
+    [Fact(DisplayName = "User can add item to basket")]
     public async Task UserCanAddItemToBasket()
     {
         var productsResponse = await Api.Products.GetSearchProducts("").RequestAsync();
