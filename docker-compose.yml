@@ -20,4 +20,4 @@ services:
         condition: service_healthy
     environment:
       - CI=true
-    command: sh -c "dotnet test OwaspPlaywrightTests && allure serve OwaspPlaywrightTests/bin/Debug/net10.0/allure-results --port 8080"
+    command: sh -c "dotnet test OwaspPlaywrightTests; allure serve OwaspPlaywrightTests/bin/Debug/net10.0/allure-results --port 8080"
