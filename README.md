@@ -58,7 +58,7 @@ The project is configured to run tests in Docker using the official Playwright .
 
 ```bash
 git clone https://github.com/notNullThen/owasp-playwright-api-csharp-docker.git
-cd owasp-js-playwright-api-csharp
+cd owasp-playwright-api-csharp-docker
 ```
 
 2. Start Juice Shop + run tests + serve Allure:
@@ -99,7 +99,7 @@ docker run --rm -p 3000:3000 bkimminich/juice-shop:latest
 
 ```bash
 git clone https://github.com/notNullThen/owasp-playwright-api-csharp-docker.git
-cd owasp-js-playwright-api-csharp
+cd owasp-playwright-api-csharp-docker
 ```
 
 3. Create `.env` file from `.env.example`:
