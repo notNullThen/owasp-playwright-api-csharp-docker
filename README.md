@@ -57,7 +57,7 @@ The project is configured to run tests in Docker using the official Playwright .
 1. Clone the repository and navigate to it:
 
 ```bash
-git clone https://github.com/notNullThen/owasp-playwright-api-typescript-docker.git
+git clone https://github.com/notNullThen/owasp-playwright-api-csharp-docker.git
 cd owasp-js-playwright-api-csharp
 ```
 
@@ -98,7 +98,7 @@ docker run --rm -p 3000:3000 bkimminich/juice-shop:latest
 2. Clone the repository and navigate to it:
 
 ```bash
-git clone https://github.com/notNullThen/owasp-playwright-api-typescript-docker.git
+git clone https://github.com/notNullThen/owasp-playwright-api-csharp-docker.git
 cd owasp-js-playwright-api-csharp
 ```
 
