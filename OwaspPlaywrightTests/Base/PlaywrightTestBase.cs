@@ -1,6 +1,7 @@
 using Allure.Net.Commons;
 using Microsoft.Playwright;
 using Microsoft.Playwright.Xunit;
+using OwaspPlaywrightTests.Tests.System;
 
 namespace OwaspPlaywrightTests.Base;
 
@@ -12,6 +13,8 @@ public abstract class PlaywrightTestBase : PlaywrightTest
 
     public override async Task InitializeAsync()
     {
+        EnvVariablesTest.EnvVariablesAreLoadedSuccessfully();
+
         await base.InitializeAsync().ConfigureAwait(false);
 
         Playwright.Selectors.SetTestIdAttribute(TestConfig.TestIdAttribute);
