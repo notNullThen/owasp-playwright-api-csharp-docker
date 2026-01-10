@@ -1,52 +1,22 @@
 # OWASP Juice Shop — Playwright UI + API Test Framework (C#/.NET)
 
-Portfolio project showcasing an **SDET-friendly test framework on top of Playwright for .NET** for the OWASP Juice Shop web app.
+Portfolio project demonstrating an SDET-style automation framework for the OWASP Juice Shop app: **Playwright UI + API testing**, a reusable **API tooling layer** (request + wait), **Allure 3 reporting**, and **Dockerized execution**.
 
 ## Playwright TypeScript/NodeJS version
 
 Also available as a Playwright TypeScript NodeJS version: https://github.com/notNullThen/owasp-playwright-api-typescript-docker
 
-## Project overview
+## Framework Features
 
-This repository contains a test automation framework for OWASP Juice Shop.
+- **Test architecture**: Page Objects + reusable UI Components + data builders + hooks.
+- **UI + API combined**: API calls for fast setup/verification; UI flows stay readable.
+- **Network-aware assertions**: the same endpoint definitions support API `RequestAsync()` and UI `WaitAsync()`.
+- **Parallel-safe design**: per-test Playwright context + `AsyncLocal` API clients to avoid cross-test leaks.
+- **Engineering hygiene**: configuration via `.env`, CI/Docker-friendly base URL switching, structured test reporting.
 
-It demonstrates a practical automation architecture with both UI and API flows along with an API tooling layer which significantly simplifies API waiting/interaction.
+## Quick start (recommended: Docker)
 
-- **UI tests**: validate key user workflows (e.g., registration, login, search).
-- **API tooling**: used for fast setup/verification and for asserting UI-triggered network calls.
-
-**Note on test coverage:**
-This suite demonstrates framework capabilities and a core testing strategy. More extensive coverage (negative cases, additional flows, etc.) can be added on top of the same architecture.
-
-### Reporting: Allure Report 3 (Allure CLI)
-
-Allure is used via the Allure CLI. Test results are written to:
-
-- `OwaspPlaywrightTests/bin/Debug/net10.0/allure-results`
-
-In Docker, Allure is installed and the report is served automatically.
-
-### Traces
-
-Playwright tracing is enabled for each test (see `OwaspPlaywrightTests/Base/PlaywrightTestBase.cs`).
-
-- Traces are saved under `OwaspPlaywrightTests/playwright-traces` as `.zip`
-- Each test trace is also attached to Allure
-
-## Benefits / what this demonstrates
-
-- **Unified UI + API approach**: UI flows stay readable while setup stays fast.
-- **Network-aware UI assertions**: the same endpoint definitions support both API `RequestAsync()` and UI `WaitAsync()`.
-- **Parallel-friendly design**: `AsyncLocal` API clients + per-test Playwright context to avoid cross-test leaks.
-- **Docker-ready solution**: Juice Shop + tests + Allure can run end-to-end via Docker Compose.
-
-## Prerequisites
-
-- .NET SDK (this project targets **.NET 10**)
-- Optional: Node.js (only needed if you want to run the Allure CLI locally)
-- Optional: Docker + Docker Compose (recommended for a reproducible and stable demo)
-
-## Running tests
+Runs Juice Shop, executes the full suite (API + UI), and serves Allure:
 
 ### Docker (recommended)
 
@@ -67,12 +37,7 @@ cd owasp-playwright-api-csharp-docker
 docker compose up playwright --build
 ```
 
-This will:
-
-- Start OWASP Juice Shop on `http://localhost:3000`
-- Run the full test suite (API + UI) and serve the Allure report at `http://localhost:8080`
-
-### GitHub Codespaces
+### Run in GitHub Codespaces
 
 1. Wait until all the Codespace init commands complete (the `.env` file should appear)
 
@@ -87,158 +52,68 @@ dotnet build -t:RunAllTests /tl:false
 allure serve OwaspPlaywrightTests/bin/Debug/net10.0/allure-results
 ```
 
-### Local (run tests on your machine)
 
-1. Start OWASP Juice Shop:
+## Run locally
+
+1. Start Juice Shop:
 
 ```bash
 docker run --rm -p 3000:3000 bkimminich/juice-shop:latest
 ```
 
-2. Clone the repository and navigate to it:
-
-```bash
-git clone https://github.com/notNullThen/owasp-playwright-api-csharp-docker.git
-cd owasp-playwright-api-csharp-docker
-```
-
-3. Create `.env` file from `.env.example`:
+2. Create env file and run tests:
 
 ```bash
 cp .env.example .env
-```
-
-4. Run all tests:
-
-```bash
 dotnet build -t:RunAllTests /tl:false
 ```
 
-If Playwright browsers are not installed on your machine yet, install them after the first build:
+If browsers aren’t installed yet:
 
 ```bash
-# Linux/macOS
 OwaspPlaywrightTests/bin/Debug/net10.0/playwright.sh install
-
-# Windows / PowerShell
-pwsh OwaspPlaywrightTests/bin/Debug/net10.0/playwright.ps1 install
 ```
 
-5. (Optional) Open Allure report locally (requires Allure CLI):
+Allure locally (optional):
 
 ```bash
 npm i -g allure
 allure serve OwaspPlaywrightTests/bin/Debug/net10.0/allure-results --port 8080
 ```
 
+## Suites / filtering
+
+This repo uses xUnit Traits:
+
+- API only: `dotnet build -t:RunAPITests /tl:false` (or `dotnet test OwaspPlaywrightTests --filter "Suite=API"`)
+- UI only: `dotnet build -t:RunUITests /tl:false` (or `dotnet test OwaspPlaywrightTests --filter "Suite=UI"`)
+
 ## Configuration
 
-Environment variables are loaded from `.env` via `DotNetEnv` (see `OwaspPlaywrightTests/TestConfig.cs`).
+- Environment variables load from `.env` via `DotNetEnv` (see `OwaspPlaywrightTests/TestConfig.cs`).
+- Base URL switches automatically:
+	- Local: `http://localhost:3000`
+	- Docker/CI (`CI=true`): `http://juice-shop:3000`
 
-❗️ For demonstration and convenience purposes the `.env.example` already contains values.
+## API tooling (the interesting bit)
 
-### Base URL selection
+API layer lives in `OwaspPlaywrightTests/Base/ApiHandler/` and is designed so endpoints are defined once and reused for:
 
-Base URL switches automatically in Docker/CI:
+- direct API setup/verification via `RequestAsync()`
+- UI-network assertions via `WaitAsync()`
 
-- Locally (no `CI` env var): `http://localhost:3000`
-- In Compose/CI (`CI=true`): `http://juice-shop:3000`
-
-## Running options
-
-This project uses xUnit Traits to separate suites:
-
-- `Suite=API` for API tests in `OwaspPlaywrightTests/Tests/API/`
-- `Suite=UI` for UI tests in `OwaspPlaywrightTests/Tests/UI/`
-
-- Run API tests only:
-
-```bash
-dotnet build -t:RunAPITests /tl:false
-```
-
-- Run UI tests only:
-
-```bash
-dotnet build -t:RunUITests /tl:false
-```
-
-- Run all tests:
-
-```bash
-dotnet test OwaspPlaywrightTests
-```
-
-- Run API tests only (without MSBuild targets):
-
-```bash
-dotnet test OwaspPlaywrightTests --filter "Suite=API"
-```
-
-- Run UI tests only (without MSBuild targets):
-
-```bash
-dotnet test OwaspPlaywrightTests --filter "Suite=UI"
-```
-
-- Run a single test class (example):
-
-```bash
-dotnet test OwaspPlaywrightTests --filter "FullyQualifiedName~OwaspPlaywrightTests.Tests.UI.UsersTest"
-```
-
-## API tooling
-
-The API tooling layer is located under `OwaspPlaywrightTests/Base/ApiHandler/`. It provides a fluent interface for defining endpoints once and reusing them across both API and UI tests.
-
-### Architecture
-
-- `OwaspPlaywrightTests/Base/ApiHandler/ApiAction.cs`: exposes `RequestAsync()` and `WaitAsync()` depending on context
-- `OwaspPlaywrightTests/Base/ApiHandler/ApiBase.cs`: executes requests / waits for responses, parses JSON, validates status codes
-- `OwaspPlaywrightTests/Base/ApiHandler/ApiParametersBase.cs`: builds normalized URLs, stores base URL / token, and applies per-call request parameters
-
-### Usage examples
-
-**Direct API request (fast setup):**
+Example (wait for UI-triggered API call):
 
 ```csharp
-using OwaspPlaywrightTests.ApiEndpoints;
-
-var response = await Api.RestUser.PostLogin(new() { Email = email, Password = password }).RequestAsync();
-```
-
-**Wait for UI-triggered API call:**
-
-```csharp
-// Example pattern inside a Page Object method
 var loginResponseTask = Api.RestUser.PostLogin().WaitAsync();
 await Task.WhenAll(LoginButton.ClickAsync(), loginResponseTask);
 var loginResponse = await loginResponseTask;
 ```
 
-## Auth & parallel execution
+## Where to look
 
-- API auth is applied via a bearer token set on the API tooling (`ApiParametersBase.SetToken(...)`).
-- Common flows are provided as hooks under `OwaspPlaywrightTests/Hooks/` (e.g. `CreatedUserHook`, `AuthenticatedHook`, `AuthenticatedUiHook`).
-- API endpoint wrappers are stored per-async-flow via `AsyncLocal` (see `OwaspPlaywrightTests/ApiEndpoints/Api.cs`).
-
-## Example tests
-
-- API auth flow: `OwaspPlaywrightTests/Tests/API/AuthenticationTest.cs`
-- UI auth flows: `OwaspPlaywrightTests/Tests/UI/UsersTest.cs`
-- Search flow: `OwaspPlaywrightTests/Tests/UI/SearchTest.cs`
-
-## Project structure
-
-- `OwaspPlaywrightTests/ApiEndpoints/` — API client wrappers + endpoint definitions
-- `OwaspPlaywrightTests/Base/ApiHandler/` — API tooling (request + wait abstraction)
-- `OwaspPlaywrightTests/Pages/` — Page Objects
-- `OwaspPlaywrightTests/Components/` — reusable UI Components
-- `OwaspPlaywrightTests/Tests/` — test specs (API/UI/System)
-- `OwaspPlaywrightTests/Data/` — test data builders
-- `OwaspPlaywrightTests/Support/` — utilities and helpers
-
-## Notes
-
-- API calls validate expected status codes by default 200/201 (see `OwaspPlaywrightTests/TestConfig.cs`).
-- API failures include endpoint/method context and HTTP status.
+- Tests: `OwaspPlaywrightTests/Tests/API/`, `OwaspPlaywrightTests/Tests/UI/`
+- API endpoints: `OwaspPlaywrightTests/ApiEndpoints/`
+- API handler: `OwaspPlaywrightTests/Base/ApiHandler/`
+- Pages/components: `OwaspPlaywrightTests/Pages/`, `OwaspPlaywrightTests/Components/`
+- Hooks: `OwaspPlaywrightTests/Hooks/`
