@@ -1,6 +1,6 @@
 # OWASP Juice Shop — Playwright UI + API Test Framework (C#/.NET)
 
-Portfolio project demonstrating an SDET-style automation framework for the OWASP Juice Shop app: **Playwright UI + API testing**, a reusable **API tooling layer** (request + wait), **Allure 3 reporting**, and **Dockerized execution**.
+Portfolio project demonstrating an **SDET-friendly** automation framework for the OWASP Juice Shop app: **Playwright UI + API testing**, a reusable **API tooling layer** (request + wait), **Allure 3 reporting**, and **Dockerized execution**.
 
 ## Playwright TypeScript/NodeJS version
 
@@ -12,7 +12,7 @@ Also available as a Playwright TypeScript NodeJS version: https://github.com/not
 - **UI + API combined**: API calls for fast setup/verification; UI flows stay readable.
 - **Network-aware assertions**: the same endpoint definitions support API `RequestAsync()` and UI `WaitAsync()`.
 - **Parallel-safe design**: per-test Playwright context + `AsyncLocal` API clients to avoid cross-test leaks.
-- **Engineering hygiene**: configuration via `.env`, CI/Docker-friendly base URL switching, structured test reporting.
+- **Engineering hygiene**: configuration via `.env`, CI/Docker-friendly base URL switching, formatted with CSharpier & configured `.editorconfig` file, structured test reporting.
 
 ## Quick start
 
