@@ -70,19 +70,19 @@ docker compose up playwright --build
 This will:
 
 - Start OWASP Juice Shop on `http://localhost:3000`
-- Run the test suite and serve the Allure report.
+- Run the full test suite (API + UI) and serve the Allure report at `http://localhost:8080`
 
 ### GitHub Codespaces
 
-1. Wait till all the commands in Codespace are executed (as a result, the `.env` file should appear)
+1. Wait until all the Codespace init commands complete (the `.env` file should appear)
 
-1. Run all tests:
+2. Run all tests:
 
 ```bash
 dotnet build -t:RunAllTests /tl:false
 ```
 
-3. Open Allure reports:
+3. Open Allure report:
 ```bash
 allure serve OwaspPlaywrightTests/bin/Debug/net10.0/allure-results
 ```
@@ -114,6 +114,16 @@ cp .env.example .env
 dotnet build -t:RunAllTests /tl:false
 ```
 
+If Playwright browsers are not installed on your machine yet, install them after the first build:
+
+```bash
+# Linux/macOS
+OwaspPlaywrightTests/bin/Debug/net10.0/playwright.sh install
+
+# Windows / PowerShell
+pwsh OwaspPlaywrightTests/bin/Debug/net10.0/playwright.ps1 install
+```
+
 5. (Optional) Open Allure report locally (requires Allure CLI):
 
 ```bash
@@ -136,10 +146,39 @@ Base URL switches automatically in Docker/CI:
 
 ## Running options
 
+This project uses xUnit Traits to separate suites:
+
+- `Suite=API` for API tests in `OwaspPlaywrightTests/Tests/API/`
+- `Suite=UI` for UI tests in `OwaspPlaywrightTests/Tests/UI/`
+
+- Run API tests only:
+
+```bash
+dotnet build -t:RunAPITests /tl:false
+```
+
+- Run UI tests only:
+
+```bash
+dotnet build -t:RunUITests /tl:false
+```
+
 - Run all tests:
 
 ```bash
 dotnet test OwaspPlaywrightTests
+```
+
+- Run API tests only (without MSBuild targets):
+
+```bash
+dotnet test OwaspPlaywrightTests --filter "Suite=API"
+```
+
+- Run UI tests only (without MSBuild targets):
+
+```bash
+dotnet test OwaspPlaywrightTests --filter "Suite=UI"
 ```
 
 - Run a single test class (example):
