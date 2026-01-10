@@ -14,7 +14,7 @@ Also available as a Playwright TypeScript NodeJS version: https://github.com/not
 - **Parallel-safe design**: per-test Playwright context + `AsyncLocal` API clients to avoid cross-test leaks.
 - **Engineering hygiene**: configuration via `.env`, CI/Docker-friendly base URL switching, structured test reporting.
 
-## Quick start (recommended: Docker)
+## Quick start
 
 Runs Juice Shop, executes the full suite (API + UI), and serves Allure:
 
@@ -68,7 +68,7 @@ cp .env.example .env
 dotnet build -t:RunAllTests /tl:false
 ```
 
-If browsers aren’t installed yet:
+If Playwright dependencies aren’t installed yet:
 
 ```bash
 OwaspPlaywrightTests/bin/Debug/net10.0/playwright.sh install
