@@ -37,18 +37,14 @@ public class Test : PlaywrightTestBase
         set { _state.Value?.Request = value; }
     }
 
-    /**
-     * TODO: StepAsync() functions are VIBE-CODED AREA.
-     * Task: Investigate and understand why do we need this handling of tracing groups.
-     * Topics resolved with vibe-coding:
-     * Handling parallel execution of ApiEndpointBase.WaitAsync() which has logic inside StepAsync().
-     */
+    /// <summary>
+    /// Implementation of Playwright Typescript await test.step().
+    /// </summary>
+    /// <param name="name">The name of the step/group.</param>
+    /// <param name="action">The action to execute.</param>
     public static async Task StepAsync(string name, Func<Task> action)
     {
-        // Start the trace group without blocking the action.
-        // This avoids races when multiple steps are started in parallel (Task.WhenAll)
-        // and the action needs to register Playwright waiters immediately.
-        var groupTask = Page.Context.Tracing.GroupAsync(name);
+                var groupTask = Page.Context.Tracing.GroupAsync(name);
         Exception? actionException = null;
 
         try
@@ -67,10 +63,7 @@ public class Test : PlaywrightTestBase
                 await groupTask;
                 await Page.Context.Tracing.GroupEndAsync();
             }
-            catch when (actionException != null)
-            {
-                // Don't mask the original failure with tracing failures.
-            }
+            catch when (actionException != null) { }
         }
     }
 
