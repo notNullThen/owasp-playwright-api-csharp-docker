@@ -25,7 +25,7 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
     private async Task<IAPIResponse> RequestBaseAsync(IAPIRequestContext context)
     {
         return await Test.StepAsync(
-            $"Request {_method} \"{_route}\", expect {string.Join(", ", s_expectedStatusCodes)}",
+            $"Request {_method} \"{_route}\", expect {string.Join(", ", _expectedStatusCodes)}",
             async () =>
             {
                 // Separate bodyJson variable for better debug
@@ -39,7 +39,7 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
                         Headers =
                         [
                             new("Content-Type", "application/json"),
-                            new("Authorization", s_token ?? string.Empty),
+                            new("Authorization", GetToken() ?? string.Empty),
                         ],
                         Timeout = s_apiWaitTimeout,
                     }
@@ -68,7 +68,7 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
     private async Task<IResponse> WaitBaseAsync<T>(IPage page)
     {
         return await Test.StepAsync(
-            $"Wait for {_method} \"{_route}\" {string.Join(", ", s_expectedStatusCodes)}",
+            $"Wait for {_method} \"{_route}\" {string.Join(", ", _expectedStatusCodes)}",
             async () =>
             {
                 var response = await page.WaitForResponseAsync(
@@ -142,10 +142,10 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
 
     private void ValidateStatusCode()
     {
-        if (!s_expectedStatusCodes.Contains(_actualStatusCode))
+        if (!_expectedStatusCodes.Contains(_actualStatusCode))
         {
             throw new Exception(
-                $"Expected to return {string.Join(", ", s_expectedStatusCodes)}, but got {_actualStatusCode}.\nEndpoint: {_method} {_route}\nError Message: {_errorMessage}"
+                $"Expected to return {string.Join(", ", _expectedStatusCodes)}, but got {_actualStatusCode}.\nEndpoint: {_method} {_route}\nError Message: {_errorMessage}"
             );
         }
     }

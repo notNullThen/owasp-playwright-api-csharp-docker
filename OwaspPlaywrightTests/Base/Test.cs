@@ -44,7 +44,7 @@ public class Test : PlaywrightTestBase
     /// <param name="action">The action to execute.</param>
     public static async Task StepAsync(string name, Func<Task> action)
     {
-                var groupTask = Page.Context.Tracing.GroupAsync(name);
+        var groupTask = Page.Context.Tracing.GroupAsync(name);
         Exception? actionException = null;
 
         try
@@ -119,5 +119,16 @@ public class Test : PlaywrightTestBase
         public ITestOutputHelper? Output;
         public IPage? Page;
         public IAPIRequestContext? Request;
+        public string? Token;
+    }
+
+    public static string? Token
+    {
+        get => _state.Value?.Token;
+        set
+        {
+            if (_state.Value != null)
+                _state.Value.Token = value;
+        }
     }
 }

@@ -5,9 +5,9 @@ namespace OwaspPlaywrightTests.Base.ApiHandler;
 public abstract class ApiParametersBase(string baseApiUrl)
 {
     protected static int s_apiWaitTimeout;
-    protected static IReadOnlyCollection<int> s_expectedStatusCodes = null!;
+    private static IReadOnlyCollection<int> s_defaultExpectedStatusCodes = null!;
+    protected IReadOnlyCollection<int> _expectedStatusCodes = null!;
     protected static string s_baseUrl = null!;
-    protected static string? s_token;
 
     protected string _fullUrl = string.Empty;
     protected string? _route;
@@ -17,7 +17,7 @@ public abstract class ApiParametersBase(string baseApiUrl)
 
     protected ApiParametersBase AquireParameters(RequestParameters parameters)
     {
-        if (s_apiWaitTimeout == 0 || s_expectedStatusCodes == null || s_baseUrl == null)
+        if (s_apiWaitTimeout == 0 || s_defaultExpectedStatusCodes == null || s_baseUrl == null)
         {
             throw new InvalidOperationException(
                 $"You need to set initial config (usually in Tests Global Setup) via '{nameof(SetInitialConfig)}' method before using '{nameof(ApiParametersBase)}' class."
@@ -27,7 +27,7 @@ public abstract class ApiParametersBase(string baseApiUrl)
         _fullUrl = ConnectUrlParts(_baseApiUrl, parameters.Url ?? string.Empty);
         _route = _fullUrl.Replace(ConnectUrlParts(s_baseUrl), "");
         _method = parameters.Method;
-        s_expectedStatusCodes = parameters.ExpectedStatusCodes ?? s_expectedStatusCodes;
+        _expectedStatusCodes = parameters.ExpectedStatusCodes ?? s_defaultExpectedStatusCodes;
         _body = parameters.Body;
 
         return this;
@@ -35,8 +35,10 @@ public abstract class ApiParametersBase(string baseApiUrl)
 
     public static void SetToken(string token)
     {
-        s_token = token;
+        Test.Token = token;
     }
+
+    protected static string? GetToken() => Test.Token;
 
     public static void SetInitialConfig(
         int apiWaitTimeout,
@@ -45,7 +47,7 @@ public abstract class ApiParametersBase(string baseApiUrl)
     )
     {
         s_apiWaitTimeout = apiWaitTimeout;
-        s_expectedStatusCodes = expectedStatusCodes;
+        s_defaultExpectedStatusCodes = expectedStatusCodes;
         s_baseUrl = baseUrl;
     }
 
