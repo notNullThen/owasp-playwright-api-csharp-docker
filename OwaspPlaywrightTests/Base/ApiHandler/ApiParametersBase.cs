@@ -35,10 +35,10 @@ public abstract class ApiParametersBase(string baseApiUrl)
 
     public static void SetToken(string token)
     {
-        Test.Token = token;
+        Test.ApiToken = token;
     }
 
-    protected static string? GetToken() => Test.Token;
+    protected static string? GetToken() => Test.ApiToken;
 
     public static void SetInitialConfig(
         int apiWaitTimeout,

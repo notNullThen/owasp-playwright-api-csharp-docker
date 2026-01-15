@@ -119,16 +119,16 @@ public class Test : PlaywrightTestBase
         public ITestOutputHelper? Output;
         public IPage? Page;
         public IAPIRequestContext? Request;
-        public string? Token;
+        public string? ApiToken;
     }
 
-    public static string? Token
+    public static string? ApiToken
     {
-        get => _state.Value?.Token;
+        get => _state.Value?.ApiToken;
         set
         {
             if (_state.Value != null)
-                _state.Value.Token = value;
+                _state.Value.ApiToken = value;
         }
     }
 }
