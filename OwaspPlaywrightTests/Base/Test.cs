@@ -10,6 +10,7 @@ public class Test : PlaywrightTestBase
     {
         _state.Value = new TestContext();
         Output = outputHelper;
+        ApiHandler.TokenStorage.Init();
     }
 
     public static ITestOutputHelper? Output
@@ -119,16 +120,5 @@ public class Test : PlaywrightTestBase
         public ITestOutputHelper? Output;
         public IPage? Page;
         public IAPIRequestContext? Request;
-        public string? ApiToken;
-    }
-
-    public static string? ApiToken
-    {
-        get => _state.Value?.ApiToken;
-        set
-        {
-            if (_state.Value != null)
-                _state.Value.ApiToken = value;
-        }
     }
 }
