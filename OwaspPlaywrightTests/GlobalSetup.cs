@@ -17,15 +17,7 @@ public static class GlobalSetup
             {
                 if (!_initialized)
                 {
-                    ApiParametersBase.SetInitialConfig(
-                        apiWaitTimeout: TestConfig.ApiWaitTimeout,
-                        expectedStatusCodes: TestConfig.ExpectedApiStatusCodes,
-                        baseUrl: TestConfig.BaseUrl
-                    );
-
-                    await TestUtils.WaitForBaseUrlReadyAsync();
-
-                    _initialized = true;
+                    await InitAsync();
                 }
             }
             finally
@@ -34,6 +26,26 @@ public static class GlobalSetup
             }
         }
 
+        await DismissBannersAsync();
+    }
+
+    private static async Task InitAsync()
+    {
+        {
+            ApiParametersBase.SetInitialConfig(
+                apiWaitTimeout: TestConfig.ApiWaitTimeout,
+                expectedStatusCodes: TestConfig.ExpectedApiStatusCodes,
+                baseUrl: TestConfig.BaseUrl
+            );
+
+            await TestUtils.WaitForBaseUrlReadyAsync();
+
+            _initialized = true;
+        }
+    }
+
+    private static async Task DismissBannersAsync()
+    {
         await TestUtils.DismissCookiesAsync();
         await TestUtils.DismissWelcomeBannerAsync();
     }
