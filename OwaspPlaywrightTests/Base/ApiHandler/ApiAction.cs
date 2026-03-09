@@ -30,7 +30,6 @@ public class ApiAction<T>
     public async Task<ApiResponse<T>> RequestAsync()
     {
         return await new ApiClient(_apiBaseUrl, _parameters).RequestAsync<T>(_context);
-        ;
     }
 
     public async Task<BrowserApiResponse<T>> WaitAsync()

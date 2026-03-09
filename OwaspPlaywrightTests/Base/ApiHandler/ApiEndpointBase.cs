@@ -1,4 +1,3 @@
-using Microsoft.Playwright;
 using OwaspPlaywrightTests.Base.ApiHandler.Types;
 
 namespace OwaspPlaywrightTests.Base.ApiHandler;
