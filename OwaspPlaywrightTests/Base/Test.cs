@@ -10,7 +10,7 @@ public class Test : PlaywrightTestBase
     {
         _state.Value = new TestContext();
         Output = outputHelper;
-        ApiHandler.TokenStorage.Init();
+        ApiClient.TokenStorage.Init();
     }
 
     public static ITestOutputHelper? Output

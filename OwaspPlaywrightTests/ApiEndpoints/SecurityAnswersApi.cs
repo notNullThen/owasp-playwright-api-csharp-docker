@@ -1,7 +1,7 @@
 using OwaspPlaywrightTests.ApiEndpoints.Types;
 using OwaspPlaywrightTests.ApiEndpoints.Types.SecurityAnswers;
-using OwaspPlaywrightTests.Base.ApiHandler;
-using OwaspPlaywrightTests.Base.ApiHandler.Types;
+using OwaspPlaywrightTests.Base.ApiClient;
+using OwaspPlaywrightTests.Base.ApiClient.Types;
 
 namespace OwaspPlaywrightTests.ApiEndpoints;
 

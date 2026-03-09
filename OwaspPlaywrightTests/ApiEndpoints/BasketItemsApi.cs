@@ -1,6 +1,6 @@
 using OwaspPlaywrightTests.ApiEndpoints.Types.BasketItems;
-using OwaspPlaywrightTests.Base.ApiHandler;
-using OwaspPlaywrightTests.Base.ApiHandler.Types;
+using OwaspPlaywrightTests.Base.ApiClient;
+using OwaspPlaywrightTests.Base.ApiClient.Types;
 
 namespace OwaspPlaywrightTests.ApiEndpoints;
 

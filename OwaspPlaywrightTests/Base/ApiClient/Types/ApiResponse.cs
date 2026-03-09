@@ -1,6 +1,6 @@
 using Microsoft.Playwright;
 
-namespace OwaspPlaywrightTests.Base.ApiHandler.Types;
+namespace OwaspPlaywrightTests.Base.ApiClient.Types;
 
 public class ApiResponse<T>
 {

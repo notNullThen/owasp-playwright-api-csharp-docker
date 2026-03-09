@@ -1,8 +1,8 @@
 using System.Text.Json;
 using Microsoft.Playwright;
-using OwaspPlaywrightTests.Base.ApiHandler.Types;
+using OwaspPlaywrightTests.Base.ApiClient.Types;
 
-namespace OwaspPlaywrightTests.Base.ApiHandler;
+namespace OwaspPlaywrightTests.Base.ApiClient;
 
 public class ApiClient
 {

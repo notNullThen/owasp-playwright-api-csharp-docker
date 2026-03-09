@@ -1,4 +1,4 @@
-using OwaspPlaywrightTests.Base.ApiHandler;
+using OwaspPlaywrightTests.Base.ApiClient;
 using OwaspPlaywrightTests.Support;
 
 namespace OwaspPlaywrightTests;

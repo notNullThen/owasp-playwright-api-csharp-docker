@@ -101,7 +101,7 @@ This repo uses xUnit Traits:
 
 ## API tooling (the interesting bit)
 
-API layer lives in `OwaspPlaywrightTests/Base/ApiHandler/` and is designed so endpoints are defined once and reused for:
+API layer lives in `OwaspPlaywrightTests/Base/ApiClient/` and is designed so endpoints are defined once and reused for:
 
 - direct API setup/verification via `RequestAsync()`
 - UI-network assertions via `WaitAsync()`
@@ -117,7 +117,7 @@ var loginResponse = await loginResponseTask;
 ## Where to look
 
 - Tests: `OwaspPlaywrightTests/Tests/API/`, `OwaspPlaywrightTests/Tests/UI/`
-- API endpoints: `OwaspPlaywrightTests/ApiEndpoints/`
-- API handler: `OwaspPlaywrightTests/Base/ApiHandler/`
-- Pages/components: `OwaspPlaywrightTests/Pages/`, `OwaspPlaywrightTests/Components/`
+- API Endpoints: `OwaspPlaywrightTests/ApiEndpoints/`
+- API Client: `OwaspPlaywrightTests/Base/ApiClient/`
+- Pages/Components: `OwaspPlaywrightTests/Pages/`, `OwaspPlaywrightTests/Components/`
 - Hooks: `OwaspPlaywrightTests/Hooks/`

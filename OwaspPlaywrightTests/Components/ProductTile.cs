@@ -3,7 +3,7 @@ using OwaspPlaywrightTests.ApiEndpoints;
 using OwaspPlaywrightTests.ApiEndpoints.Types;
 using OwaspPlaywrightTests.ApiEndpoints.Types.BasketItems;
 using OwaspPlaywrightTests.Base;
-using OwaspPlaywrightTests.Base.ApiHandler.Types;
+using OwaspPlaywrightTests.Base.ApiClient.Types;
 using OwaspPlaywrightTests.Support;
 
 namespace OwaspPlaywrightTests.Components;
