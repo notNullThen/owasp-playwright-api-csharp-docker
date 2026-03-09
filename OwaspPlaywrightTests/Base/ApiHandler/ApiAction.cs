@@ -19,7 +19,7 @@ public class ApiAction<T>
         if (Test.Page == null && Test.Request == null)
         {
             throw new PlaywrightException(
-                $"You need to provide at least '{nameof(Test.Page)}' or '{nameof(Test.Request)}' parameters to create an instance of '{nameof(ApiBase)}'."
+                $"You need to provide at least '{nameof(Test.Page)}' or '{nameof(Test.Request)}' parameters to create an instance of '{nameof(ApiClient)}'."
             );
         }
 
@@ -29,7 +29,7 @@ public class ApiAction<T>
 
     public async Task<ApiResponse<T>> RequestAsync()
     {
-        return await new ApiBase(_apiBaseUrl, _parameters).RequestAsync<T>(_context);
+        return await new ApiClient(_apiBaseUrl, _parameters).RequestAsync<T>(_context);
         ;
     }
 
@@ -42,6 +42,6 @@ public class ApiAction<T>
             );
         }
 
-        return await new ApiBase(_apiBaseUrl, _parameters).WaitAsync<T>(_page);
+        return await new ApiClient(_apiBaseUrl, _parameters).WaitAsync<T>(_page);
     }
 }

@@ -4,7 +4,7 @@ using OwaspPlaywrightTests.Base.ApiHandler.Types;
 
 namespace OwaspPlaywrightTests.Base.ApiHandler;
 
-public class ApiBase
+public class ApiClient
 {
     private string? _errorMessage;
 
@@ -20,12 +20,12 @@ public class ApiBase
     private readonly int _apiWaitTimeout;
     private readonly object? _body;
 
-    public ApiBase(string apiBaseUrl, RequestParameters parameters)
+    public ApiClient(string apiBaseUrl, RequestParameters parameters)
     {
         if (s_appBaseUrl == null)
         {
             throw new Exception(
-                $"The {nameof(s_appBaseUrl)} must be set before {nameof(ApiBase)} class initalization"
+                $"The {nameof(s_appBaseUrl)} must be set before {nameof(ApiClient)} class initalization"
             );
         }
 
