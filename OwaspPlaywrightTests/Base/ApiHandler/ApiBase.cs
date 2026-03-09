@@ -4,11 +4,57 @@ using OwaspPlaywrightTests.Base.ApiHandler.Types;
 
 namespace OwaspPlaywrightTests.Base.ApiHandler;
 
-public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
+public class ApiBase
 {
-    protected int _actualStatusCode;
-
     private string? _errorMessage;
+
+    private static string? s_appBaseUrl;
+    private static int s_initialApiWaitTimeout;
+    private static IReadOnlyCollection<int>? s_initialExpectedStatusCodes;
+
+    private readonly string _apiBaseUrl;
+    private readonly string _fullUrl;
+    private readonly string _route;
+    private readonly ApiHttpMethod _method;
+    private readonly IReadOnlyCollection<int> _expectedStatusCodes;
+    private readonly int _apiWaitTimeout;
+    private readonly object? _body;
+
+    public ApiBase(string apiBaseUrl, RequestParameters parameters)
+    {
+        if (s_appBaseUrl == null)
+        {
+            throw new Exception(
+                $"The {nameof(s_appBaseUrl)} must be set before {nameof(ApiBase)} class initalization"
+            );
+        }
+
+        if (s_initialExpectedStatusCodes == null && parameters.ExpectedStatusCodes == null)
+        {
+            throw new Exception(
+                $"Expected status codes are not set. Are you sure you used {SetInitialConfig}()?"
+            );
+        }
+
+        _apiBaseUrl = ConnectUrlParts(s_appBaseUrl, apiBaseUrl);
+        _fullUrl = ConnectUrlParts(_apiBaseUrl, parameters.Url ?? string.Empty);
+        _route = _fullUrl.Replace(ConnectUrlParts(s_appBaseUrl), string.Empty);
+        _method = parameters.Method;
+        _expectedStatusCodes = parameters.ExpectedStatusCodes ?? s_initialExpectedStatusCodes!;
+        _apiWaitTimeout = parameters.apiWaitTimeout ?? s_initialApiWaitTimeout;
+        _body = parameters.Body;
+    }
+
+    public static void SetInitialConfig(
+        int apiWaitTimeout,
+        int[] expectedStatusCodes,
+        string baseUrl
+    )
+    {
+        s_initialApiWaitTimeout = apiWaitTimeout;
+        s_initialExpectedStatusCodes = expectedStatusCodes;
+        s_appBaseUrl = baseUrl;
+    }
 
     public async Task<ApiResponse<T>> RequestAsync<T>(IAPIRequestContext context)
     {
@@ -41,12 +87,11 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
                             new("Content-Type", "application/json"),
                             new("Authorization", GetToken() ?? string.Empty),
                         ],
-                        Timeout = s_apiWaitTimeout,
+                        Timeout = _apiWaitTimeout,
                     }
                 );
 
-                _actualStatusCode = response.Status;
-                ValidateStatusCode();
+                ValidateStatusCode(response.Status);
 
                 return response;
             }
@@ -63,6 +108,41 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
     {
         var response = await WaitBaseAsync<dynamic>(page);
         return await GetResponseAsync(response);
+    }
+
+    public static void SetToken(string token)
+    {
+        TokenStorage.Set(token);
+    }
+
+    private static string? GetToken() => TokenStorage.Get();
+
+    private static string ConnectUrlParts(params string[] parts)
+    {
+        var connectedParts = string.Join(
+            "/",
+            parts
+                .Where(part => !string.IsNullOrEmpty(part))
+                .Select(NormalizeUrl)
+                .Where(part => part.Trim().Length > 0)
+        );
+
+        return connectedParts;
+    }
+
+    private static string NormalizeUrl(string url)
+    {
+        return RemoveLeadingSlash(RemoveTrailingSlash(url));
+    }
+
+    private static string RemoveTrailingSlash(string url)
+    {
+        return url.EndsWith('/') ? url.Substring(0, url.Length - 1) : url;
+    }
+
+    private static string RemoveLeadingSlash(string url)
+    {
+        return url.StartsWith('/') ? url.Substring(1) : url;
     }
 
     private async Task<IResponse> WaitBaseAsync<T>(IPage page)
@@ -101,13 +181,12 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
 
                         return true;
                     },
-                    new() { Timeout = s_apiWaitTimeout }
+                    new() { Timeout = _apiWaitTimeout }
                 );
 
                 _errorMessage = response.StatusText;
 
-                _actualStatusCode = response.Status;
-                ValidateStatusCode();
+                ValidateStatusCode(response.Status);
 
                 return response;
             }
@@ -140,12 +219,12 @@ public abstract class ApiBase(string baseApiUrl) : ApiParametersBase(baseApiUrl)
         return new() { Response = response, ResponseBody = default };
     }
 
-    private void ValidateStatusCode()
+    private void ValidateStatusCode(int statusCode)
     {
-        if (!_expectedStatusCodes.Contains(_actualStatusCode))
+        if (!_expectedStatusCodes.Contains(statusCode))
         {
             throw new Exception(
-                $"Expected to return {string.Join(", ", _expectedStatusCodes)}, but got {_actualStatusCode}.\nEndpoint: {_method} {_route}\nError Message: {_errorMessage}"
+                $"Expected to return {string.Join(", ", _expectedStatusCodes)}, but got {statusCode}.\nEndpoint: {_method} {_route}\nError Message: {_errorMessage}"
             );
         }
     }

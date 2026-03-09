@@ -22,6 +22,6 @@ public abstract class AuthenticatedUiHook(ITestOutputHelper output) : CreatedUse
         );
         LoggedInUserResponse = loginResponse.ResponseBody!;
 
-        ApiParametersBase.SetToken(BearerToken.Format(LoggedInUserResponse.Authentication.Token));
+        ApiBase.SetToken(BearerToken.Format(LoggedInUserResponse.Authentication.Token));
     }
 }

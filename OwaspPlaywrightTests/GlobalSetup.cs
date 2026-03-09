@@ -32,7 +32,7 @@ public static class GlobalSetup
     private static async Task InitAsync()
     {
         {
-            ApiParametersBase.SetInitialConfig(
+            ApiBase.SetInitialConfig(
                 apiWaitTimeout: TestConfig.ApiWaitTimeout,
                 expectedStatusCodes: TestConfig.ExpectedApiStatusCodes,
                 baseUrl: TestConfig.BaseUrl

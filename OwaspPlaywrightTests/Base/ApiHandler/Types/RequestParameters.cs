@@ -6,4 +6,5 @@ public class RequestParameters
     public ApiHttpMethod Method;
     public int[]? ExpectedStatusCodes { get; set; }
     public object? Body { get; set; }
+    public int? apiWaitTimeout;
 }

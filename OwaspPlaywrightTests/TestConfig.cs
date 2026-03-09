@@ -9,7 +9,7 @@ public static class TestConfig
     public const string PriceSymbol = "¤";
     public const int Timeout = 5_000;
     public const int ApiWaitTimeout = 5_000;
-    public static readonly IReadOnlyCollection<int> ExpectedApiStatusCodes = [200, 201];
+    public static readonly int[] ExpectedApiStatusCodes = [200, 201];
     public const string TestIdAttribute = "data-testid";
     public const int ViewportWidth = 1280;
     public const int ViewportHeight = 720;
