@@ -7,7 +7,7 @@ namespace OwaspPlaywrightTests.Tests.API;
 public class RegistrationTest(ITestOutputHelper outputHelper) : CreatedUserHook(outputHelper)
 {
     [Fact(DisplayName = "User can register successfully")]
-    public async Task UserCanRegisterSuccessfully()
+    public void UserCanRegisterSuccessfully()
     {
         var payloadData = CreatedUser.Payload;
         var responseData = CreatedUser.Response.Data;

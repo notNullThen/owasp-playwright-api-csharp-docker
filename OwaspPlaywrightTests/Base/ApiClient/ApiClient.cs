@@ -65,7 +65,7 @@ public class ApiClient
     public async Task<ApiResponse<dynamic>> RequestAsync(IAPIRequestContext context)
     {
         var response = await RequestBaseAsync(context);
-        return await GetResponseAsync(response);
+        return FormResponse(response);
     }
 
     private async Task<IAPIResponse> RequestBaseAsync(IAPIRequestContext context)
@@ -107,7 +107,7 @@ public class ApiClient
     public async Task<BrowserApiResponse<dynamic>> WaitAsync(IPage page)
     {
         var response = await WaitBaseAsync<dynamic>(page);
-        return await GetResponseAsync(response);
+        return FormResponse(response);
     }
 
     public static void SetToken(string token)
@@ -202,7 +202,7 @@ public class ApiClient
         return new() { Response = response, ResponseBody = responseBody };
     }
 
-    private static async Task<ApiResponse<dynamic>> GetResponseAsync(IAPIResponse response)
+    private static ApiResponse<dynamic> FormResponse(IAPIResponse response)
     {
         return new() { Response = response, ResponseBody = default };
     }
@@ -214,7 +214,7 @@ public class ApiClient
         return new() { Response = response, ResponseBody = responseBody };
     }
 
-    private static async Task<BrowserApiResponse<dynamic>> GetResponseAsync(IResponse response)
+    private static BrowserApiResponse<dynamic> FormResponse(IResponse response)
     {
         return new() { Response = response, ResponseBody = default };
     }
