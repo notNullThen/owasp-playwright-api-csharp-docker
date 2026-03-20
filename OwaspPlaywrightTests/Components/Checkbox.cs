@@ -3,9 +3,8 @@ using OwaspPlaywrightTests.Base;
 
 namespace OwaspPlaywrightTests.Components;
 
-// Didn't use constructor overloading as it is the only way to implement the GetByName() method properly.
 public class Checkbox(string componentName, ILocator? parent = null)
-    : ComponentBase(
+    : IterableComponentBase(
         componentName: componentName.EndsWith(
             " Checkbox",
             StringComparison.InvariantCultureIgnoreCase
@@ -87,12 +86,9 @@ public class Checkbox(string componentName, ILocator? parent = null)
         );
     }
 
-    public Checkbox GetByName(string name)
-    {
-        var checkbox = new Checkbox(componentName: _componentName, parent: _parent);
-        checkbox.Body = checkbox.Body.Filter(
-            new() { Has = Page.GetByText(name, new() { Exact = true }) }
-        );
-        return checkbox;
-    }
+    public override Checkbox GetByText(string text) => GetByTextBase<Checkbox>(text);
+
+    public override Checkbox GetByIndex(int index) => GetByIndexBase<Checkbox>(index);
+
+    protected override Checkbox Create(ILocator body) => new(_componentName, _parent);
 }

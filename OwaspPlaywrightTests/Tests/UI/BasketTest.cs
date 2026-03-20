@@ -20,7 +20,7 @@ public class BasketTest(ITestOutputHelper output) : AuthenticatedUiHook(output)
 
         await homePage.GotoAsync();
         await homePage.Header.SearchBar.SearchAsync(partialName);
-        await homePage.ProductTiles.GetByName(product.Name).AddToBasketAsync();
+        await homePage.ProductTiles.GetByText(product.Name).AddToBasketAsync();
 
         await basketPage.GotoAsync();
         var expectedProduct = await basketPage.Products.GetByNameAsync(product.Name);

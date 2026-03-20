@@ -5,7 +5,7 @@ using OwaspPlaywrightTests.Support;
 namespace OwaspPlaywrightTests.Components;
 
 public class ProductRow()
-    : ComponentBase("Product Row", Test.Page.Locator("app-purchase-basket mat-row"))
+    : IterableComponentBase("Product Row", Test.Page.Locator("app-purchase-basket mat-row"))
 {
     public ILocator Cells => Body.GetByRole(AriaRole.Cell);
     public ILocator ImageCell => Cells.Nth(0);
@@ -54,8 +54,9 @@ public class ProductRow()
         throw new Exception($"Product with name '{productName}' not found in basket");
     }
 
-    public ProductRow GetByIndex(int index)
-    {
-        return new ProductRow() { Body = Body.Nth(index) };
-    }
+    public override ProductRow GetByIndex(int index) => GetByIndexBase<ProductRow>(index);
+
+    public override ProductRow GetByText(string text) => GetByTextBase<ProductRow>(text);
+
+    protected override ProductRow Create(ILocator body) => new() { Body = body };
 }

@@ -1,6 +1,5 @@
 using Microsoft.Playwright;
 using OwaspPlaywrightTests.ApiEndpoints;
-using OwaspPlaywrightTests.ApiEndpoints.Types;
 using OwaspPlaywrightTests.ApiEndpoints.Types.BasketItems;
 using OwaspPlaywrightTests.Base;
 using OwaspPlaywrightTests.Base.ApiClient.Types;
@@ -9,7 +8,7 @@ using OwaspPlaywrightTests.Support;
 namespace OwaspPlaywrightTests.Components;
 
 public class ProductTile()
-    : ComponentBase(componentName: "Product tile", body: Test.Page.Locator("mat-grid-tile"))
+    : IterableComponentBase(componentName: "Product tile", body: Test.Page.Locator("mat-grid-tile"))
 {
     private const string ItemNameSelector = ".item-name";
 
@@ -21,13 +20,6 @@ public class ProductTile()
     {
         var priceText = await Price.InnerTextAsync();
         return TestUtils.GetPriceFromText(priceText);
-    }
-
-    public ProductTile GetByName(string name)
-    {
-        var tile = new ProductTile();
-        tile.Body = Body.Filter(new() { Has = Page.Locator(ItemNameSelector).GetByText(name) });
-        return tile;
     }
 
     public async Task<BrowserApiResponse<BasketItemsResponse>> AddToBasketAsync()
@@ -42,4 +34,10 @@ public class ProductTile()
             }
         );
     }
+
+    public override ProductTile GetByText(string text) => GetByTextBase<ProductTile>(text);
+
+    public override ProductTile GetByIndex(int index) => GetByIndexBase<ProductTile>(index);
+
+    protected override ProductTile Create(ILocator body) => new() { Body = body };
 }

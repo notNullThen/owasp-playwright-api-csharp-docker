@@ -16,7 +16,7 @@ public class LoginPage() : PageBase("/#/login")
     public ILocator LoginButton =>
         Page.GetByRole(AriaRole.Button, new() { Name = "Login", Exact = true });
     public Checkbox RememberMeCheckbox =>
-        new Checkbox(componentName: "Remember Me").GetByName("Remember me");
+        new Checkbox(componentName: "Remember Me").GetByText("Remember me");
 
     public async Task<BrowserApiResponse<LoginResponse>> LoginAsync(
         string email,
