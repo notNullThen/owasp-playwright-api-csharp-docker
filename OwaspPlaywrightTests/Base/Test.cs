@@ -16,7 +16,7 @@ public class Test : PlaywrightTestBase
     public static ITestOutputHelper? Output
     {
         get => _state.Value?.Output;
-        set { _state.Value?.Output = value; }
+        set { _state.Value!.Output = value; }
     }
 
     public static new IPage Page
@@ -35,7 +35,7 @@ public class Test : PlaywrightTestBase
     public static new IAPIRequestContext? Request
     {
         get => _state.Value?.Request;
-        set { _state.Value?.Request = value; }
+        set { _state.Value!.Request = value; }
     }
 
     /// <summary>
