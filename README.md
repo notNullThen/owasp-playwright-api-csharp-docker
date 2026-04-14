@@ -73,16 +73,16 @@ If Playwright dependencies aren’t installed yet:
 OwaspPlaywrightTests/bin/Debug/net10.0/playwright.sh install
 ```
 
+3. Run tests:
+```bash
+dotnet build -t:RunAllTests /tl:false
+```
+
 Allure locally (optional):
 
 ```bash
 npm i -g allure
 allure serve OwaspPlaywrightTests/bin/Debug/net10.0/allure-results --port 8080
-```
-
-3. Run tests:
-```bash
-dotnet build -t:RunAllTests /tl:false
 ```
 
 ## Suites / filtering
