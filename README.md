@@ -5,7 +5,7 @@
 [![Allure](https://img.shields.io/badge/Reporting-Allure-FF6C37?logo=allure)](https://allurereport.org/)
 [![NuGet](https://img.shields.io/badge/Package-SimpleApiPlaywright-blue)](https://github.com/notNullThen/simple-api-playwright-nuget-dotnet)
 
-A professional-grade SDET portfolio project demonstrating a modern, containerized automation framework for the **OWASP Juice Shop**. This project showcases high-performance testing strategies, clean architecture, and custom tooling.
+A professional-grade SDET project demonstrating a modern, containerized automation framework for the **OWASP Juice Shop**. This project showcases high-performance testing strategies, clean architecture, and custom tooling.
 
 ## 🌟 Highlights
 
