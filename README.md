@@ -1,123 +1,49 @@
-# OWASP Juice Shop — Playwright UI + API Test Framework (C#/.NET)
+# OWASP Juice Shop — Advanced Test Framework
 
-Portfolio project demonstrating an **SDET-friendly** automation framework for the OWASP Juice Shop app: **Playwright UI + API testing**, an _own developed NuGet package_ - [**SimpleApiPlaywright (API tooling layer)**](https://github.com/notNullThen/simple-api-playwright-dotnet) (request + wait), **Allure 3 reporting**, and **Dockerized execution**.
+[![Playwright](https://img.shields.io/badge/Playwright-C%23-2E8B57?logo=playwright)](https://playwright.dev/dotnet/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)](https://www.docker.com/)
+[![Allure](https://img.shields.io/badge/Reporting-Allure-FF6C37?logo=allure)](https://allurereport.org/)
+[![NuGet](https://img.shields.io/badge/Package-SimpleApiPlaywright-blue)](https://github.com/notNullThen/simple-api-playwright-dotnet)
 
-## Playwright TypeScript/NodeJS version
+A professional-grade SDET portfolio project demonstrating a modern, containerized automation framework for the **OWASP Juice Shop**. This project showcases high-performance testing strategies, clean architecture, and custom tooling.
 
-Also available as a Playwright TypeScript NodeJS version: https://github.com/notNullThen/owasp-playwright-api-typescript-docker
+## 🌟 Highlights
 
-## Framework Features
+- **Hybrid Automation**: Seamlessly combines UI and API testing. Uses API for fast state setup and teardown.
+- **Custom Tooling**: Powered by **[SimpleApiPlaywright](https://github.com/notNullThen/simple-api-playwright-dotnet)**, a _custom NuGet package I developed_ for unified API/UI synchronization and context management.
+- **Enterprise Patterns**: Implements Page Objects, Reusable Components, Data Builders, and `AsyncLocal` context management.
+- **CI/CD Ready**: Fully dockerized execution with multi-stage builds and automated Allure reporting.
+- **Strict Engineering**: Configured with `.editorconfig`, CSharpier, and strict linting.
 
-- **Test architecture**: Page Objects + reusable UI Components + data builders + hooks.
-- **UI + API combined**: API calls for fast setup/verification; UI flows stay readable.
-- **Network-aware assertions**: the same endpoint definitions support API `RequestAsync()` and UI `WaitAsync()`.
-- **Parallel-safe design**: per-test Playwright context + `AsyncLocal` context managed by [SimpleApiPlaywright](https://github.com/notNullThen/simple-api-playwright-dotnet) to avoid cross-test leaks.
-- **Engineering hygiene**: configuration via `.env`, CI/Docker-friendly base URL switching, formatted with CSharpier & configured `.editorconfig` file, structured test reporting.
+## 🛠 Tech Stack
 
-## Quick start
+- **Lanuage**: C# / .NET
+- **Engine**: Playwright
+- **Runner**: xUnit
+- **Infrastructure**: Docker & Docker Compose
+- **Reporting**: Allure Framework
 
-Runs Juice Shop, executes the full suite (API + UI), and serves Allure:
+## ⚡ Quick Start (Docker)
 
-### Docker (recommended)
-
-The project is configured to run tests in Docker using the official Playwright .NET Docker image.
-
-**To run tests in Docker:**
-
-1. Clone the repository and navigate to it:
-
-```bash
-git clone https://github.com/notNullThen/owasp-playwright-api-csharp-docker.git
-cd owasp-playwright-api-csharp-docker
-```
-
-2. Start Juice Shop + run tests + serve Allure:
+Launch the entire ecosystem (Juice Shop + Tests + Reporting) with a single command:
 
 ```bash
 docker compose up playwright --build
 ```
 
-### Run in GitHub Codespaces
+*The report will be available at [http://localhost:8080](http://localhost:8080) after execution.*
 
-1. Wait until all the Codespace init commands complete (the `.env` file should appear)
+## 📂 Project Structure
 
-2. Run all tests:
+- `OwaspPlaywrightTests/Tests/`: Structured API and UI test suites.
+- `OwaspPlaywrightTests/ApiEndpoints/`: Strong-typed endpoint definitions.
+- `OwaspPlaywrightTests/Pages/`: Clean Page Object implementation.
+- `OwaspPlaywrightTests/Components/`: Reusable UI atomics (Buttons, Inputs).
 
-```bash
-dotnet build -t:RunAllTests /tl:false
-```
+---
 
-3. Open Allure report:
-```bash
-allure serve OwaspPlaywrightTests/bin/Debug/net10.0/allure-results
-```
+### 🔗 Related
+- [SimpleApiPlaywright](https://github.com/notNullThen/simple-api-playwright-dotnet) (My custom library for unified API/UI automation)
+- [NodeJS/TypeScript Version](https://github.com/notNullThen/owasp-playwright-api-typescript-docker)
 
-
-## Run locally
-
-1. Start Juice Shop:
-
-```bash
-docker run --rm -p 3000:3000 bkimminich/juice-shop:latest
-```
-
-2. Create env file and run tests:
-
-```bash
-cp .env.example .env
-```
-
-If Playwright dependencies aren’t installed yet:
-
-```bash
-OwaspPlaywrightTests/bin/Debug/net10.0/playwright.sh install
-```
-
-3. Run tests:
-```bash
-dotnet build -t:RunAllTests /tl:false
-```
-
-Allure locally (optional):
-
-```bash
-npm i -g allure
-allure serve OwaspPlaywrightTests/bin/Debug/net10.0/allure-results --port 8080
-```
-
-## Suites / filtering
-
-This repo uses xUnit Traits:
-
-- API only: `dotnet build -t:RunAPITests /tl:false` (or `dotnet test OwaspPlaywrightTests --filter "Suite=API"`)
-- UI only: `dotnet build -t:RunUITests /tl:false` (or `dotnet test OwaspPlaywrightTests --filter "Suite=UI"`)
-
-## Configuration
-
-- Environment variables load from `.env` via `DotNetEnv` (see `OwaspPlaywrightTests/TestConfig.cs`).
-- Base URL switches automatically:
-	- Local: `http://localhost:3000`
-	- Docker/CI (`CI=true`): `http://juice-shop:3000`
-
-## API tooling (SimpleApiPlaywright)
-
-The API layer is powered by my own [SimpleApiPlaywright](https://github.com/notNullThen/simple-api-playwright-dotnet) NuGet package. It allows simplier API endpoints defining and reusage:
-
-- Direct API setup/verification via `RequestAsync()`
-- UI-network assertions via `WaitAsync()` (waiting for XHR/Fetch calls triggered by UI actions)
-
-Example (wait for UI-triggered API call):
-
-```csharp
-var loginResponseTask = Api.RestUser.PostLogin().WaitAsync();
-await Task.WhenAll(LoginButton.ClickAsync(), loginResponseTask);
-var loginResponse = await loginResponseTask;
-```
-
-## Where to look
-
-- Tests: `OwaspPlaywrightTests/Tests/API/`, `OwaspPlaywrightTests/Tests/UI/`
-- API Endpoints: `OwaspPlaywrightTests/ApiEndpoints/`
-- API Tooling: [SimpleApiPlaywright](https://github.com/notNullThen/simple-api-playwright-dotnet) (NuGet)
-- Pages/Components: `OwaspPlaywrightTests/Pages/`, `OwaspPlaywrightTests/Components/`
-- Hooks: `OwaspPlaywrightTests/Hooks/`
+*Built by [notNullThen](https://github.com/notNullThen) to demonstrate modern SDET craftsmanship.*
