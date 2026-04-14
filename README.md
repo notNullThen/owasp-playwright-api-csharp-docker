@@ -1,6 +1,6 @@
 # OWASP Juice Shop — Playwright UI + API Test Framework (C#/.NET)
 
-Portfolio project demonstrating an **SDET-friendly** automation framework for the OWASP Juice Shop app: **Playwright UI + API testing**, an own developed NuGet package - [**SimpleApiPlaywright (API tooling layer)**](https://github.com/notNullThen/simple-api-playwright-dotnet) (request + wait), **Allure 3 reporting**, and **Dockerized execution**.
+Portfolio project demonstrating an **SDET-friendly** automation framework for the OWASP Juice Shop app: **Playwright UI + API testing**, an _own developed NuGet package_ - [**SimpleApiPlaywright (API tooling layer)**](https://github.com/notNullThen/simple-api-playwright-dotnet) (request + wait), **Allure 3 reporting**, and **Dockerized execution**.
 
 ## Playwright TypeScript/NodeJS version
 
