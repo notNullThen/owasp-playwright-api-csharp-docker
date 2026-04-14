@@ -1,7 +1,7 @@
 using OwaspPlaywrightTests.ApiEndpoints.Helpers;
 using OwaspPlaywrightTests.ApiEndpoints.Types.RestUserApi;
-using OwaspPlaywrightTests.Base.ApiClient;
 using OwaspPlaywrightTests.Pages;
+using SimpleApiPlaywright;
 using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Hooks;

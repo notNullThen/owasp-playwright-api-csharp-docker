@@ -2,9 +2,9 @@ using Microsoft.Playwright;
 using OwaspPlaywrightTests.ApiEndpoints;
 using OwaspPlaywrightTests.ApiEndpoints.Types.User;
 using OwaspPlaywrightTests.Base;
-using OwaspPlaywrightTests.Base.ApiClient.Types;
 using OwaspPlaywrightTests.Components;
 using OwaspPlaywrightTests.Pages;
+using SimpleApiPlaywright.Types;
 
 public class RegistrationPage() : PageBase("/#/register")
 {

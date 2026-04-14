@@ -1,9 +1,9 @@
 using Microsoft.Playwright;
 using OwaspPlaywrightTests.ApiEndpoints;
 using OwaspPlaywrightTests.ApiEndpoints.Types.RestBasket;
-using OwaspPlaywrightTests.Base.ApiClient.Types;
 using OwaspPlaywrightTests.Components;
 using OwaspPlaywrightTests.Support;
+using SimpleApiPlaywright.Types;
 
 namespace OwaspPlaywrightTests.Pages;
 

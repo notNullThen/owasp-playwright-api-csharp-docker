@@ -1,5 +1,5 @@
-using OwaspPlaywrightTests.Base.ApiClient;
 using OwaspPlaywrightTests.Support;
+using SimpleApiPlaywright;
 
 namespace OwaspPlaywrightTests;
 

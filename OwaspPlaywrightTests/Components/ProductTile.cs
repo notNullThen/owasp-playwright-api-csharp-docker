@@ -2,8 +2,8 @@ using Microsoft.Playwright;
 using OwaspPlaywrightTests.ApiEndpoints;
 using OwaspPlaywrightTests.ApiEndpoints.Types.BasketItems;
 using OwaspPlaywrightTests.Base;
-using OwaspPlaywrightTests.Base.ApiClient.Types;
 using OwaspPlaywrightTests.Support;
+using SimpleApiPlaywright.Types;
 
 namespace OwaspPlaywrightTests.Components;
 

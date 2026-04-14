@@ -2,8 +2,8 @@ using Microsoft.Playwright;
 using OwaspPlaywrightTests.ApiEndpoints;
 using OwaspPlaywrightTests.ApiEndpoints.Types.RestUserApi;
 using OwaspPlaywrightTests.Base;
-using OwaspPlaywrightTests.Base.ApiClient.Types;
 using OwaspPlaywrightTests.Components;
+using SimpleApiPlaywright.Types;
 
 namespace OwaspPlaywrightTests.Pages;
 
