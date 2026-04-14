@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.Playwright;
+using SimpleApiPlaywright;
 using Xunit.Abstractions;
 
 namespace OwaspPlaywrightTests.Base;
@@ -10,7 +11,7 @@ public class Test : PlaywrightTestBase
     {
         _state.Value = new TestContext();
         Output = outputHelper;
-        ApiClient.TokenStorage.Init();
+        TokenStorage.Init();
     }
 
     public static ITestOutputHelper? Output
