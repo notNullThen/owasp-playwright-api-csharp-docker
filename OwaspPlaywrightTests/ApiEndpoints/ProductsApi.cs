@@ -1,7 +1,6 @@
-using OwaspPlaywrightTests.ApiEndpoints.Types;
 using OwaspPlaywrightTests.ApiEndpoints.Types.Products;
-using OwaspPlaywrightTests.Base.ApiClient;
-using OwaspPlaywrightTests.Base.ApiClient.Types;
+using SimpleApiPlaywright;
+using SimpleApiPlaywright.Types;
 
 namespace OwaspPlaywrightTests.ApiEndpoints;
 

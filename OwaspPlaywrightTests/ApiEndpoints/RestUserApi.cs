@@ -1,6 +1,6 @@
 using OwaspPlaywrightTests.ApiEndpoints.Types.RestUserApi;
-using OwaspPlaywrightTests.Base.ApiClient;
-using OwaspPlaywrightTests.Base.ApiClient.Types;
+using SimpleApiPlaywright;
+using SimpleApiPlaywright.Types;
 
 namespace OwaspPlaywrightTests.ApiEndpoints;
 
