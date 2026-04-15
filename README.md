@@ -3,7 +3,7 @@
 [![Playwright](https://img.shields.io/badge/Playwright-C%23-2E8B57?logo=playwright)](https://playwright.dev/dotnet/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)](https://www.docker.com/)
 [![Allure](https://img.shields.io/badge/Reporting-Allure-FF6C37?logo=allure)](https://allurereport.org/)
-[![NuGet](https://img.shields.io/badge/Package-SimpleApiPlaywright-blue)](https://github.com/notNullThen/simple-api-playwright-nuget-dotnet)
+[![NuGet](https://img.shields.io/badge/Package-SimpleApiPlaywright-blue)](https://www.nuget.org/packages/SimpleApiPlaywright/)
 
 A professional-grade SDET project demonstrating a modern, containerized automation framework for the **OWASP Juice Shop**. This project showcases high-performance testing strategies, clean architecture, and custom tooling.
 
@@ -22,6 +22,9 @@ A professional-grade SDET project demonstrating a modern, containerized automati
 - **Runner**: xUnit
 - **Infrastructure**: Docker & Docker Compose
 - **Reporting**: Allure Framework
+- **SimpleApiPlaywright** is now [published on NuGet](https://www.nuget.org/packages/SimpleApiPlaywright/)!
+
+For documentation and source code, visit the [GitHub repository](https://github.com/notNullThen/simple-api-playwright-nuget-dotnet).
 
 ## ⚡ Quick Start (Docker)
 
