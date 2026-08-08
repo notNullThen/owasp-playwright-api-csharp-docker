@@ -29,7 +29,8 @@ public class ProductTile()
             async () =>
             {
                 var basketItemsWaitTask = Api.BasketItems.PostBasketItems().WaitAsync();
-                await Task.WhenAll(basketItemsWaitTask, AddToBasketButton.ClickAsync());
+                await AddToBasketButton.ClickAsync();
+
                 return await basketItemsWaitTask;
             }
         );

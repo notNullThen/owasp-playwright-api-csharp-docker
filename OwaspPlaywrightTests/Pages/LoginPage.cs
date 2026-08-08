@@ -36,7 +36,9 @@ public class LoginPage() : PageBase("/#/login")
                 }
 
                 var loginResponseTask = Api.RestUser.PostLogin().WaitAsync();
-                await Task.WhenAll(LoginButton.ClickAsync(), loginResponseTask);
+                await LoginButton.ClickAsync();
+
+                var loginResponse = await loginResponseTask;
 
                 await Header.AccountMenu.OpenAsync();
                 await Assertions
@@ -44,7 +46,7 @@ public class LoginPage() : PageBase("/#/login")
                     .ToContainTextAsync(email);
                 await Header.AccountMenu.CloseAsync();
 
-                return await loginResponseTask;
+                return loginResponse;
             }
         );
     }

@@ -62,14 +62,17 @@ public class RegistrationPage() : PageBase("/#/register")
             async () =>
             {
                 var userResponseTask = Api.Users.PostUser().WaitAsync();
-                await Task.WhenAll(
-                    RegisterButton.ClickAsync(),
-                    userResponseTask,
-                    Api.SecurityAnswers.PostSecurityAnswers().WaitAsync()
-                );
+                var securityAnswerResponseTask = Api.SecurityAnswers
+                    .PostSecurityAnswers()
+                    .WaitAsync();
+
+                await RegisterButton.ClickAsync();
+
+                var userResponse = await userResponseTask;
+                await securityAnswerResponseTask;
                 await Page.WaitForURLAsync("**/#/login");
 
-                return await userResponseTask;
+                return userResponse;
             }
         );
     }

@@ -15,7 +15,7 @@ public class BasketPage() : PageBase("#/basket")
     {
         var basketWaitTask = Api.RestBasket.GetBasket().WaitAsync();
 
-        await Task.WhenAll(base.GotoAsync(), basketWaitTask);
+        await base.GotoAsync();
 
         return await basketWaitTask;
     }
