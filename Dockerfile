@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright/dotnet:v1.59.0-noble
+FROM mcr.microsoft.com/playwright/dotnet:v1.63.0-noble
 
 # Install NodeJS
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
