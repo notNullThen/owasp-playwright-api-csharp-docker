@@ -36,6 +36,24 @@ docker compose up playwright --build
 
 *The report will be available at [http://localhost:8080](http://localhost:8080) after execution.*
 
+## Hold and release an API response
+
+The [login demo](OwaspPlaywrightTests/Tests/UI/UsersTest.cs) holds the response while checking the login form, then releases it and verifies the signed-in user:
+
+```csharp
+var holdTask = Api.RestUser.PostLogin().HoldAsync();
+await loginPage.LoginButton.ClickAsync();
+await using var heldResponse = await holdTask;
+
+await Expect(loginPage.LoginButton).ToBeVisibleAsync();
+await Expect(loginPage.EmailInput.Input).ToHaveValueAsync(email);
+await heldResponse.ReleaseAsync(failIfNotReleased: true);
+
+await Expect(loginPage.LoginButton).ToBeHiddenAsync();
+await loginPage.Header.AccountMenu.OpenAsync();
+await Expect(loginPage.Header.AccountMenu.UserProfileItem).ToContainTextAsync(email);
+```
+
 ## 📂 Project Structure
 
 - `OwaspPlaywrightTests/Tests/`: Structured API and UI test suites.

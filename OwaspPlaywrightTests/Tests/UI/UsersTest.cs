@@ -1,3 +1,4 @@
+using OwaspPlaywrightTests.ApiEndpoints;
 using OwaspPlaywrightTests.Base;
 using OwaspPlaywrightTests.Hooks;
 using OwaspPlaywrightTests.Pages;
@@ -44,6 +45,31 @@ public class UsersTest
                 email: CreatedUser.Payload.Email,
                 password: CreatedUser.Payload.Password
             );
+        }
+
+        [Fact(DisplayName = "Login completes only after the held API response is released")]
+        public async Task LoginCompletesOnlyAfterHeldResponseIsReleased()
+        {
+            var loginPage = new LoginPage();
+            var email = CreatedUser.Payload.Email;
+
+            await loginPage.GotoAsync();
+            await loginPage.EmailInput.FillAsync(email);
+            await loginPage.PasswordInput.FillAsync(CreatedUser.Payload.Password);
+
+            var holdTask = Api.RestUser.PostLogin().HoldAsync();
+            await loginPage.LoginButton.ClickAsync();
+            await using var heldResponse = await holdTask;
+
+            // The server has responded, but the browser is still on the login form.
+            await Expect(loginPage.LoginButton).ToBeVisibleAsync();
+            await Expect(loginPage.EmailInput.Input).ToHaveValueAsync(email);
+
+            await heldResponse.ReleaseAsync(failIfNotReleased: true);
+
+            await Expect(loginPage.LoginButton).ToBeHiddenAsync();
+            await loginPage.Header.AccountMenu.OpenAsync();
+            await Expect(loginPage.Header.AccountMenu.UserProfileItem).ToContainTextAsync(email);
         }
     }
 }
